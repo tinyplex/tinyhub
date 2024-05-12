@@ -1,0 +1,8 @@
+{
+  "name": "tinyhub",
+  "version": "0.0.0",
+  "author": "jamesgpearce",
+  "repository": "github:tinyplex/tinyhub",
+  "license": "MIT",
+  "description": "A local-first GitHub client, built in public."
+}
