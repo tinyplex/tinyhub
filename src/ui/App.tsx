@@ -1,5 +1,6 @@
 import {Provider, useCreateStore} from 'tinybase/debug/ui-react';
-import {Button} from './Button';
+import {Header} from './Header';
+import {Main} from './Main';
 import React from 'react';
 import {StoreInspector} from 'tinybase/debug/ui-react-dom';
 import {createStore} from 'tinybase/debug';
@@ -9,8 +10,8 @@ export const App = () => {
 
   return (
     <Provider store={store}>
-      It works.
-      <Button />
+      <Header />
+      <Main />
       <StoreInspector />
     </Provider>
   );
