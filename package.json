@@ -4,5 +4,19 @@
   "author": "jamesgpearce",
   "repository": "github:tinyplex/tinyhub",
   "license": "MIT",
-  "description": "A local-first GitHub client, built in public."
+  "description": "A local-first GitHub client, built in public.",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "tinybase": "^4.8.7"
+  }
 }
