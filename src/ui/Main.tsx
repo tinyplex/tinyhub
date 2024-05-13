@@ -1,4 +1,4 @@
-import {Page} from './Page';
+import {Page} from './page/Page';
 import React from 'react';
 import {Sidebar} from './sidebar/Sidebar';
 

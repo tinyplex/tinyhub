@@ -168,6 +168,13 @@ hr {
   justify-content: center;
   align-items: stretch;
   padding: 2rem;
+  & header {
+    flex: 0;
+  }
+  & #body {
+    flex: 1;
+    margin-top: 1rem;
+  }
 }
 
 #overlay {
