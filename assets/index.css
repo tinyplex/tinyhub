@@ -1,7 +1,6 @@
 @font-face {
   font-family: Inter;
-  src: url(inter.woff2) format('woff2');
-  font-display: swap;
+  src: url(/assets/inter.woff2) format('woff2');
 }
 
 * {
@@ -137,9 +136,6 @@ hr {
   flex-direction: column;
   padding: 1rem;
   background: #f9f9f9;
-  & button {
-    margin-bottom: 1rem;
-  }
 }
 
 #repoList {
