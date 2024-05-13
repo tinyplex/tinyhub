@@ -1,11 +1,14 @@
+import {REPO_ID, UI_STORE} from '../../stores/UiStore';
 import React from 'react';
-import {useUiRepoId} from '../../stores/UiStore';
+import {useValue} from 'tinybase/debug/ui-react';
 
 export const Page = () => (
   <div id="page">
     <header>
-      <h1>{useUiRepoId()}</h1>
+      <h1>{useValue(REPO_ID, UI_STORE)}</h1>
     </header>
-    <div id="body">Information for {useUiRepoId()} goes here.</div>
+    <div id="body">
+      Information for {useValue(REPO_ID, UI_STORE)} goes here.
+    </div>
   </div>
 );

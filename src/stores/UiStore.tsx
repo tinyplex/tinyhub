@@ -3,22 +3,20 @@ import {
   useCreatePersister,
   useCreateStore,
   useProvideStore,
-  useSetValueCallback,
-  useValue,
   useValueListener,
 } from 'tinybase/debug/ui-react';
 import {createSessionPersister} from 'tinybase/debug/persisters/persister-browser';
 import {createStore} from 'tinybase/debug';
 
-const UI_STORE_ID = 'ui';
+export const UI_STORE = 'ui';
 
-const REPO_ID_VALUE = 'repoId';
+export const REPO_ID = 'repoId';
 
 export const UiStore = () => {
   const uiStore = useCreateStore(createStore);
   useCreatePersister(
     uiStore,
-    (uiStore) => createSessionPersister(uiStore, UI_STORE_ID),
+    (uiStore) => createSessionPersister(uiStore, UI_STORE),
     [],
     async (persister) => {
       await persister.startAutoLoad();
@@ -27,11 +25,7 @@ export const UiStore = () => {
   );
 
   const handleHash = useCallback(
-    () =>
-      uiStore.setValue(
-        REPO_ID_VALUE,
-        decodeURIComponent(location.hash.slice(1)),
-      ),
+    () => uiStore.setValue(REPO_ID, decodeURIComponent(location.hash.slice(1))),
     [uiStore],
   );
   useEffect(() => {
@@ -40,7 +34,7 @@ export const UiStore = () => {
     return () => removeEventListener('hashchange', handleHash);
   }, [handleHash]);
   useValueListener(
-    REPO_ID_VALUE,
+    REPO_ID,
     (_, _valueId, roomId) =>
       history.replaceState(null, '', '#' + encodeURIComponent(roomId)),
     [],
@@ -48,11 +42,6 @@ export const UiStore = () => {
     uiStore,
   );
 
-  useProvideStore(UI_STORE_ID, uiStore);
+  useProvideStore(UI_STORE, uiStore);
   return null;
 };
-
-export const useUiRepoId = () => useValue(REPO_ID_VALUE, UI_STORE_ID) as string;
-
-export const useUiSetRepoId = (repoId: string) =>
-  useSetValueCallback(REPO_ID_VALUE, () => repoId, [repoId], UI_STORE_ID);

@@ -1,5 +1,6 @@
+import {REPO_ID, UI_STORE} from '../../stores/UiStore';
 import React from 'react';
-import {useUiSetRepoId} from '../../stores/UiStore';
+import {useSetValueCallback} from 'tinybase/debug/ui-react';
 
 export const RepoLink = ({
   repoId,
@@ -13,7 +14,12 @@ export const RepoLink = ({
     classes.push('current');
   }
 
-  const handleClick = useUiSetRepoId(repoId);
+  const handleClick = useSetValueCallback(
+    REPO_ID,
+    () => repoId,
+    [repoId],
+    UI_STORE,
+  );
 
   return (
     <li onClick={handleClick} className={classes.join(' ')}>
