@@ -1,24 +1,34 @@
+import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
 import React, {useCallback, useState} from 'react';
 import {useModal} from '../common/Modal';
+import {useSetRowCallback} from 'tinybase/debug/ui-react';
 
 export const RepoAdd = () => {
   const [Modal, showModal, hideModal] = useModal();
 
-  const [name, setName] = useState('');
+  const [repoId, setRepoId] = useState('');
 
   const handleNameChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value),
+    (event: React.ChangeEvent<HTMLInputElement>) =>
+      setRepoId(event.target.value),
     [],
   );
 
+  const addRepo = useSetRowCallback(
+    REPOS_TABLE,
+    (repoId: string) => repoId,
+    (repoId: string) => ({name: repoId}),
+    [],
+    REPOS_STORE,
+  );
+
   const handleRepoAdd = useCallback(() => {
-    if (name != '') {
-      // eslint-disable-next-line no-console
-      console.log('adding', name);
-      setName('');
+    if (repoId != '') {
+      addRepo(repoId);
+      setRepoId('');
     }
     hideModal();
-  }, [name, hideModal]);
+  }, [addRepo, repoId, hideModal]);
 
   return (
     <>
@@ -30,7 +40,7 @@ export const RepoAdd = () => {
         <div id="buttons">
           <input
             type="text"
-            value={name}
+            value={repoId}
             onChange={handleNameChange}
             placeholder="tinyplex/tinybase"
           />

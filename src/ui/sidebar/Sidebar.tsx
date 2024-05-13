@@ -1,6 +1,8 @@
+import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
 import React from 'react';
 import {RepoAdd} from './RepoAdd';
 import {RepoLink} from './RepoLink';
+import {useRowIds} from 'tinybase/debug/ui-react';
 import {useUiRepoId} from '../../stores/UiStore';
 
 export const Sidebar = () => {
@@ -8,8 +10,13 @@ export const Sidebar = () => {
   return (
     <nav id="sidebar">
       <ul id="repoList">
-        <RepoLink repoId="Repo 1" currentRepoId={currentRepoId} />
-        <RepoLink repoId="Repo 2" currentRepoId={currentRepoId} />
+        {useRowIds(REPOS_TABLE, REPOS_STORE).map((repoId) => (
+          <RepoLink
+            repoId={repoId}
+            currentRepoId={currentRepoId}
+            key={repoId}
+          />
+        ))}
       </ul>
       <hr />
       <RepoAdd />

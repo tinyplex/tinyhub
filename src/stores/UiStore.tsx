@@ -8,7 +8,7 @@ import {
   useValueListener,
 } from 'tinybase/debug/ui-react';
 import {createSessionPersister} from 'tinybase/debug/persisters/persister-browser';
-import {createStore} from 'tinybase';
+import {createStore} from 'tinybase/debug';
 
 const UI_STORE_ID = 'ui';
 
