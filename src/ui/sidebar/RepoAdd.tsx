@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {useModal} from './common/Modal';
+import {useModal} from '../common/Modal';
 
 export const RepoAdd = () => {
   const [Modal, showModal, hideModal] = useModal();
