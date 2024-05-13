@@ -37,6 +37,9 @@ button {
       border-color: #eee;
     }
   }
+  &.error {
+    background-color: #ffe9e9;
+  }
 }
 
 p {

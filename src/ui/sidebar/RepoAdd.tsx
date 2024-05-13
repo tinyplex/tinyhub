@@ -1,20 +1,32 @@
 import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
+import {REPO_ID, UI_STORE} from '../../stores/UiStore';
 import React, {useCallback, useState} from 'react';
+import {
+  useSetPartialRowCallback,
+  useSetValueCallback,
+} from 'tinybase/debug/ui-react';
 import {useModal} from '../common/Modal';
-import {useSetRowCallback} from 'tinybase/debug/ui-react';
+
+const VALID_REPO_ID = /^[0-9a-zA-Z_.-]+\/[0-9a-zA-Z_.-]+$/;
+
+const DEFAULT_REPO_ID = 'tinyplex/tinybase';
 
 export const RepoAdd = () => {
   const [Modal, showModal, hideModal] = useModal();
 
   const [repoId, setRepoId] = useState('');
+  const [error, setError] = useState(false);
 
   const handleNameChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) =>
-      setRepoId(event.target.value),
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const repoId = event.target.value;
+      setRepoId(repoId);
+      setError(repoId != '' && !VALID_REPO_ID.test(repoId));
+    },
     [],
   );
 
-  const addRepo = useSetRowCallback(
+  const addRepo = useSetPartialRowCallback(
     REPOS_TABLE,
     (repoId: string) => repoId,
     (repoId: string) => ({name: repoId}),
@@ -22,13 +34,20 @@ export const RepoAdd = () => {
     REPOS_STORE,
   );
 
+  const setCurrentRepoId = useSetValueCallback(
+    REPO_ID,
+    (repoId: string) => repoId,
+    [repoId],
+    UI_STORE,
+  );
+
   const handleRepoAdd = useCallback(() => {
-    if (repoId != '') {
-      addRepo(repoId);
-      setRepoId('');
-    }
+    const defaultedRepoId = repoId == '' ? DEFAULT_REPO_ID : repoId;
+    addRepo(defaultedRepoId);
+    setCurrentRepoId(defaultedRepoId);
+    setRepoId('');
     hideModal();
-  }, [addRepo, repoId, hideModal]);
+  }, [repoId, addRepo, setCurrentRepoId, hideModal]);
 
   return (
     <>
@@ -43,8 +62,12 @@ export const RepoAdd = () => {
             value={repoId}
             onChange={handleNameChange}
             placeholder="tinyplex/tinybase"
+            autoFocus
+            className={error ? 'error' : ''}
           />
-          <button onClick={handleRepoAdd}>OK</button>
+          <button onClick={handleRepoAdd} disabled={error}>
+            OK
+          </button>
         </div>
       </Modal>
     </>
