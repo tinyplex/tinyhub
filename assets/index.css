@@ -1,6 +1,6 @@
 @font-face {
   font-family: Inter;
-  src: url(/assets/inter.woff2) format('woff2');
+  src: url(inter.woff2) format('woff2');
 }
 
 * {
