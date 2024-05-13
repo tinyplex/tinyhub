@@ -1,4 +1,5 @@
 import React from 'react';
+import {RepoAdd} from './RepoAdd';
 
 export const Sidebar = () => (
   <nav id="sidebar">
@@ -7,5 +8,6 @@ export const Sidebar = () => (
       <li>Repo 2</li>
     </ul>
     <hr />
+    <RepoAdd />
   </nav>
 );
