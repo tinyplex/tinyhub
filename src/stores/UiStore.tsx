@@ -35,8 +35,8 @@ export const UiStore = () => {
   }, [handleHash]);
   useValueListener(
     REPO_ID,
-    (_, _valueId, roomId) =>
-      history.replaceState(null, '', '#' + encodeURIComponent(roomId)),
+    (_, _valueId, repoId) =>
+      history.replaceState(null, '', '#' + encodeURIComponent(repoId ?? '')),
     [],
     false,
     uiStore,
