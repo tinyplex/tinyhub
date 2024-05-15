@@ -1,5 +1,6 @@
 import {
-  REPOS_FULL_NAME_CELL,
+  REPOS_OWNER_CELL,
+  REPOS_REPO_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
@@ -28,7 +29,8 @@ export const RepoLink = ({
 
   return (
     <li onClick={handleClick} className={classes.join(' ')}>
-      {useCell(REPOS_TABLE, repoId, REPOS_FULL_NAME_CELL, REPOS_STORE)}
+      {useCell(REPOS_TABLE, repoId, REPOS_OWNER_CELL, REPOS_STORE)}/
+      {useCell(REPOS_TABLE, repoId, REPOS_REPO_CELL, REPOS_STORE)}
     </li>
   );
 };

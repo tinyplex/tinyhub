@@ -9,7 +9,8 @@ import {createStore} from 'tinybase/debug';
 export const REPOS_STORE = 'repos';
 
 export const REPOS_TABLE = 'repos';
-export const REPOS_FULL_NAME_CELL = 'fullName';
+export const REPOS_OWNER_CELL = 'owner';
+export const REPOS_REPO_CELL = 'repo';
 
 export const ReposStore = () => {
   const reposStore = useCreateStore(createStore);

@@ -1,5 +1,6 @@
 import {
-  REPOS_FULL_NAME_CELL,
+  REPOS_OWNER_CELL,
+  REPOS_REPO_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
@@ -9,9 +10,10 @@ import {
   useSetPartialRowCallback,
   useSetValueCallback,
 } from 'tinybase/debug/ui-react';
+import type {Row} from 'tinybase';
 import {useModal} from '../common/Modal';
 
-const VALID_REPO_FULL_NAME = /^[0-9a-zA-Z_.-]+\/[0-9a-zA-Z_.-]+$/;
+const VALID_REPO_FULL_NAME = /^([0-9a-zA-Z_.-]+)\/([0-9a-zA-Z_.-]+)$/;
 
 const DEFAULT_REPO_FULL_NAME = 'tinyplex/tinybase';
 
@@ -33,7 +35,12 @@ export const RepoAdd = () => {
   const addRepo = useSetPartialRowCallback(
     REPOS_TABLE,
     (repoFullName: string) => repoFullName,
-    (repoFullName: string) => ({[REPOS_FULL_NAME_CELL]: repoFullName}),
+    (repoFullName: string) => {
+      const match = repoFullName.match(VALID_REPO_FULL_NAME);
+      return match
+        ? ({[REPOS_OWNER_CELL]: match[1], [REPOS_REPO_CELL]: match[2]} as Row)
+        : {};
+    },
     [],
     REPOS_STORE,
   );
