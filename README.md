@@ -1,6 +1,6 @@
 # TinyHub
 
-This is a local-first GitHub client, built in public.
+This is a local-first GitHub app, built in public.
 
 https://github.com/tinyplex/tinyhub/assets/90942/53740a55-a3a3-4fbf-9f2c-c9bd0f3e0c18
 
@@ -9,13 +9,21 @@ Follow the build:
 - [Twitter](https://twitter.com/jamespearce/status/1789727909730455890)
 - [Threads](https://www.threads.net/@jamesgpearce/post/C64P4g-v-3J)
 
-To install dependencies:
+## Client
+
+Go into the directory:
+
+```bash
+cd client
+```
+
+Install dependencies:
 
 ```bash
 bun install
 ```
 
-To run:
+Run in development mode:
 
 ```bash
 bun run dev
