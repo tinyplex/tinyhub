@@ -12,9 +12,9 @@ export const REPOS_TABLE = 'repos';
 export const REPOS_FULL_NAME_CELL = 'fullName';
 
 export const ReposStore = () => {
-  const repoStore = useCreateStore(createStore);
+  const reposStore = useCreateStore(createStore);
   useCreatePersister(
-    repoStore,
+    reposStore,
     (repoStore) => createLocalPersister(repoStore, REPOS_STORE),
     [],
     async (persister) => {
@@ -23,6 +23,6 @@ export const ReposStore = () => {
     },
   );
 
-  useProvideStore(REPOS_STORE, repoStore);
+  useProvideStore(REPOS_STORE, reposStore);
   return null;
 };
