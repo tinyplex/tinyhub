@@ -1,6 +1,7 @@
 import {REPO_ID, UI_STORE} from '../../stores/UiStore';
 import {REPO_STORE, REPO_VALUE, RepoStore} from '../../stores/RepoStore';
 import React from 'react';
+import {ValuesInHtmlTable} from 'tinybase/debug/ui-react-dom';
 import {useValue} from 'tinybase/debug/ui-react';
 
 export const Page = () => {
@@ -16,7 +17,9 @@ export const Page = () => {
           <header>
             <h1>{name}</h1>
           </header>
-          <div id="body">Information for {name} goes here.</div>
+          <div id="body">
+            <ValuesInHtmlTable store={REPO_STORE} headerRow={false} />
+          </div>
         </>
       ) : (
         <p>Please add a repo using the button on the left.</p>

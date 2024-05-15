@@ -42,6 +42,10 @@ button {
   }
 }
 
+h1 {
+  font-size: 1.5rem;
+}
+
 p {
   font-size: 0.8rem;
   margin: 1rem;
@@ -54,6 +58,29 @@ hr {
   border: solid #eee;
   border-width: 1px 0 0 0;
   width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  box-shadow: 0 0rem 0.15rem 0 #0000001a;
+  border: 1px solid #eee;
+  border-radius: 0.25rem;
+  font-size: inherit;
+  line-height: inherit;
+  table-layout: fixed;
+  th,
+  td {
+    overflow: hidden;
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: #eee;
+    text-align: left;
+  }
+  thead th {
+    border-bottom-color: #ccc;
+  }
 }
 
 #app,
