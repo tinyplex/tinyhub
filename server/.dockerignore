@@ -1,0 +1,8 @@
+.dockerignore
+.env
+.eslintrc.json
+.prettierrc
+cspell.json
+Dockerfile
+fly.toml
+node_modules
