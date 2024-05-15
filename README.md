@@ -2,7 +2,7 @@
 
 This is a local-first GitHub client, built in public.
 
-https://github.com/tinyplex/tinyhub/assets/90942/7ef3c885-f7ce-4e2c-a4b4-ee5049db27f0
+https://github.com/tinyplex/tinyhub/assets/90942/53740a55-a3a3-4fbf-9f2c-c9bd0f3e0c18
 
 Follow the build:
 
