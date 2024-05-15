@@ -1,4 +1,8 @@
-import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
+import {
+  REPOS_FULL_NAME_CELL,
+  REPOS_STORE,
+  REPOS_TABLE,
+} from '../../stores/ReposStore';
 import {REPO_ID, UI_STORE} from '../../stores/UiStore';
 import React, {useCallback, useState} from 'react';
 import {
@@ -7,47 +11,48 @@ import {
 } from 'tinybase/debug/ui-react';
 import {useModal} from '../common/Modal';
 
-const VALID_REPO_ID = /^[0-9a-zA-Z_.-]+\/[0-9a-zA-Z_.-]+$/;
+const VALID_REPO_FULL_NAME = /^[0-9a-zA-Z_.-]+\/[0-9a-zA-Z_.-]+$/;
 
-const DEFAULT_REPO_ID = 'tinyplex/tinybase';
+const DEFAULT_REPO_FULL_NAME = 'tinyplex/tinybase';
 
 export const RepoAdd = () => {
   const [Modal, showModal, hideModal] = useModal();
 
-  const [repoId, setRepoId] = useState('');
+  const [repoFullName, setRepoFullName] = useState('');
   const [error, setError] = useState(false);
 
   const handleNameChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const repoId = event.target.value;
-      setRepoId(repoId);
-      setError(repoId != '' && !VALID_REPO_ID.test(repoId));
+      const repoFullName = event.target.value;
+      setRepoFullName(repoFullName);
+      setError(repoFullName != '' && !VALID_REPO_FULL_NAME.test(repoFullName));
     },
     [],
   );
 
   const addRepo = useSetPartialRowCallback(
     REPOS_TABLE,
-    (repoId: string) => repoId,
-    (repoId: string) => ({name: repoId}),
+    (repoFullName: string) => repoFullName,
+    (repoFullName: string) => ({[REPOS_FULL_NAME_CELL]: repoFullName}),
     [],
     REPOS_STORE,
   );
 
   const setCurrentRepoId = useSetValueCallback(
     REPO_ID,
-    (repoId: string) => repoId,
-    [repoId],
+    (repoFullName: string) => repoFullName,
+    [repoFullName],
     UI_STORE,
   );
 
   const handleRepoAdd = useCallback(() => {
-    const defaultedRepoId = repoId == '' ? DEFAULT_REPO_ID : repoId;
+    const defaultedRepoId =
+      repoFullName == '' ? DEFAULT_REPO_FULL_NAME : repoFullName;
     addRepo(defaultedRepoId);
     setCurrentRepoId(defaultedRepoId);
-    setRepoId('');
+    setRepoFullName('');
     hideModal();
-  }, [repoId, addRepo, setCurrentRepoId, hideModal]);
+  }, [repoFullName, addRepo, setCurrentRepoId, hideModal]);
 
   return (
     <>
@@ -59,7 +64,7 @@ export const RepoAdd = () => {
         <div id="buttons">
           <input
             type="text"
-            value={repoId}
+            value={repoFullName}
             onChange={handleNameChange}
             placeholder="tinyplex/tinybase"
             autoFocus

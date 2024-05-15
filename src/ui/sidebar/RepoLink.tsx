@@ -1,6 +1,11 @@
+import {
+  REPOS_FULL_NAME_CELL,
+  REPOS_STORE,
+  REPOS_TABLE,
+} from '../../stores/ReposStore';
 import {REPO_ID, UI_STORE} from '../../stores/UiStore';
+import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
 import React from 'react';
-import {useSetValueCallback} from 'tinybase/debug/ui-react';
 
 export const RepoLink = ({
   repoId,
@@ -23,7 +28,7 @@ export const RepoLink = ({
 
   return (
     <li onClick={handleClick} className={classes.join(' ')}>
-      {repoId}
+      {useCell(REPOS_TABLE, repoId, REPOS_FULL_NAME_CELL, REPOS_STORE)}
     </li>
   );
 };
