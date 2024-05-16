@@ -1,0 +1,26 @@
+<script>
+  const SERVER = 'https://api.tinyhub.org';
+
+  const params = new URLSearchParams(location.search);
+  let redirect = location.origin;
+
+  if (!params.has('token')) {
+    const state = Math.random().toString();
+    sessionStorage.setItem('state', state);
+    redirect =
+      SERVER +
+      '?' +
+      new URLSearchParams({
+        client: location.origin + location.pathname,
+        step: 0,
+        state,
+      }).toString();
+  } else {
+    if (params.get('state') === sessionStorage.getItem('state')) {
+      sessionStorage.setItem('token', params.get('token'));
+      sessionStorage.removeItem('state');
+    }
+  }
+
+  location.replace(redirect);
+</script>
