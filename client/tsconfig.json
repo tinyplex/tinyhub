@@ -26,6 +26,6 @@
     "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": false
   },
-  "include": ["client/src"],
+  "include": ["src"],
   "references": [{"path": "./tsconfig.node.json"}]
 }
