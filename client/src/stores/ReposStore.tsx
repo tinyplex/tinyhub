@@ -61,13 +61,13 @@ const createGithubReposLoadingPersister = (store: Store) =>
 
         (
           await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)
-        ).data.forEach(
-          ({full_name, owner, name}) =>
-            (reposTable[full_name] = {
-              [REPOS_OWNER_CELL]: owner.login,
-              [REPOS_REPO_CELL]: name,
-            }),
-        );
+        ).data.forEach(({full_name, owner, name}) => {
+          orgsTable[owner.login] = {[ORGS_NAME_CELL]: owner.login};
+          reposTable[full_name] = {
+            [REPOS_OWNER_CELL]: owner.login,
+            [REPOS_REPO_CELL]: name,
+          };
+        });
 
         await Promise.all(
           (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.map(

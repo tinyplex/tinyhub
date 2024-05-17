@@ -178,29 +178,44 @@ table {
   flex-direction: column;
   padding: 1rem;
   background: #f9f9f9;
-}
 
-#repoList {
-  flex: 1;
-  overflow: auto;
-  padding: 0;
-  width: 12rem;
-  & li {
-    margin-bottom: 1rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    line-height: 1rem;
-    font-weight: 400;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    &:hover {
-      background-color: #e9e9e9;
-    }
-    &.current {
-      background-color: #d9d9d9;
-      cursor: unset;
+  #orgList {
+    flex: 1;
+    overflow: auto;
+    padding: 0;
+    width: 12rem;
+    & details {
+      margin-bottom: 0.25rem;
+      & summary {
+        font-weight: 700;
+        padding: 0.5rem;
+        margin-bottom: 0.25rem;
+        border-radius: 0.25rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        &:hover {
+          background-color: #e9e9e9;
+        }
+      }
+      & .repoList {
+        padding-left: 0.9rem;
+        & li {
+          margin-bottom: 0.25rem;
+          cursor: pointer;
+          padding: 0.5rem;
+          border-radius: 0.25rem;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          &:hover {
+            background-color: #e9e9e9;
+          }
+          &.current {
+            background-color: #d9d9d9;
+            cursor: unset;
+          }
+        }
+      }
     }
   }
 }
