@@ -149,6 +149,9 @@ table {
       }
     }
   }
+  #auth > button {
+    margin-left: 1rem;
+  }
 }
 
 #main {

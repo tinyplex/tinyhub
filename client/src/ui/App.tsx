@@ -1,4 +1,4 @@
-import {Header} from './Header';
+import {Header} from './header/Header';
 import {Main} from './Main';
 import {Provider} from 'tinybase/debug/ui-react';
 import React from 'react';
