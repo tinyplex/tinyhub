@@ -15,6 +15,7 @@ serve({
     const client = params.get('client');
     const step = params.get('step');
     const state = params.get('state');
+    const scope = params.get('scope') ?? '';
 
     if (!error && client && step && state) {
       switch (step) {
@@ -24,6 +25,7 @@ serve({
               new URLSearchParams({
                 client_id: CLIENT_ID,
                 state,
+                scope,
                 redirect_uri:
                   SERVER +
                   '?' +
