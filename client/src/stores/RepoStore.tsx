@@ -16,10 +16,8 @@ import {
   useCreateStore,
   useProvideStore,
 } from 'tinybase/debug/ui-react';
-import {Octokit} from 'octokit';
 import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
-
-const octokit = new Octokit({});
+import {octokit} from './octokit';
 
 export const REPO_STORE = 'repo';
 

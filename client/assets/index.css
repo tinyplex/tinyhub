@@ -149,8 +149,17 @@ table {
       }
     }
   }
-  #auth > button {
-    margin-left: 1rem;
+  #auth {
+    display: flex;
+    align-items: center;
+    & .avatar {
+      height: 2rem;
+      width: 2rem;
+      border-radius: 1rem;
+    }
+    & button {
+      margin-left: 1rem;
+    }
   }
 }
 

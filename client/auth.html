@@ -4,9 +4,12 @@
   const params = new URLSearchParams(location.search);
   let redirect = location.origin;
 
-  if (!params.has('token')) {
+  if (params.has('logout')) {
+    localStorage.removeItem('token');
+  } else if (!params.has('token')) {
     const state = Math.random().toString();
     sessionStorage.setItem('state', state);
+    localStorage.removeItem('token');
     redirect =
       SERVER +
       '?' +
@@ -17,7 +20,7 @@
       }).toString();
   } else {
     if (params.get('state') === sessionStorage.getItem('state')) {
-      sessionStorage.setItem('token', params.get('token'));
+      localStorage.setItem('token', params.get('token'));
       sessionStorage.removeItem('state');
     }
   }

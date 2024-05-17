@@ -5,10 +5,12 @@ import React from 'react';
 import {ReposStore} from '../stores/ReposStore';
 import {StoreInspector} from 'tinybase/debug/ui-react-dom';
 import {UiStore} from '../stores/UiStore';
+import {UserStore} from '../stores/UserStore';
 
 export const App = () => {
   return (
     <Provider>
+      <UserStore />
       <ReposStore />
       <UiStore />
 
