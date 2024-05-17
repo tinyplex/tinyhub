@@ -16,6 +16,7 @@ import {
   useCreateStore,
   useProvideStore,
 } from 'tinybase/debug/ui-react';
+import {REFRESH_INTERVAL} from './common';
 import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
 import {octokit} from './octokit';
 
@@ -29,8 +30,6 @@ export const FORK_VALUE = 'fork';
 export const HOMEPAGE_VALUE = 'homepage';
 export const STARGAZERS_COUNT_VALUE = 'stargazersCount';
 export const LANGUAGE_VALUE = 'language';
-
-export const REFRESH_INTERVAL = 60000;
 
 export const RepoStore = ({repoId}: {readonly repoId: string}) => {
   const owner = useCell(
@@ -74,7 +73,7 @@ export const RepoStore = ({repoId}: {readonly repoId: string}) => {
     },
     [owner, repo],
     async (persister) => {
-      await persister?.startAutoLoad();
+      await persister?.load();
     },
     [],
   );

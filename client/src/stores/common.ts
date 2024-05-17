@@ -1,0 +1,1 @@
+export const REFRESH_INTERVAL = 60000;

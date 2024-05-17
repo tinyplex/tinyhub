@@ -1,10 +1,17 @@
 import {
+  type Store,
+  type Table,
+  createCustomPersister,
+  createStore,
+} from 'tinybase/debug';
+import {hasToken, octokit} from './octokit';
+import {
   useCreatePersister,
   useCreateStore,
   useProvideStore,
 } from 'tinybase/debug/ui-react';
+import {REFRESH_INTERVAL} from './common';
 import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
-import {createStore} from 'tinybase/debug';
 
 export const REPOS_STORE = 'repos';
 
@@ -16,7 +23,7 @@ export const ReposStore = () => {
   const reposStore = useCreateStore(createStore);
   useCreatePersister(
     reposStore,
-    (repoStore) => createLocalPersister(repoStore, REPOS_STORE),
+    (reposStore) => createLocalPersister(reposStore, REPOS_STORE),
     [],
     async (persister) => {
       await persister.startAutoLoad();
@@ -24,6 +31,45 @@ export const ReposStore = () => {
     },
   );
 
+  useCreatePersister(
+    reposStore,
+    (reposStore) => {
+      return createGithubReposLoadingPersister(reposStore);
+    },
+    [],
+    async (persister) => {
+      await persister?.load();
+    },
+    [],
+  );
+
   useProvideStore(REPOS_STORE, reposStore);
   return null;
 };
+
+const createGithubReposLoadingPersister = (store: Store) =>
+  createCustomPersister(
+    store,
+    async () => {
+      if (hasToken()) {
+        const response = await octokit.rest.repos.listForAuthenticatedUser({
+          per_page: 100,
+        });
+        if (response.status == 200) {
+          const reposTable: Table = {};
+          response.data.forEach(
+            ({full_name, owner, name}) =>
+              (reposTable[full_name] = {
+                [REPOS_OWNER_CELL]: owner.login,
+                [REPOS_REPO_CELL]: name,
+              }),
+          );
+          return [{[REPOS_TABLE]: reposTable}, {}];
+        }
+      }
+      return [{}, {}];
+    },
+    async () => {},
+    (listener) => setInterval(listener, REFRESH_INTERVAL),
+    (intervalId) => clearInterval(intervalId),
+  );

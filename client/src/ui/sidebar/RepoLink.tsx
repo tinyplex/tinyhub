@@ -28,8 +28,15 @@ export const RepoLink = ({
   );
 
   return (
-    <li onClick={handleClick} className={classes.join(' ')}>
-      {useCell(REPOS_TABLE, repoId, REPOS_OWNER_CELL, REPOS_STORE)}/
+    <li
+      onClick={handleClick}
+      title={
+        useCell(REPOS_TABLE, repoId, REPOS_OWNER_CELL, REPOS_STORE) +
+        '/' +
+        useCell(REPOS_TABLE, repoId, REPOS_REPO_CELL, REPOS_STORE)
+      }
+      className={classes.join(' ')}
+    >
       {useCell(REPOS_TABLE, repoId, REPOS_REPO_CELL, REPOS_STORE)}
     </li>
   );

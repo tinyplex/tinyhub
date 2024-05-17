@@ -2,7 +2,6 @@ import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
 import {REPO_ID, UI_STORE} from '../../stores/UiStore';
 import {useRowIds, useValue} from 'tinybase/debug/ui-react';
 import React from 'react';
-import {RepoAdd} from './RepoAdd';
 import {RepoLink} from './RepoLink';
 
 export const Sidebar = () => {
@@ -18,8 +17,6 @@ export const Sidebar = () => {
           />
         ))}
       </ul>
-      <hr />
-      <RepoAdd />
     </nav>
   );
 };

@@ -192,6 +192,9 @@ table {
     border-radius: 0.25rem;
     line-height: 1rem;
     font-weight: 400;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     &:hover {
       background-color: #e9e9e9;
     }

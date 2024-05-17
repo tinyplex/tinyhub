@@ -1,7 +1,17 @@
-import {useCreateStore, useProvideStore} from 'tinybase/debug/ui-react';
-import {createStore} from 'tinybase/debug';
-import {octokit} from './octokit';
-import {useEffect} from 'react';
+import {
+  type Store,
+  type Values,
+  createCustomPersister,
+  createStore,
+} from 'tinybase/debug';
+import {hasToken, octokit} from './octokit';
+import {
+  useCreatePersister,
+  useCreateStore,
+  useProvideStore,
+} from 'tinybase/debug/ui-react';
+import {REFRESH_INTERVAL} from './common';
+import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
 
 export const USER_STORE = 'user';
 
@@ -11,27 +21,50 @@ export const AVATAR_URL_VALUE = 'avatarUrl';
 
 export const UserStore = () => {
   const userStore = useCreateStore(createStore);
+  useCreatePersister(
+    userStore,
+    (userStore) => createLocalPersister(userStore, USER_STORE),
+    [],
+    async (persister) => {
+      await persister.startAutoLoad();
+      await persister.startAutoSave();
+    },
+  );
 
-  useEffect(() => {
-    (async () => {
-      userStore.setValue(
-        HAS_TOKEN_VALUE,
-        ((await octokit.auth()) as any).token != null,
-      );
-      try {
-        const response = await octokit.rest.users.getAuthenticated();
-        const {name, login, avatar_url} = response.data;
-        userStore.setPartialValues({
-          [NAME_VALUE]: name ?? login,
-          [AVATAR_URL_VALUE]: avatar_url,
-        });
-      } catch {
-        userStore.delValues();
-        localStorage.removeItem('token');
-      }
-    })();
-  }, [userStore]);
+  useCreatePersister(
+    userStore,
+    createGithubAuthenticatedUserLoadingPersister,
+    [],
+    async (persister) => {
+      await persister?.load();
+    },
+    [],
+  );
 
   useProvideStore(USER_STORE, userStore);
   return null;
 };
+
+const createGithubAuthenticatedUserLoadingPersister = (store: Store) =>
+  createCustomPersister(
+    store,
+    async () => {
+      if (hasToken()) {
+        const response = await octokit.rest.users.getAuthenticated();
+        if (response.status == 200) {
+          const {name, login, avatar_url} = response.data;
+          return [
+            {},
+            {
+              [NAME_VALUE]: name ?? login,
+              [AVATAR_URL_VALUE]: avatar_url,
+            } as Values,
+          ];
+        }
+      }
+      return [{}, {}];
+    },
+    async () => {},
+    (listener) => setInterval(listener, REFRESH_INTERVAL),
+    (intervalId) => clearInterval(intervalId),
+  );
