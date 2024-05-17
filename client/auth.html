@@ -17,6 +17,7 @@
         client: location.origin + location.pathname,
         step: 0,
         state,
+        scope: 'read:org',
       }).toString();
   } else {
     if (params.get('state') === sessionStorage.getItem('state')) {
