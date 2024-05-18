@@ -1,3 +1,4 @@
+import {DarkMode} from './DarkMode';
 import {Header} from './header/Header';
 import {Main} from './Main';
 import {Provider} from 'tinybase/debug/ui-react';
@@ -9,14 +10,16 @@ import {UserStore} from '../stores/UserStore';
 
 export const App = () => {
   return (
-    <Provider>
-      <UserStore />
-      <ReposStore />
-      <UiStore />
+    <DarkMode>
+      <Provider>
+        <UserStore />
+        <ReposStore />
+        <UiStore />
 
-      <Header />
-      <Main />
-      <StoreInspector />
-    </Provider>
+        <Header />
+        <Main />
+        <StoreInspector />
+      </Provider>
+    </DarkMode>
   );
 };
