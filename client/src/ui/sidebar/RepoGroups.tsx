@@ -13,10 +13,10 @@ import {
 } from '../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import React from 'react';
-import {RepoList} from './RepoList';
+import {RepoGroup} from './RepoGroup';
 import {createIndexes} from 'tinybase/debug';
 
-export const REPO_ORG_INDEX = 'repoOrg';
+export const REPO_GROUP_INDEX = 'repoOrg';
 
 export const OrgList = () => {
   const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
@@ -24,7 +24,7 @@ export const OrgList = () => {
   const reposStore = useStore(REPOS_STORE);
   const reposIndexes = useCreateIndexes(reposStore, (reposStore) =>
     createIndexes(reposStore).setIndexDefinition(
-      REPO_ORG_INDEX,
+      REPO_GROUP_INDEX,
       REPOS_TABLE,
       REPOS_GROUP_CELL,
       REPOS_FORK_CELL,
@@ -33,14 +33,9 @@ export const OrgList = () => {
 
   return (
     <Provider store={reposStore} indexes={reposIndexes}>
-      <ul id="orgList">
-        {useSliceIds(REPO_ORG_INDEX, reposIndexes).map((owner) => (
-          <li key={owner}>
-            <details>
-              <summary>{owner}</summary>
-              <RepoList owner={owner} currentRepoId={currentRepoId} />
-            </details>
-          </li>
+      <ul id="repoGroups">
+        {useSliceIds(REPO_GROUP_INDEX, reposIndexes).map((group) => (
+          <RepoGroup group={group} currentRepoId={currentRepoId} key={group} />
         ))}
       </ul>
     </Provider>

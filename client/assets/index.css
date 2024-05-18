@@ -223,7 +223,7 @@ table {
   padding: 1rem;
   background: var(--background2);
 
-  #orgList {
+  #repoGroups {
     flex: 1;
     overflow: auto;
     padding: 0;
@@ -241,7 +241,7 @@ table {
           background-color: var(--background3);
         }
       }
-      & .repoList {
+      & ul {
         padding-left: 0.9rem;
         & li {
           margin-bottom: 0.25rem;

@@ -9,7 +9,7 @@ import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
 import React from 'react';
 
-export const RepoLink = ({
+export const Repo = ({
   repoId,
   currentRepoId,
 }: {

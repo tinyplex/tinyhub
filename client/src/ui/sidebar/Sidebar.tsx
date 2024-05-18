@@ -1,4 +1,4 @@
-import {OrgList} from './OrgList';
+import {OrgList} from './RepoGroups';
 import React from 'react';
 
 export const Sidebar = () => {
