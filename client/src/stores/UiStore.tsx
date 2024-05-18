@@ -5,18 +5,22 @@ import {
   useProvideStore,
   useValueListener,
 } from 'tinybase/debug/ui-react';
-import {createSessionPersister} from 'tinybase/debug/persisters/persister-browser';
+import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
 import {createStore} from 'tinybase/debug';
 
 export const UI_STORE = 'ui';
 
 export const REPO_ID = 'repoId';
+export const DARK_MODE = 'darkMode';
+export const AUTO = 'auto';
+export const DARK = 'dark';
+export const LIGHT = 'light';
 
 export const UiStore = () => {
   const uiStore = useCreateStore(createStore);
   useCreatePersister(
     uiStore,
-    (uiStore) => createSessionPersister(uiStore, UI_STORE),
+    (uiStore) => createLocalPersister(uiStore, UI_STORE),
     [],
     async (persister) => {
       await persister.startAutoLoad();

@@ -1,12 +1,12 @@
 import {Auth} from './Auth';
-import {DarkModeToggle} from './DarkModeToggle';
+import {DarkMode} from './DarkMode';
 import {Logo} from './Logo';
 import React from 'react';
 
 export const Header = () => (
   <header id="header">
     <Logo />
-    <DarkModeToggle />
+    <DarkMode />
     <Auth />
   </header>
 );
