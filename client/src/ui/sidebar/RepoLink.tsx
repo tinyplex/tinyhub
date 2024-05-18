@@ -1,4 +1,5 @@
 import {
+  REPOS_FORK_CELL,
   REPOS_OWNER_CELL,
   REPOS_REPO_CELL,
   REPOS_STORE,
@@ -15,10 +16,15 @@ export const RepoLink = ({
   readonly repoId: string;
   readonly currentRepoId: string;
 }) => {
-  const classes: string[] = [];
+  const classes: string[] = ['icon'];
   if (repoId == currentRepoId) {
     classes.push('current');
   }
+  classes.push(
+    useCell(REPOS_TABLE, repoId, REPOS_FORK_CELL, REPOS_STORE)
+      ? 'fork'
+      : 'repo',
+  );
 
   const handleClick = useSetValueCallback(
     REPO_ID_VALUE,

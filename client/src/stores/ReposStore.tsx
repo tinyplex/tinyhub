@@ -13,6 +13,13 @@ import {
 import {REFRESH_INTERVAL} from './common';
 import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
 
+type RepoData = {
+  full_name: string;
+  owner: {login: string};
+  name: string;
+  fork: boolean;
+};
+
 export const REPOS_STORE = 'repos';
 
 export const ORGS_TABLE = 'orgs';
@@ -21,6 +28,7 @@ export const ORGS_NAME_CELL = 'name';
 export const REPOS_TABLE = 'repos';
 export const REPOS_OWNER_CELL = 'owner';
 export const REPOS_REPO_CELL = 'repo';
+export const REPOS_FORK_CELL = 'fork';
 
 export const ReposStore = () => {
   const reposStore = useCreateStore(createStore);
@@ -59,15 +67,18 @@ const createGithubReposLoadingPersister = (store: Store) =>
         const orgsTable: Table = {};
         const reposTable: Table = {};
 
-        (
-          await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)
-        ).data.forEach(({full_name, owner, name}) => {
+        const updateTables = ({full_name, owner, name, fork}: RepoData) => {
           orgsTable[owner.login] = {[ORGS_NAME_CELL]: owner.login};
           reposTable[full_name] = {
             [REPOS_OWNER_CELL]: owner.login,
             [REPOS_REPO_CELL]: name,
+            [REPOS_FORK_CELL]: fork,
           };
-        });
+        };
+
+        (
+          await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)
+        ).data.forEach(updateTables);
 
         await Promise.all(
           (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.map(
@@ -77,13 +88,7 @@ const createGithubReposLoadingPersister = (store: Store) =>
                 org: login,
                 ...PER_PAGE,
               });
-              repos.data.forEach(
-                ({full_name, owner, name}) =>
-                  (reposTable[full_name] = {
-                    [REPOS_OWNER_CELL]: owner.login,
-                    [REPOS_REPO_CELL]: name,
-                  }),
-              );
+              repos.data.forEach(updateTables);
             },
           ),
         );
