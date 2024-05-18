@@ -1,44 +1,44 @@
 import {
-  ORGS_TABLE,
+  Provider,
+  useCreateIndexes,
+  useSliceIds,
+  useStore,
+  useValue,
+} from 'tinybase/debug/ui-react';
+import {
+  REPOS_FORK_CELL,
   REPOS_OWNER_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
-import {
-  Provider,
-  useCreateRelationships,
-  useRowIds,
-  useStore,
-  useValue,
-} from 'tinybase/debug/ui-react';
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import React from 'react';
 import {RepoList} from './RepoList';
-import {createRelationships} from 'tinybase/debug';
+import {createIndexes} from 'tinybase/debug';
 
-export const REPO_ORG_RELATIONSHIP = 'repoOrg';
+export const REPO_ORG_INDEX = 'repoOrg';
 
 export const OrgList = () => {
   const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
 
   const reposStore = useStore(REPOS_STORE);
-  const reposRelationships = useCreateRelationships(reposStore, (reposStore) =>
-    createRelationships(reposStore).setRelationshipDefinition(
-      REPO_ORG_RELATIONSHIP,
+  const reposIndexes = useCreateIndexes(reposStore, (reposStore) =>
+    createIndexes(reposStore).setIndexDefinition(
+      REPO_ORG_INDEX,
       REPOS_TABLE,
-      ORGS_TABLE,
       REPOS_OWNER_CELL,
+      REPOS_FORK_CELL,
     ),
   );
 
   return (
-    <Provider store={reposStore} relationships={reposRelationships}>
+    <Provider store={reposStore} indexes={reposIndexes}>
       <ul id="orgList">
-        {useRowIds(ORGS_TABLE, REPOS_STORE).map((orgId) => (
-          <li key={orgId}>
+        {useSliceIds(REPO_ORG_INDEX, reposIndexes).map((owner) => (
+          <li key={owner}>
             <details>
-              <summary>{orgId}</summary>
-              <RepoList orgId={orgId} currentRepoId={currentRepoId} />
+              <summary>{owner}</summary>
+              <RepoList owner={owner} currentRepoId={currentRepoId} />
             </details>
           </li>
         ))}
