@@ -22,12 +22,13 @@ type RepoData = {
 
 export const REPOS_STORE = 'repos';
 
-export const ORGS_TABLE = 'orgs';
-export const ORGS_NAME_CELL = 'name';
+export const GROUPS_TABLE = 'groups';
+export const GROUPS_NAME_CELL = 'name';
 
 export const REPOS_TABLE = 'repos';
+export const REPOS_GROUP_CELL = 'group';
 export const REPOS_OWNER_CELL = 'owner';
-export const REPOS_REPO_CELL = 'repo';
+export const REPOS_NAME_CELL = 'name';
 export const REPOS_FORK_CELL = 'fork';
 
 export const ReposStore = () => {
@@ -64,36 +65,46 @@ const createGithubReposLoadingPersister = (store: Store) =>
     store,
     async () => {
       if (hasToken()) {
-        const orgsTable: Table = {};
+        const groupsTable: Table = {};
         const reposTable: Table = {};
 
-        const updateTables = ({full_name, owner, name, fork}: RepoData) => {
-          orgsTable[owner.login] = {[ORGS_NAME_CELL]: owner.login};
+        const updateTables = (
+          {full_name, owner, name, fork}: RepoData,
+          group: string = owner.login,
+        ) => {
+          groupsTable[group] = {[GROUPS_NAME_CELL]: group};
           reposTable[full_name] = {
+            [REPOS_GROUP_CELL]: group,
             [REPOS_OWNER_CELL]: owner.login,
-            [REPOS_REPO_CELL]: name,
+            [REPOS_NAME_CELL]: name,
             [REPOS_FORK_CELL]: fork,
           };
         };
 
         (
+          await octokit.rest.activity.listReposStarredByAuthenticatedUser(
+            PER_PAGE,
+          )
+        ).data.forEach((repo) => updateTables(repo, 'Starred'));
+
+        (
           await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)
-        ).data.forEach(updateTables);
+        ).data.forEach((repo) => updateTables(repo));
 
         await Promise.all(
           (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.map(
             async ({login}) => {
-              orgsTable[login] = {[ORGS_NAME_CELL]: login};
+              groupsTable[login] = {[GROUPS_NAME_CELL]: login};
               const repos = await octokit.rest.repos.listForOrg({
                 org: login,
                 ...PER_PAGE,
               });
-              repos.data.forEach(updateTables);
+              repos.data.forEach((repo) => updateTables(repo));
             },
           ),
         );
 
-        return [{[REPOS_TABLE]: reposTable, [ORGS_TABLE]: orgsTable}, {}];
+        return [{[REPOS_TABLE]: reposTable, [GROUPS_TABLE]: groupsTable}, {}];
       }
       return [{}, {}];
     },

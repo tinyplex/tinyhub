@@ -7,7 +7,7 @@ import {
 } from 'tinybase/debug/ui-react';
 import {
   REPOS_FORK_CELL,
-  REPOS_OWNER_CELL,
+  REPOS_GROUP_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
@@ -26,7 +26,7 @@ export const OrgList = () => {
     createIndexes(reposStore).setIndexDefinition(
       REPO_ORG_INDEX,
       REPOS_TABLE,
-      REPOS_OWNER_CELL,
+      REPOS_GROUP_CELL,
       REPOS_FORK_CELL,
     ),
   );

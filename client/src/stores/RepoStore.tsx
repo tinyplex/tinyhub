@@ -1,6 +1,6 @@
 import {
+  REPOS_NAME_CELL,
   REPOS_OWNER_CELL,
-  REPOS_REPO_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from './ReposStore';
@@ -41,7 +41,7 @@ export const RepoStore = ({repoId}: {readonly repoId: string}) => {
   const repo = useCell(
     REPOS_TABLE,
     repoId,
-    REPOS_REPO_CELL,
+    REPOS_NAME_CELL,
     REPOS_STORE,
   ) as string;
 

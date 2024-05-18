@@ -1,7 +1,7 @@
 import {
   REPOS_FORK_CELL,
+  REPOS_NAME_CELL,
   REPOS_OWNER_CELL,
-  REPOS_REPO_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
@@ -39,11 +39,11 @@ export const RepoLink = ({
       title={
         useCell(REPOS_TABLE, repoId, REPOS_OWNER_CELL, REPOS_STORE) +
         '/' +
-        useCell(REPOS_TABLE, repoId, REPOS_REPO_CELL, REPOS_STORE)
+        useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)
       }
       className={classes.join(' ')}
     >
-      {useCell(REPOS_TABLE, repoId, REPOS_REPO_CELL, REPOS_STORE)}
+      {useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)}
     </li>
   );
 };
