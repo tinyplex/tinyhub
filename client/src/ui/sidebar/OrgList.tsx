@@ -11,7 +11,7 @@ import {
   useStore,
   useValue,
 } from 'tinybase/debug/ui-react';
-import {REPO_ID, UI_STORE} from '../../stores/UiStore';
+import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import React from 'react';
 import {RepoList} from './RepoList';
 import {createRelationships} from 'tinybase/debug';
@@ -19,7 +19,7 @@ import {createRelationships} from 'tinybase/debug';
 export const REPO_ORG_RELATIONSHIP = 'repoOrg';
 
 export const OrgList = () => {
-  const currentRepoId = (useValue(REPO_ID, UI_STORE) as string) ?? '';
+  const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
 
   const reposStore = useStore(REPOS_STORE);
   const reposRelationships = useCreateRelationships(reposStore, (reposStore) =>

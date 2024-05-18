@@ -10,8 +10,8 @@ import {createStore} from 'tinybase/debug';
 
 export const UI_STORE = 'ui';
 
-export const REPO_ID = 'repoId';
-export const DARK_MODE = 'darkMode';
+export const REPO_ID_VALUE = 'repoId';
+export const DARK_MODE_VALUE = 'darkMode';
 export const AUTO = 'auto';
 export const DARK = 'dark';
 export const LIGHT = 'light';
@@ -29,7 +29,11 @@ export const UiStore = () => {
   );
 
   const handleHash = useCallback(
-    () => uiStore.setValue(REPO_ID, decodeURIComponent(location.hash.slice(1))),
+    () =>
+      uiStore.setValue(
+        REPO_ID_VALUE,
+        decodeURIComponent(location.hash.slice(1)),
+      ),
     [uiStore],
   );
   useEffect(() => {
@@ -38,7 +42,7 @@ export const UiStore = () => {
     return () => removeEventListener('hashchange', handleHash);
   }, [handleHash]);
   useValueListener(
-    REPO_ID,
+    REPO_ID_VALUE,
     (_, _valueId, repoId) =>
       history.replaceState(null, '', '#' + encodeURIComponent(repoId ?? '')),
     [],

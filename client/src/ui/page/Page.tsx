@@ -1,11 +1,11 @@
-import {REPO_ID, UI_STORE} from '../../stores/UiStore';
+import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import {REPO_STORE, REPO_VALUE, RepoStore} from '../../stores/RepoStore';
 import React from 'react';
 import {ValuesInHtmlTable} from 'tinybase/debug/ui-react-dom';
 import {useValue} from 'tinybase/debug/ui-react';
 
 export const Page = () => {
-  const currentRepoId = (useValue(REPO_ID, UI_STORE) as string) ?? '';
+  const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
 
   const name = useValue(REPO_VALUE, REPO_STORE);
 

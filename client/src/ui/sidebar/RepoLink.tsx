@@ -4,7 +4,7 @@ import {
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
-import {REPO_ID, UI_STORE} from '../../stores/UiStore';
+import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
 import React from 'react';
 
@@ -21,7 +21,7 @@ export const RepoLink = ({
   }
 
   const handleClick = useSetValueCallback(
-    REPO_ID,
+    REPO_ID_VALUE,
     () => repoId,
     [repoId],
     UI_STORE,
