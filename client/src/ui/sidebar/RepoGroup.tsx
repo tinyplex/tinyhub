@@ -1,6 +1,7 @@
 import {REPO_GROUP_INDEX} from './RepoGroups';
 import React from 'react';
 import {Repo} from './Repo';
+import {STARRED_GROUP} from '../../stores/ReposStore';
 import {useSliceRowIds} from 'tinybase/debug/ui-react';
 
 export const RepoGroup = ({
@@ -13,7 +14,7 @@ export const RepoGroup = ({
   const repoIds = useSliceRowIds(REPO_GROUP_INDEX, group);
   return (
     <li>
-      <details>
+      <details open={group == STARRED_GROUP}>
         <summary>{group}</summary>
         <ul>
           {repoIds.map((repoId) => (

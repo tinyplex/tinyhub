@@ -18,6 +18,7 @@ type RepoData = {
   owner: {login: string};
   name: string;
   fork: boolean;
+  stargazers_count?: number;
 };
 
 export const REPOS_STORE = 'repos';
@@ -30,6 +31,9 @@ export const REPOS_GROUP_CELL = 'group';
 export const REPOS_OWNER_CELL = 'owner';
 export const REPOS_NAME_CELL = 'name';
 export const REPOS_FORK_CELL = 'fork';
+export const REPOS_STARGAZERS_COUNT_CELL = 'stargazersCount';
+
+export const STARRED_GROUP = 'Starred';
 
 export const ReposStore = () => {
   const reposStore = useCreateStore(createStore);
@@ -65,19 +69,18 @@ const createGithubReposLoadingPersister = (store: Store) =>
     store,
     async () => {
       if (hasToken()) {
-        const groupsTable: Table = {};
         const reposTable: Table = {};
 
         const updateTables = (
-          {full_name, owner, name, fork}: RepoData,
+          {full_name, owner, name, fork, stargazers_count}: RepoData,
           group: string = owner.login,
         ) => {
-          groupsTable[group] = {[GROUPS_NAME_CELL]: group};
           reposTable[full_name] = {
             [REPOS_GROUP_CELL]: group,
             [REPOS_OWNER_CELL]: owner.login,
             [REPOS_NAME_CELL]: name,
             [REPOS_FORK_CELL]: fork,
+            [REPOS_STARGAZERS_COUNT_CELL]: stargazers_count ?? 0,
           };
         };
 
@@ -85,7 +88,7 @@ const createGithubReposLoadingPersister = (store: Store) =>
           await octokit.rest.activity.listReposStarredByAuthenticatedUser(
             PER_PAGE,
           )
-        ).data.forEach((repo) => updateTables(repo, 'Starred'));
+        ).data.forEach((repo) => updateTables(repo, STARRED_GROUP));
 
         (
           await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)
@@ -94,7 +97,6 @@ const createGithubReposLoadingPersister = (store: Store) =>
         await Promise.all(
           (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.map(
             async ({login}) => {
-              groupsTable[login] = {[GROUPS_NAME_CELL]: login};
               const repos = await octokit.rest.repos.listForOrg({
                 org: login,
                 ...PER_PAGE,
@@ -104,7 +106,7 @@ const createGithubReposLoadingPersister = (store: Store) =>
           ),
         );
 
-        return [{[REPOS_TABLE]: reposTable, [GROUPS_TABLE]: groupsTable}, {}];
+        return [{[REPOS_TABLE]: reposTable}, {}];
       }
       return [{}, {}];
     },
