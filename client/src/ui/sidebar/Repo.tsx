@@ -2,12 +2,14 @@ import {
   REPOS_FORK_CELL,
   REPOS_NAME_CELL,
   REPOS_OWNER_CELL,
+  REPOS_STARGAZERS_COUNT_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
 import React from 'react';
+import {formatNumber} from '../common/common';
 
 export const Repo = ({
   repoId,
@@ -43,7 +45,17 @@ export const Repo = ({
       }
       className={classes.join(' ')}
     >
-      {useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)}
+      {useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)}{' '}
+      <span>
+        {formatNumber(
+          useCell(
+            REPOS_TABLE,
+            repoId,
+            REPOS_STARGAZERS_COUNT_CELL,
+            REPOS_STORE,
+          ) as number,
+        )}
+      </span>
     </li>
   );
 };

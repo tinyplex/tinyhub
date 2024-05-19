@@ -15,7 +15,8 @@ html {
 }
 
 input,
-button {
+button,
+select {
   background: var(--background);
   box-shadow: 0 0rem 0.15rem 0 var(--shadow);
   border: 1px solid var(--border);
@@ -123,6 +124,7 @@ table {
   --border2: #ccc;
   --paragraph: #666;
   --text: #444;
+  --text2: #666;
   &.dark {
     --shadow: #000;
     --overlay: #333a;
@@ -134,6 +136,7 @@ table {
     --border2: #777;
     --paragraph: #ccc;
     --text: #ddd;
+    --text2: #aaa;
   }
 }
 
@@ -222,12 +225,25 @@ table {
   flex-direction: column;
   padding: 1rem;
   background: var(--background2);
+  width: 16rem;
+
+  #repoSort {
+    font-size: 0.8rem;
+    color: var(--text2);
+    label {
+      width: 5rem;
+    }
+    select {
+      padding: 0;
+      background: none;
+      border: transparent;
+    }
+  }
 
   #repoGroups {
     flex: 1;
     overflow: auto;
     padding: 0;
-    width: 12rem;
     & details {
       margin-bottom: 0.25rem;
       & summary {
@@ -263,6 +279,25 @@ table {
           }
           &.fork::before {
             mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M360-120v-567l-64 63-56-56 160-160 160 160-56 57-64-64v261q35-31 79-44.5t88-13.5q11 0 21 1t19 3l-63-64 56-56 160 160-160 160-56-56 63-64q-11-2-22-3.5t-22-1.5q-54 0-99.5 30.5T440-280v160h-80Z"/></svg>');
+          }
+          & span {
+            color: var(--text2);
+            background-color: var(--background4);
+            font-size: 0.7rem;
+            border-radius: 0.2rem;
+            padding: 0.1rem 0.2rem;
+            top: -0.1rem;
+            position: relative;
+            &::before {
+              margin: 0 0.1rem 0 0;
+              height: 0.8rem;
+              width: 0.8rem;
+              display: inline-block;
+              vertical-align: text-top;
+              background: var(--text2);
+              content: '';
+              mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/></svg>');
+            }
           }
         }
       }

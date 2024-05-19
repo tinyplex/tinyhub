@@ -15,6 +15,7 @@ export const DARK_MODE_VALUE = 'darkMode';
 export const AUTO = 'auto';
 export const DARK = 'dark';
 export const LIGHT = 'light';
+export const REPO_SORT_CELL_VALUE = 'repoSortCell';
 
 export const UiStore = () => {
   const uiStore = useCreateStore(createStore);
