@@ -1,3 +1,4 @@
+import {PER_PAGE, REFRESH_INTERVAL} from './common';
 import {
   type Store,
   type Table,
@@ -6,11 +7,11 @@ import {
 } from 'tinybase/debug';
 import {hasToken, octokit} from './octokit';
 import {
+  useCell,
   useCreatePersister,
   useCreateStore,
   useProvideStore,
 } from 'tinybase/debug/ui-react';
-import {REFRESH_INTERVAL} from './common';
 import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
 
 type RepoData = {
@@ -27,7 +28,6 @@ type RepoData = {
   language?: string | null;
   license?: {name?: string} | null;
   open_issues_count?: number;
-  pushed_at?: string | null;
   size?: number;
   stargazers_count?: number;
   topics?: string[];
@@ -51,7 +51,6 @@ export const REPOS_HOMEPAGE_CELL = 'homepage';
 export const REPOS_LANGUAGE_CELL = 'language';
 export const REPOS_LICENSE_CELL = 'license';
 export const REPOS_OPEN_ISSUES_COUNT_CELL = 'openIssuesCount';
-export const REPOS_PUSHED_AT_CELL = 'pushedAt';
 export const REPOS_SIZE_CELL = 'size';
 export const REPOS_STARGAZERS_COUNT_CELL = 'stargazersCount';
 export const REPOS_TOPICS_CELL = 'topics';
@@ -87,7 +86,9 @@ export const ReposStore = () => {
   useProvideStore(REPOS_STORE, reposStore);
   return null;
 };
-const PER_PAGE = {per_page: 100};
+
+export const useRepoCell = (repoId: string, cellId: string) =>
+  useCell(REPOS_TABLE, repoId, cellId, REPOS_STORE);
 
 const createGithubReposLoadingPersister = (store: Store) =>
   createCustomPersister(
@@ -111,7 +112,6 @@ const createGithubReposLoadingPersister = (store: Store) =>
             language,
             license,
             open_issues_count,
-            pushed_at,
             size,
             stargazers_count,
             topics,
@@ -134,7 +134,6 @@ const createGithubReposLoadingPersister = (store: Store) =>
             [REPOS_LANGUAGE_CELL]: language ?? '',
             [REPOS_LICENSE_CELL]: license?.name ?? '',
             [REPOS_OPEN_ISSUES_COUNT_CELL]: open_issues_count ?? 0,
-            [REPOS_PUSHED_AT_CELL]: pushed_at ?? '',
             [REPOS_SIZE_CELL]: size ?? 0,
             [REPOS_STARGAZERS_COUNT_CELL]: stargazers_count ?? 0,
             [REPOS_TOPICS_CELL]: topics?.join(', ') ?? '',
