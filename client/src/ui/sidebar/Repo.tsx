@@ -45,15 +45,15 @@ export const Repo = ({
       }
       className={classes.join(' ')}
     >
-      {useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)}{' '}
-      <span>
+      {useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)}
+      <span className="meta star">
         {formatNumber(
           useCell(
             REPOS_TABLE,
             repoId,
             REPOS_STARGAZERS_COUNT_CELL,
             REPOS_STORE,
-          ) as number,
+          ),
         )}
       </span>
     </li>

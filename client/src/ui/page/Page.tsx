@@ -1,29 +1,14 @@
+import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
-import {REPO_STORE, REPO_VALUE, RepoStore} from '../../stores/RepoStore';
+import {useHasRow, useValue} from 'tinybase/debug/ui-react';
 import React from 'react';
-import {ValuesInHtmlTable} from 'tinybase/debug/ui-react-dom';
-import {useValue} from 'tinybase/debug/ui-react';
+import {Repo} from './Repo';
 
 export const Page = () => {
   const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
-
-  const name = useValue(REPO_VALUE, REPO_STORE);
+  const hasRepo = useHasRow(REPOS_TABLE, currentRepoId, REPOS_STORE);
 
   return (
-    <div id="page">
-      {currentRepoId ? (
-        <>
-          <RepoStore repoId={currentRepoId} />
-          <header>
-            <h1>{name}</h1>
-          </header>
-          <div id="body">
-            <ValuesInHtmlTable store={REPO_STORE} headerRow={false} />
-          </div>
-        </>
-      ) : (
-        <p>Please add a repo using the button on the left.</p>
-      )}
-    </div>
+    <div id="page">{hasRepo ? <Repo repoId={currentRepoId} /> : null}</div>
   );
 };

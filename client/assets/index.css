@@ -45,10 +45,12 @@ h1 {
 }
 
 p {
-  font-size: 0.8rem;
-  margin: 1rem;
-  text-align: center;
+  margin: 1rem 0;
   color: var(--paragraph);
+}
+
+a {
+  color: inherit;
 }
 
 hr {
@@ -60,24 +62,19 @@ hr {
 
 table {
   border-collapse: collapse;
-  box-shadow: 0 0rem 0.15rem 0 var(--shadow);
-  border: 1px solid var(--border);
   border-radius: 0.25rem;
   font-size: inherit;
   line-height: inherit;
   table-layout: fixed;
   th,
   td {
-    overflow: hidden;
-    padding: 0.25rem 0.5rem;
     white-space: nowrap;
-    border-width: 1px 0;
-    border-style: solid;
-    border-color: var(--border);
     text-align: left;
+    padding: 0 0.25rem;
   }
-  thead th {
-    border-bottom-color: var(--border2);
+  th {
+    font-weight: 700;
+    text-align: right;
   }
 }
 
@@ -112,6 +109,7 @@ table {
   flex-direction: column;
   flex: 1;
   color: var(--text);
+  height: 100vh;
   background: var(--background);
 
   --shadow: #0000001a;
@@ -132,11 +130,11 @@ table {
     --background2: #222;
     --background3: #333;
     --background4: #444;
-    --border: #555;
+    --border: #333;
     --border2: #777;
     --paragraph: #ccc;
-    --text: #ddd;
-    --text2: #aaa;
+    --text: #ccc;
+    --text2: #999;
   }
 }
 
@@ -274,31 +272,6 @@ table {
             background-color: var(--background4);
             cursor: unset;
           }
-          &.repo::before {
-            mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M300-80q-58 0-99-41t-41-99v-520q0-58 41-99t99-41h500v600q-25 0-42.5 17.5T740-220q0 25 17.5 42.5T800-160v80H300Zm-60-267q14-7 29-10t31-3h20v-440h-20q-25 0-42.5 17.5T240-740v393Zm160-13h320v-440H400v440Zm-160 13v-453 453Zm60 187h373q-6-14-9.5-28.5T660-220q0-16 3-31t10-29H300q-26 0-43 17.5T240-220q0 26 17 43t43 17Z" /></svg>');
-          }
-          &.fork::before {
-            mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M360-120v-567l-64 63-56-56 160-160 160 160-56 57-64-64v261q35-31 79-44.5t88-13.5q11 0 21 1t19 3l-63-64 56-56 160 160-160 160-56-56 63-64q-11-2-22-3.5t-22-1.5q-54 0-99.5 30.5T440-280v160h-80Z"/></svg>');
-          }
-          & span {
-            color: var(--text2);
-            background-color: var(--background4);
-            font-size: 0.7rem;
-            border-radius: 0.2rem;
-            padding: 0.1rem 0.2rem;
-            top: -0.1rem;
-            position: relative;
-            &::before {
-              margin: 0 0.1rem 0 0;
-              height: 0.8rem;
-              width: 0.8rem;
-              display: inline-block;
-              vertical-align: text-top;
-              background: var(--text2);
-              content: '';
-              mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/></svg>');
-            }
-          }
         }
       }
     }
@@ -311,9 +284,23 @@ table {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 2rem;
+  padding: 1rem 2rem;
+  line-height: 1.6em;
   & header {
     flex: 0;
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    & main {
+      flex: 1;
+    }
+    & aside {
+      flex: 0 16rem;
+      border-left: 1px solid var(--border);
+      padding-left: 2rem;
+      margin-left: 2rem;
+      color: var(--text2);
+    }
   }
   & #body {
     flex: 1;
@@ -363,6 +350,28 @@ table {
   }
 }
 
+.meta {
+  color: var(--text2);
+  background-color: var(--background4);
+  font-size: 0.7em;
+  border-radius: 0.25em;
+  padding: 0.1em 0.5em;
+  top: -0.1em;
+  margin-left: 0.5em;
+  position: relative;
+  display: inline-block;
+  font-weight: normal;
+  &::before {
+    margin: 0.1em 0.2em 0 0;
+    height: 1em;
+    width: 1em;
+    display: inline-block;
+    vertical-align: text-top;
+    background: var(--text2);
+    content: '';
+  }
+}
+
 .icon::before {
   margin: 0 0.5rem 0 0;
   height: 1rem;
@@ -371,4 +380,21 @@ table {
   vertical-align: middle;
   background: var(--text);
   content: '';
+}
+
+.star::before {
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/></svg>');
+}
+.repo::before {
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M300-80q-58 0-99-41t-41-99v-520q0-58 41-99t99-41h500v600q-25 0-42.5 17.5T740-220q0 25 17.5 42.5T800-160v80H300Zm-60-267q14-7 29-10t31-3h20v-440h-20q-25 0-42.5 17.5T240-740v393Zm160-13h320v-440H400v440Zm-160 13v-453 453Zm60 187h373q-6-14-9.5-28.5T660-220q0-16 3-31t10-29H300q-26 0-43 17.5T240-220q0 26 17 43t43 17Z" /></svg>');
+}
+.fork::before {
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M360-120v-567l-64 63-56-56 160-160 160 160-56 57-64-64v261q35-31 79-44.5t88-13.5q11 0 21 1t19 3l-63-64 56-56 160 160-160 160-56-56 63-64q-11-2-22-3.5t-22-1.5q-54 0-99.5 30.5T440-280v160h-80Z"/></svg>');
+}
+.visibility::before {
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>');
+}
+.archived::before,
+.disabled::before {
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M200-80q-33 0-56.5-23.5T120-160v-451q-18-11-29-28.5T80-680v-120q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v120q0 23-11 40.5T840-611v451q0 33-23.5 56.5T760-80H200Zm0-520v440h560v-440H200Zm-40-80h640v-120H160v120Zm200 280h240v-80H360v80Zm120 20Z"/></svg>');
 }
