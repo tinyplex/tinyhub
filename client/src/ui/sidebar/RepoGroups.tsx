@@ -8,7 +8,7 @@ import {
 import {
   REPOS_FORK_CELL,
   REPOS_GROUP_CELL,
-  REPOS_STARGAZERS_COUNT_CELL,
+  REPOS_NAME_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
@@ -28,6 +28,8 @@ export const OrgList = () => {
   const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
   const repoSortCell =
     (useValue(REPO_SORT_CELL_VALUE, UI_STORE) as string) ?? REPOS_FORK_CELL;
+  const repoSortDirection =
+    repoSortCell == REPOS_NAME_CELL || repoSortCell == REPOS_FORK_CELL ? 1 : -1;
 
   const reposStore = useStore(REPOS_STORE);
   const reposIndexes = useCreateIndexes(
@@ -40,8 +42,7 @@ export const OrgList = () => {
         repoSortCell,
         undefined,
         (repoCell1, repoCell2) =>
-          (repoCell1 > repoCell2 ? 1 : -1) *
-          (repoSortCell == REPOS_STARGAZERS_COUNT_CELL ? -1 : 1),
+          (repoCell1 > repoCell2 ? 1 : -1) * repoSortDirection,
       ),
     [repoSortCell],
   );
