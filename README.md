@@ -2,7 +2,7 @@
 
 This is a local-first GitHub app, built in public.
 
-https://github.com/tinyplex/tinyhub/assets/90942/a6706556-7359-4f6b-af42-b91c563da4d1
+https://github.com/tinyplex/tinyhub/assets/90942/9f3b714e-f8da-430d-a73b-1c8693cc2ecb
 
 Follow the build:
 
