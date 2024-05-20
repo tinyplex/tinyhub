@@ -224,19 +224,6 @@ table {
   padding: 1rem;
   background: var(--background2);
   width: 18rem;
-  #repoSort {
-    font-size: 0.8rem;
-    color: var(--text2);
-    label {
-      width: 5rem;
-    }
-    select {
-      padding: 0;
-      background: none;
-      border: transparent;
-    }
-  }
-
   #repoGroups {
     flex: 1;
     overflow: auto;
@@ -359,6 +346,19 @@ table {
     vertical-align: text-top;
     background: var(--text2);
     content: '';
+  }
+}
+
+.sort {
+  font-size: 0.8rem;
+  color: var(--text2);
+  label {
+    width: 5rem;
+  }
+  select {
+    padding: 0;
+    background: none;
+    border: transparent;
   }
 }
 

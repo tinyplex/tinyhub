@@ -21,9 +21,10 @@ const OPTIONS = {
   [REPOS_FORK_CELL]: 'repo vs fork',
 };
 
-export const RepoSort = () => {
-  const repoSortCell =
-    (useValue(REPOS_SORT_CELL_VALUE, UI_STORE) as string) ?? REPOS_FORK_CELL;
+export const ReposSort = () => {
+  const reposSortCell =
+    (useValue(REPOS_SORT_CELL_VALUE, UI_STORE) as string) ??
+    REPOS_STARGAZERS_COUNT_CELL;
 
   const handleChange = useSetValueCallback(
     REPOS_SORT_CELL_VALUE,
@@ -33,9 +34,9 @@ export const RepoSort = () => {
   );
 
   return (
-    <div id="repoSort">
+    <div className="sort">
       <label>Repos sorted by</label>
-      <select onChange={handleChange} value={repoSortCell}>
+      <select onChange={handleChange} value={reposSortCell}>
         {Object.entries(OPTIONS).map(([key, label]) => (
           <option value={key} key={key}>
             {label}
