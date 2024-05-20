@@ -1,5 +1,5 @@
-import {ISSUES_BODY_HTML_CELL, useIssueCell} from '../../stores/IssuesStore';
-import {ISSUE_ID_VALUE, UI_STORE} from '../../stores/UiStore';
+import {ISSUES_BODY_HTML_CELL, useIssueCell} from '../../../stores/IssuesStore';
+import {ISSUE_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
 import React from 'react';
 import {useValue} from 'tinybase/debug/ui-react';
 

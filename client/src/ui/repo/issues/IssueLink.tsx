@@ -3,8 +3,8 @@ import {
   ISSUES_STORE,
   ISSUES_TABLE,
   ISSUES_TITLE_CELL,
-} from '../../stores/IssuesStore';
-import {ISSUE_ID_VALUE, UI_STORE} from '../../stores/UiStore';
+} from '../../../stores/IssuesStore';
+import {ISSUE_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
 import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
 import React from 'react';
 

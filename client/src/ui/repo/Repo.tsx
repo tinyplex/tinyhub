@@ -1,8 +1,8 @@
 import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import {useHasRow, useValue} from 'tinybase/debug/ui-react';
-import {Issue} from './Issue';
-import {Issues} from './Issues';
+import {Issue} from './issues/Issue';
+import {Issues} from './issues/Issues';
 import {IssuesStore} from '../../stores/IssuesStore';
 import React from 'react';
 import {RepoHeader} from './RepoHeader';

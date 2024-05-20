@@ -1,5 +1,5 @@
-import {ISSUES_STORE, ISSUES_TABLE} from '../../stores/IssuesStore';
-import {ISSUE_ID_VALUE, UI_STORE} from '../../stores/UiStore';
+import {ISSUES_STORE, ISSUES_TABLE} from '../../../stores/IssuesStore';
+import {ISSUE_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
 import {useHasRow, useValue} from 'tinybase/debug/ui-react';
 import {IssueBody} from './IssueBody';
 import {IssueHeader} from './IssueHeader';

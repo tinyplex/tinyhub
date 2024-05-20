@@ -1,5 +1,5 @@
 import React from 'react';
-import {Repo} from './page/Repo';
+import {Repo} from './repo/Repo';
 import {Sidebar} from './sidebar/Sidebar';
 
 export const Main = () => (

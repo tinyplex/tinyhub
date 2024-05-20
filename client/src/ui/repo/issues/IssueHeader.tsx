@@ -4,10 +4,10 @@ import {
   ISSUES_TITLE_CELL,
   ISSUES_UPDATED_AT_CELL,
   useIssueCell,
-} from '../../stores/IssuesStore';
-import {ISSUE_ID_VALUE, UI_STORE} from '../../stores/UiStore';
+} from '../../../stores/IssuesStore';
+import {ISSUE_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
 import React from 'react';
-import {formatDate} from '../common/common';
+import {formatDate} from '../../common/common';
 import {useValue} from 'tinybase/debug/ui-react';
 
 export const IssueHeader = () => {
