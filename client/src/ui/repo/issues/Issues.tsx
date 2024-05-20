@@ -37,7 +37,7 @@ export const Issues = () => {
           <IssueLink
             key={issueId}
             issueId={issueId}
-            currentIssueId={currentIssueId}
+            isCurrent={issueId == currentIssueId}
           />
         ))}
       </ul>

@@ -5,18 +5,19 @@ import {
   ISSUES_TITLE_CELL,
 } from '../../../stores/IssuesStore';
 import {ISSUE_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
+import React, {useEffect, useRef} from 'react';
 import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
-import React from 'react';
+import {SCROLL_OPTIONS} from '../../common/common';
 
 export const IssueLink = ({
   issueId,
-  currentIssueId,
+  isCurrent,
 }: {
   readonly issueId: string;
-  readonly currentIssueId: string;
+  readonly isCurrent: boolean;
 }) => {
   const classes: string[] = ['icon'];
-  if (issueId == currentIssueId) {
+  if (isCurrent) {
     classes.push('current');
   }
   classes.push(
@@ -32,8 +33,15 @@ export const IssueLink = ({
     UI_STORE,
   );
 
+  const ref = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    if (isCurrent) {
+      ref.current?.scrollIntoView(SCROLL_OPTIONS);
+    }
+  }, [isCurrent]);
+
   return (
-    <li onClick={handleClick} className={classes.join(' ')}>
+    <li ref={ref} onClick={handleClick} className={classes.join(' ')}>
       #{issueId}:{' '}
       {useCell(ISSUES_TABLE, issueId, ISSUES_TITLE_CELL, ISSUES_STORE)}
     </li>

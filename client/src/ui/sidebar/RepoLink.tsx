@@ -7,19 +7,19 @@ import {
   REPOS_TABLE,
 } from '../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
+import React, {useEffect, useRef} from 'react';
+import {SCROLL_OPTIONS, formatNumber} from '../common/common';
 import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
-import React from 'react';
-import {formatNumber} from '../common/common';
 
 export const RepoLink = ({
   repoId,
-  currentRepoId,
+  isCurrent,
 }: {
   readonly repoId: string;
-  readonly currentRepoId: string;
+  readonly isCurrent: boolean;
 }) => {
   const classes: string[] = ['icon'];
-  if (repoId == currentRepoId) {
+  if (isCurrent) {
     classes.push('current');
   }
   classes.push(
@@ -35,8 +35,16 @@ export const RepoLink = ({
     UI_STORE,
   );
 
+  const ref = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    if (isCurrent) {
+      ref.current?.scrollIntoView(SCROLL_OPTIONS);
+    }
+  }, [isCurrent]);
+
   return (
     <li
+      ref={ref}
       onClick={handleClick}
       title={
         useCell(REPOS_TABLE, repoId, REPOS_OWNER_CELL, REPOS_STORE) +

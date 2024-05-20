@@ -1,3 +1,8 @@
+export const SCROLL_OPTIONS: ScrollIntoViewOptions = {
+  behavior: 'smooth',
+  block: 'nearest',
+};
+
 export const formatNumber = (num: any) =>
   num < 1000 ? num : (num / 1000).toFixed(1) + (num < 1000 ? '' : 'k');
 
