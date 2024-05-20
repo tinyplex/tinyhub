@@ -3,10 +3,41 @@
   src: url(inter.woff2) format('woff2');
 }
 
+@font-face {
+  font-family: Inconsolata;
+  src: url(inconsolata.woff2) format('woff2');
+}
+
 * {
   margin: 0;
-  font-family: Inter;
   font-size: inherit;
+}
+
+html {
+  font-family: Inter;
+}
+
+pre,
+code {
+  font-family: Inconsolata;
+  border-radius: 0.25rem;
+}
+pre {
+  border: 1px solid var(--border);
+  overflow: scroll;
+  padding: 1rem;
+  line-height: 1rem;
+  margin: 1rem 0;
+  background-color: var(--background2);
+  code {
+    background: none;
+    border-radius: none;
+    padding: none;
+  }
+}
+code {
+  background: var(--background3);
+  padding: 0.1rem 0.25rem;
 }
 
 html {
