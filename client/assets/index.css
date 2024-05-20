@@ -217,34 +217,34 @@ table {
 #sidebar {
   border-right: 1px solid var(--border);
   box-shadow: 0 0rem 0.3rem 0 var(--shadow);
-  align-self: stretch;
   flex: 0;
-  display: flex;
-  flex-direction: column;
   padding: 1rem;
   background: var(--background2);
-  width: 18rem;
+  min-width: 20rem;
   user-select: none;
   z-index: 1;
+  overflow-y: scroll;
   #repoGroups {
-    flex: 1;
     overflow: auto;
     padding: 0;
-    & details {
-      margin-bottom: 0.25rem;
-      & summary {
-        font-weight: 700;
-        padding: 0.5rem;
+    & li {
+      list-style: none;
+      & details {
         margin-bottom: 0.25rem;
-        border-radius: 0.25rem;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        &:hover {
-          background-color: var(--background3);
+        & summary {
+          font-weight: 700;
+          padding: 0.5rem;
+          margin-bottom: 0.25rem;
+          border-radius: 0.25rem;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          &:hover {
+            background-color: var(--background3);
+          }
         }
-      }
-      & .navList {
-        padding-left: 0.9rem;
+        & .navList {
+          padding-left: 0.9rem;
+        }
       }
     }
   }
@@ -267,6 +267,7 @@ table {
     color: var(--text2);
     background: var(--background3);
     overflow: hidden;
+    font-size: 0.9rem;
   }
   & #issues {
     user-select: none;
