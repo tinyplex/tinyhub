@@ -7,7 +7,6 @@
   margin: 0;
   font-family: Inter;
   font-size: inherit;
-  user-select: none;
 }
 
 html {
@@ -147,6 +146,7 @@ table {
   padding: 1rem;
   z-index: 1;
   background: var(--background);
+  user-select: none;
   #logo {
     flex: 1;
     & img {
@@ -224,6 +224,7 @@ table {
   padding: 1rem;
   background: var(--background2);
   width: 18rem;
+  user-select: none;
   #repoGroups {
     flex: 1;
     overflow: auto;
@@ -267,6 +268,7 @@ table {
     overflow: hidden;
   }
   & #issues {
+    user-select: none;
     grid-column: 1/2;
     border-top: 1px solid var(--border);
     border-right: 1px solid var(--border);
@@ -338,6 +340,7 @@ table {
   top: -0.1em;
   position: relative;
   font-weight: normal;
+  user-select: none;
   &::before {
     margin: 0.1rem 0.2rem 0 0;
     height: 0.7rem;
@@ -352,6 +355,7 @@ table {
 .sort {
   font-size: 0.8rem;
   color: var(--text2);
+  user-select: none;
   label {
     width: 5rem;
   }
@@ -359,6 +363,7 @@ table {
     padding: 0;
     background: none;
     border: transparent;
+    outline: none;
   }
 }
 
