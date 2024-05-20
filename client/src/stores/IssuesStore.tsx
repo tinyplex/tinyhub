@@ -1,3 +1,4 @@
+import {PER_PAGE, REFRESH_INTERVAL} from './common';
 import {REPO_ID_VALUE, UI_STORE} from './UiStore';
 import {
   type Store,
@@ -6,12 +7,12 @@ import {
   createStore,
 } from 'tinybase/debug';
 import {
+  useCell,
   useCreatePersister,
   useCreateStore,
   useProvideStore,
   useValue,
 } from 'tinybase/debug/ui-react';
-import {REFRESH_INTERVAL} from './common';
 import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
 import {octokit} from './octokit';
 
@@ -19,9 +20,10 @@ export const ISSUES_STORE = 'issues';
 
 export const ISSUES_TABLE = 'issues';
 export const ISSUES_TITLE_CELL = 'title';
-export const ISSUES_ASSIGNEE_CELL = 'assignee';
+export const ISSUES_IS_PULL_REQUEST_CELL = 'pullRequest';
 export const ISSUES_BODY_HTML_CELL = 'bodyHtml';
 export const ISSUES_CREATED_AT_CELL = 'createdAt';
+export const ISSUES_UPDATED_AT_CELL = 'updatedAt';
 
 export const IssuesStore = () => {
   const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
@@ -63,6 +65,9 @@ export const IssuesStore = () => {
   return null;
 };
 
+export const useIssueCell = (issueId: string, cellId: string) =>
+  useCell(ISSUES_TABLE, issueId, cellId, ISSUES_STORE);
+
 const createGithubIssuesLoadingPersister = (store: Store, repoId: string) =>
   createCustomPersister(
     store,
@@ -74,14 +79,16 @@ const createGithubIssuesLoadingPersister = (store: Store, repoId: string) =>
           owner,
           repo,
           mediaType: {format: 'html'},
+          ...PER_PAGE,
         })
       ).data.forEach(
-        ({number, title, assignee, body_html, created_at}) =>
+        ({number, title, pull_request, body_html, created_at, updated_at}) =>
           (issuesTable[number] = {
             [ISSUES_TITLE_CELL]: title,
-            [ISSUES_ASSIGNEE_CELL]: assignee?.name ?? '',
+            [ISSUES_IS_PULL_REQUEST_CELL]: pull_request != undefined,
             [ISSUES_BODY_HTML_CELL]: body_html ?? '',
             [ISSUES_CREATED_AT_CELL]: created_at,
+            [ISSUES_UPDATED_AT_CELL]: updated_at,
           }),
       );
       return [{[ISSUES_TABLE]: issuesTable}, {}];

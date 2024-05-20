@@ -11,7 +11,7 @@ import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
 import React from 'react';
 import {formatNumber} from '../common/common';
 
-export const Repo = ({
+export const RepoLink = ({
   repoId,
   currentRepoId,
 }: {
