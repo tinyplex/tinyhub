@@ -18,7 +18,7 @@ const OPTIONS = {
   [REPOS_OPEN_ISSUES_COUNT_CELL]: 'issues',
   [REPOS_CREATED_AT_CELL]: 'most recently created',
   [REPOS_UPDATED_AT_CELL]: 'most recently updated',
-  [REPOS_FORK_CELL]: 'repo vs fork',
+  [REPOS_FORK_CELL]: 'repos then forks',
 };
 
 export const ReposSort = () => {

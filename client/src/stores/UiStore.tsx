@@ -15,6 +15,7 @@ export const LIGHT = 'light';
 
 export const REPOS_SORT_CELL_VALUE = 'reposSortCell';
 export const REPO_ID_VALUE = 'repoId';
+export const ISSUES_SORT_CELL_VALUE = 'issuesSortCell';
 export const ISSUE_ID_VALUE = 'issueId';
 
 export const UiStore = () => {
