@@ -267,29 +267,34 @@ table {
   grid-template-columns: 20rem 1fr 20rem;
   grid-template-rows: auto 1fr;
   line-height: 1.6em;
-  & header {
+  & #repoHeader {
     grid-column: 1/3;
     padding: 1rem;
     background: var(--background3);
   }
-  & aside {
+  & #repoMetadata {
     grid-column: 3/4;
     padding: 1rem;
     color: var(--text2);
     background: var(--background3);
+    overflow: hidden;
   }
-  & nav {
+  & #issues {
     grid-column: 1/2;
     border-top: 1px solid var(--border);
     border-right: 1px solid var(--border);
     overflow: scroll;
     padding: 1rem;
   }
-  & main {
+  & #issue {
     grid-column: 2/4;
     border-top: 1px solid var(--border);
     padding: 1.5rem;
     overflow: scroll;
+    & #issueHeader {
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
   }
 }
 

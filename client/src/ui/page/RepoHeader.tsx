@@ -19,7 +19,7 @@ export const RepoHeader = () => {
   const repoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
   const homepage = useRepoCell(repoId, REPOS_HOMEPAGE_CELL) as string;
   return (
-    <header>
+    <header id="repoHeader">
       <h1>
         {useRepoCell(repoId, REPOS_NAME_CELL)}
         <span className="meta visibility">

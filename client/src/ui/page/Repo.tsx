@@ -5,8 +5,8 @@ import {Issue} from './Issue';
 import {Issues} from './Issues';
 import {IssuesStore} from '../../stores/IssuesStore';
 import React from 'react';
-import {RepoAside} from './RepoAside';
 import {RepoHeader} from './RepoHeader';
+import {RepoMetadata} from './RepoMetadata';
 
 export const Repo = () => {
   const repoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
@@ -18,7 +18,7 @@ export const Repo = () => {
         <>
           <IssuesStore />
           <RepoHeader />
-          <RepoAside />
+          <RepoMetadata />
           <Issues />
           <Issue />
         </>

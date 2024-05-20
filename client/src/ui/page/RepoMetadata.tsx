@@ -12,10 +12,10 @@ import React from 'react';
 import {formatNumber} from '../common/common';
 import {useValue} from 'tinybase/debug/ui-react';
 
-export const RepoAside = () => {
+export const RepoMetadata = () => {
   const repoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
   return (
-    <aside>
+    <aside id="repoMetadata">
       <table>
         <tr>
           <th>Stars:</th>

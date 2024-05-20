@@ -7,7 +7,7 @@ import React from 'react';
 export const Issues = () => {
   const currentIssueId = (useValue(ISSUE_ID_VALUE, UI_STORE) as string) ?? '';
   return (
-    <nav>
+    <nav id="issues">
       <ul className="navList">
         {useRowIds(ISSUES_TABLE, ISSUES_STORE).map((issueId) => (
           <IssueLink
