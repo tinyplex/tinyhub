@@ -96,7 +96,7 @@ const createGithubReposLoadingPersister = (store: Store) =>
       if (hasToken()) {
         const reposTable: Table = {};
 
-        const updateTables = (
+        const addRepo = (
           {
             full_name,
             owner,
@@ -147,11 +147,11 @@ const createGithubReposLoadingPersister = (store: Store) =>
           await octokit.rest.activity.listReposStarredByAuthenticatedUser(
             PER_PAGE,
           )
-        ).data.forEach((repo) => updateTables(repo, STARRED_GROUP));
+        ).data.forEach((repo) => addRepo(repo, STARRED_GROUP));
 
         (
           await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)
-        ).data.forEach((repo) => updateTables(repo));
+        ).data.forEach((repo) => addRepo(repo));
 
         await Promise.all(
           (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.map(
@@ -160,7 +160,7 @@ const createGithubReposLoadingPersister = (store: Store) =>
                 org: login,
                 ...PER_PAGE,
               });
-              repos.data.forEach((repo) => updateTables(repo));
+              repos.data.forEach((repo) => addRepo(repo));
             },
           ),
         );
