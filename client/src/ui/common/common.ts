@@ -1,5 +1,5 @@
 export const SCROLL_OPTIONS: ScrollIntoViewOptions = {
-  behavior: 'smooth',
+  behavior: 'instant',
   block: 'nearest',
 };
 

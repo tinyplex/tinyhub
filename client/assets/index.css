@@ -11,6 +11,7 @@
 * {
   margin: 0;
   font-size: inherit;
+  outline-color: var(--accent);
 }
 
 html {
@@ -141,6 +142,8 @@ table {
   color: var(--text);
   height: 100vh;
   background: var(--background);
+
+  --accent: #da1b6180;
 
   --shadow: #0000001a;
   --overlay: #333a;
@@ -307,6 +310,10 @@ table {
     border-right: 1px solid var(--border);
     overflow: scroll;
     padding: 1rem;
+    outline: none;
+    &:focus {
+      border-right: 1px solid var(--accent);
+    }
   }
   & #issue {
     grid-column: 2/4;
