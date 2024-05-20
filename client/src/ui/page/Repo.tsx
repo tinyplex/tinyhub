@@ -97,7 +97,7 @@ export const Repo = ({repoId}: {readonly repoId: string}) => {
         </aside>
       </header>
 
-      <div id="body">s</div>
+      <div id="body">[Issues and pull requests will go here]</div>
     </>
   );
 };
