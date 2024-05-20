@@ -218,13 +218,12 @@ table {
   border-right: 1px solid var(--border);
   box-shadow: 0 0rem 0.3rem 0 var(--shadow);
   align-self: stretch;
-  flex: 0 0 12rem;
+  flex: 0;
   display: flex;
   flex-direction: column;
   padding: 1rem;
   background: var(--background2);
-  width: 16rem;
-
+  width: 18rem;
   #repoSort {
     font-size: 0.8rem;
     color: var(--text2);
@@ -353,18 +352,18 @@ table {
 .meta {
   color: var(--text2);
   background-color: var(--background4);
-  font-size: 0.7em;
-  border-radius: 0.25em;
-  padding: 0.1em 0.5em;
+  font-size: 0.7rem;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.25rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
   top: -0.1em;
-  margin-left: 0.5em;
   position: relative;
-  display: inline-block;
   font-weight: normal;
   &::before {
-    margin: 0.1em 0.2em 0 0;
-    height: 1em;
-    width: 1em;
+    margin: 0.1rem 0.2rem 0 0;
+    height: 0.7rem;
+    width: 0.7rem;
     display: inline-block;
     vertical-align: text-top;
     background: var(--text2);

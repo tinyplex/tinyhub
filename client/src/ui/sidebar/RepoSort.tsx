@@ -34,7 +34,7 @@ export const RepoSort = () => {
 
   return (
     <div id="repoSort">
-      <label>Sort repos by</label>
+      <label>Repos sorted by</label>
       <select onChange={handleChange} value={repoSortCell}>
         {Object.entries(OPTIONS).map(([key, label]) => (
           <option value={key} key={key}>
