@@ -8,7 +8,5 @@ export const Page = () => {
   const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
   const hasRepo = useHasRow(REPOS_TABLE, currentRepoId, REPOS_STORE);
 
-  return (
-    <div id="page">{hasRepo ? <Repo repoId={currentRepoId} /> : null}</div>
-  );
+  return <div id="page">{hasRepo ? <Repo /> : null}</div>;
 };
