@@ -7,7 +7,7 @@ import {
   REPOS_STARGAZERS_COUNT_CELL,
   REPOS_UPDATED_AT_CELL,
 } from '../../stores/ReposStore';
-import {REPO_SORT_CELL_VALUE, UI_STORE} from '../../stores/UiStore';
+import {REPOS_SORT_CELL_VALUE, UI_STORE} from '../../stores/UiStore';
 import React, {type ChangeEvent} from 'react';
 import {useSetValueCallback, useValue} from 'tinybase/debug/ui-react';
 
@@ -23,10 +23,10 @@ const OPTIONS = {
 
 export const RepoSort = () => {
   const repoSortCell =
-    (useValue(REPO_SORT_CELL_VALUE, UI_STORE) as string) ?? REPOS_FORK_CELL;
+    (useValue(REPOS_SORT_CELL_VALUE, UI_STORE) as string) ?? REPOS_FORK_CELL;
 
   const handleChange = useSetValueCallback(
-    REPO_SORT_CELL_VALUE,
+    REPOS_SORT_CELL_VALUE,
     (event: ChangeEvent<HTMLSelectElement>) => event.target.value,
     [],
     UI_STORE,

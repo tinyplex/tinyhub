@@ -13,8 +13,8 @@ import {
   REPOS_TABLE,
 } from '../../stores/ReposStore';
 import {
+  REPOS_SORT_CELL_VALUE,
   REPO_ID_VALUE,
-  REPO_SORT_CELL_VALUE,
   UI_STORE,
 } from '../../stores/UiStore';
 import React from 'react';
@@ -27,7 +27,7 @@ export const REPO_GROUP_INDEX = 'repoOrg';
 export const OrgList = () => {
   const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
   const repoSortCell =
-    (useValue(REPO_SORT_CELL_VALUE, UI_STORE) as string) ?? REPOS_FORK_CELL;
+    (useValue(REPOS_SORT_CELL_VALUE, UI_STORE) as string) ?? REPOS_FORK_CELL;
   const repoSortDirection =
     repoSortCell == REPOS_NAME_CELL || repoSortCell == REPOS_FORK_CELL ? 1 : -1;
 
