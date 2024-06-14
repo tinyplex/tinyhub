@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Logo = () => (
   <div id="logo">
-    <img src="/assets/favicon.svg" alt="TinyHub logo" />
+    <img src="/favicon.svg" alt="TinyHub logo" />
     <h1>TinyHub</h1>
     <a
       href="https://github.com/tinyplex/tinyhub"

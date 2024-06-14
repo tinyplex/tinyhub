@@ -1,30 +1,37 @@
 <script>
   const SERVER = 'https://api.tinyhub.org';
 
-  const params = new URLSearchParams(location.search);
-  let redirect = location.origin;
+  const LOCATION = location;
+  const LOCAL_STORAGE = localStorage;
+  const SESSION_STORAGE = sessionStorage;
+  const TOKEN = 'token';
+  const STATE = 'state';
+  const getParams = (str) => new URLSearchParams(str);
+
+  const params = getParams(LOCATION.search);
+  let redirect = LOCATION.origin;
 
   if (params.has('logout')) {
-    localStorage.removeItem('token');
-  } else if (!params.has('token')) {
+    LOCAL_STORAGE.removeItem(TOKEN);
+  } else if (!params.has(TOKEN)) {
     const state = Math.random().toString();
-    sessionStorage.setItem('state', state);
-    localStorage.removeItem('token');
+    SESSION_STORAGE.setItem(STATE, state);
+    LOCAL_STORAGE.removeItem(TOKEN);
     redirect =
       SERVER +
       '?' +
-      new URLSearchParams({
-        client: location.origin + location.pathname,
+      getParams({
+        client: LOCATION.origin + LOCATION.pathname,
         step: 0,
         state,
         scope: 'read:org',
       }).toString();
   } else {
-    if (params.get('state') === sessionStorage.getItem('state')) {
-      localStorage.setItem('token', params.get('token'));
-      sessionStorage.removeItem('state');
+    if (params.get(STATE) === SESSION_STORAGE.getItem(STATE)) {
+      LOCAL_STORAGE.setItem(TOKEN, params.get(TOKEN));
+      SESSION_STORAGE.removeItem(STATE);
     }
   }
 
-  location.replace(redirect);
+  LOCATION.replace(redirect);
 </script>
