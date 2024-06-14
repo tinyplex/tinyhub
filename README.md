@@ -9,6 +9,11 @@ Follow the build:
 - [Twitter](https://twitter.com/jamespearce/status/1789727909730455890)
 - [Threads](https://www.threads.net/@jamesgpearce/post/C64P4g-v-3J)
 
+## Try it out
+
+There is an installation of TinyHub up at
+[https://tinyhub.org](https://tinyhub.org). Enjoy!
+
 ## Running the client locally
 
 Go into the directory:
@@ -43,6 +48,8 @@ some reason) you will need to:
 The `api.tinyhub.org` server is hosted on fly.io and so if you choose to use
 that, you can reuse the docker and fly configurations in the server directory.
 Just remember to update them to match your machines and required configuration.
+Server deployment is then just `fly launch` (once) and then `fly deploy` (on
+subsequent updates).
 
 ## Limitations
 
