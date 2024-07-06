@@ -1,7 +1,7 @@
 import {Profile} from './Profile';
 import React from 'react';
 import {USER_STORE} from '../../stores/UserStore';
-import {useHasValues} from 'tinybase/debug/ui-react';
+import {useHasValues} from 'tinybase/ui-react';
 
 const handleLogin = () => location.assign('auth.html');
 const handleLogout = () => location.assign('auth.html?logout');

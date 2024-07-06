@@ -9,7 +9,7 @@ import {
 } from '../../stores/ReposStore';
 import {REPOS_SORT_CELL_VALUE, UI_STORE} from '../../stores/UiStore';
 import React, {type ChangeEvent} from 'react';
-import {useSetValueCallback, useValue} from 'tinybase/debug/ui-react';
+import {useSetValueCallback, useValue} from 'tinybase/ui-react';
 
 const OPTIONS = {
   [REPOS_NAME_CELL]: 'name',

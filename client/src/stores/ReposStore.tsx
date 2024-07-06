@@ -4,15 +4,15 @@ import {
   type Table,
   createCustomPersister,
   createStore,
-} from 'tinybase/debug';
+} from 'tinybase';
 import {hasToken, octokit} from './octokit';
 import {
   useCell,
   useCreatePersister,
   useCreateStore,
   useProvideStore,
-} from 'tinybase/debug/ui-react';
-import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
+} from 'tinybase/ui-react';
+import {createLocalPersister} from 'tinybase/persisters/persister-browser';
 
 type RepoData = {
   full_name: string;

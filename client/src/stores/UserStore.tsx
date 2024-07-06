@@ -3,15 +3,15 @@ import {
   type Values,
   createCustomPersister,
   createStore,
-} from 'tinybase/debug';
+} from 'tinybase';
 import {hasToken, octokit} from './octokit';
 import {
   useCreatePersister,
   useCreateStore,
   useProvideStore,
-} from 'tinybase/debug/ui-react';
+} from 'tinybase/ui-react';
 import {REFRESH_INTERVAL} from './common';
-import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
+import {createLocalPersister} from 'tinybase/persisters/persister-browser';
 
 export const USER_STORE = 'user';
 

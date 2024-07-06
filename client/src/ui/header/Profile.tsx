@@ -1,6 +1,6 @@
 import {AVATAR_URL_VALUE, NAME_VALUE, USER_STORE} from '../../stores/UserStore';
 import React from 'react';
-import {useValue} from 'tinybase/debug/ui-react';
+import {useValue} from 'tinybase/ui-react';
 
 export const Profile = () => {
   const name = useValue(NAME_VALUE, USER_STORE) as string;

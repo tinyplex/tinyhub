@@ -2,9 +2,9 @@ import {
   useCreatePersister,
   useCreateStore,
   useProvideStore,
-} from 'tinybase/debug/ui-react';
-import {createLocalPersister} from 'tinybase/debug/persisters/persister-browser';
-import {createStore} from 'tinybase/debug';
+} from 'tinybase/ui-react';
+import {createLocalPersister} from 'tinybase/persisters/persister-browser';
+import {createStore} from 'tinybase';
 
 export const UI_STORE = 'ui';
 

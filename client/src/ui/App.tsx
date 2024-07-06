@@ -1,4 +1,4 @@
-import {Provider} from 'tinybase/debug/ui-react';
+import {Provider} from 'tinybase/ui-react';
 import React from 'react';
 import {ReposStore} from '../stores/ReposStore';
 import {Ui} from './Ui';

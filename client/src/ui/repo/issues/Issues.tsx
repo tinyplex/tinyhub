@@ -14,7 +14,7 @@ import {
   useSetValueCallback,
   useSortedRowIds,
   useValue,
-} from 'tinybase/debug/ui-react';
+} from 'tinybase/ui-react';
 import {IssueLink} from './IssueLink';
 import {IssuesSort} from './IssuesSort';
 

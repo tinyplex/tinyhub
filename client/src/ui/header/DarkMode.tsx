@@ -5,7 +5,7 @@ import {
   LIGHT,
   UI_STORE,
 } from '../../stores/UiStore';
-import {useSetValueCallback, useValue} from 'tinybase/debug/ui-react';
+import {useSetValueCallback, useValue} from 'tinybase/ui-react';
 import React from 'react';
 
 export const DarkMode = () => {

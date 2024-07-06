@@ -4,7 +4,7 @@ import {
   useSliceIds,
   useStore,
   useValue,
-} from 'tinybase/debug/ui-react';
+} from 'tinybase/ui-react';
 import {
   REPOS_FORK_CELL,
   REPOS_GROUP_CELL,
@@ -21,7 +21,7 @@ import {
 import React from 'react';
 import {RepoGroup} from './RepoGroup';
 import {ReposSort} from './ReposSort';
-import {createIndexes} from 'tinybase/debug';
+import {createIndexes} from 'tinybase';
 
 export const REPO_GROUP_INDEX = 'repoOrg';
 

@@ -1,9 +1,9 @@
 import {AUTO, DARK, DARK_MODE_VALUE, LIGHT, UI_STORE} from '../stores/UiStore';
 import React, {useEffect, useState} from 'react';
 import {Header} from './header/Header';
+import {Inspector} from 'tinybase/ui-react-inspector';
 import {Main} from './Main';
-import {StoreInspector} from 'tinybase/debug/ui-react-dom';
-import {useValue} from 'tinybase/debug/ui-react';
+import {useValue} from 'tinybase/ui-react';
 
 const PREFERS_DARK = matchMedia('(prefers-color-scheme: dark)');
 
@@ -26,7 +26,7 @@ export const Ui = () => {
     >
       <Header />
       <Main />
-      <StoreInspector />
+      <Inspector />
     </div>
   );
 };

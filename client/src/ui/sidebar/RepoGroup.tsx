@@ -1,7 +1,7 @@
 import {REPO_GROUP_INDEX} from './RepoGroups';
 import React from 'react';
 import {RepoLink} from './RepoLink';
-import {useSliceRowIds} from 'tinybase/debug/ui-react';
+import {useSliceRowIds} from 'tinybase/ui-react';
 
 export const RepoGroup = ({
   group,

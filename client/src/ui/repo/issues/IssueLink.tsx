@@ -6,7 +6,7 @@ import {
 } from '../../../stores/IssuesStore';
 import {ISSUE_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
 import React, {useEffect, useRef} from 'react';
-import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
+import {useCell, useSetValueCallback} from 'tinybase/ui-react';
 import {SCROLL_OPTIONS} from '../../common/common';
 
 export const IssueLink = ({

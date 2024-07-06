@@ -8,7 +8,7 @@ import {
 import {ISSUE_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
 import React from 'react';
 import {formatDate} from '../../common/common';
-import {useValue} from 'tinybase/debug/ui-react';
+import {useValue} from 'tinybase/ui-react';
 
 export const IssueHeader = () => {
   const issueId = (useValue(ISSUE_ID_VALUE, UI_STORE) as string) ?? '';

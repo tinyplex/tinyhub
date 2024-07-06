@@ -6,7 +6,7 @@ import {
 } from '../../../stores/IssuesStore';
 import {ISSUES_SORT_CELL_VALUE, UI_STORE} from '../../../stores/UiStore';
 import React, {type ChangeEvent} from 'react';
-import {useSetValueCallback, useValue} from 'tinybase/debug/ui-react';
+import {useSetValueCallback, useValue} from 'tinybase/ui-react';
 
 const OPTIONS = {
   [ISSUES_TITLE_CELL]: 'title',

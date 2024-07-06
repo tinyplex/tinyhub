@@ -9,7 +9,7 @@ import {
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import React, {useEffect, useRef} from 'react';
 import {SCROLL_OPTIONS, formatNumber} from '../common/common';
-import {useCell, useSetValueCallback} from 'tinybase/debug/ui-react';
+import {useCell, useSetValueCallback} from 'tinybase/ui-react';
 
 export const RepoLink = ({
   repoId,
