@@ -15,8 +15,8 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@flydotio/dockerfile": "^0.5.7",
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@flydotio/dockerfile": "^0.5.8",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.15.0",
     "cspell": "^8.10.4",
     "eslint": "^8.57.0",
