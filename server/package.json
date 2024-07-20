@@ -16,12 +16,12 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@flydotio/dockerfile": "^0.5.8",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
-    "@typescript-eslint/parser": "^7.15.0",
-    "cspell": "^8.10.4",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
+    "cspell": "^8.11.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
     "typescript": "^5.5.3"
   }
 }
