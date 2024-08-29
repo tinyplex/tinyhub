@@ -15,7 +15,6 @@ import {createLocalPersister} from 'tinybase/persisters/persister-browser';
 
 export const USER_STORE = 'user';
 
-export const HAS_TOKEN_VALUE = 'hasToken';
 export const NAME_VALUE = 'name';
 export const AVATAR_URL_VALUE = 'avatarUrl';
 
