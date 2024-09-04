@@ -1,21 +1,43 @@
+import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
-  useCreatePersister,
+  type NoTablesSchema,
+  type Value,
+  createStore,
+} from 'tinybase/with-schemas';
+import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
+
+const STORE_ID = 'ui';
+
+const VALUES_SCHEMA = {
+  repoId: {type: 'string', default: ''},
+  issueId: {type: 'string', default: ''},
+} as const;
+type Schemas = [NoTablesSchema, typeof VALUES_SCHEMA];
+const {
   useCreateStore,
   useProvideStore,
-} from 'tinybase/ui-react';
-import {createLocalPersister} from 'tinybase/persisters/persister-browser';
-import {createStore} from 'tinybase';
+  useCreatePersister,
+  useValue,
+  useSetValueCallback,
+} = UiReact as UiReact.WithSchemas<Schemas>;
+type ValueIds = keyof typeof VALUES_SCHEMA;
 
-export const UI_STORE = 'ui';
+export const useUiValue = <ValueId extends ValueIds>(valueId: ValueId) =>
+  useValue<ValueId>(valueId, STORE_ID);
 
-export const REPO_ID_VALUE = 'repoId';
-export const ISSUE_ID_VALUE = 'issueId';
+export const useSetUiValueCallback = <Parameter, ValueId extends ValueIds>(
+  valueId: ValueId,
+  getValue: (parameter: Parameter) => Value<Schemas[1], ValueId>,
+  getValueDeps?: React.DependencyList,
+) => useSetValueCallback(valueId, getValue, getValueDeps, STORE_ID);
 
 export const UiStore = () => {
-  const uiStore = useCreateStore(createStore);
+  const uiStore = useCreateStore(() =>
+    createStore().setValuesSchema(VALUES_SCHEMA),
+  );
   useCreatePersister(
     uiStore,
-    (uiStore) => createLocalPersister(uiStore, UI_STORE),
+    (uiStore) => createLocalPersister(uiStore, STORE_ID),
     [],
     async (persister) => {
       await persister.startAutoLoad();
@@ -23,6 +45,6 @@ export const UiStore = () => {
     },
   );
 
-  useProvideStore(UI_STORE, uiStore);
+  useProvideStore(STORE_ID, uiStore);
   return null;
 };

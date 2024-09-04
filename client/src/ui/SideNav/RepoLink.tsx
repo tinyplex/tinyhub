@@ -9,7 +9,6 @@ import {
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
-import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import {
   SCROLL_OPTIONS,
   createElement,
@@ -17,7 +16,8 @@ import {
   useEffect,
   useRef,
 } from '../common';
-import {useCell, useSetValueCallback} from 'tinybase/ui-react';
+import {useCell} from 'tinybase/ui-react';
+import {useSetUiValueCallback} from '../../stores/UiStore';
 
 export const RepoLink = ({
   repoId,
@@ -26,12 +26,7 @@ export const RepoLink = ({
   readonly repoId: string;
   readonly isCurrent: boolean;
 }) => {
-  const handleClick = useSetValueCallback(
-    REPO_ID_VALUE,
-    () => repoId,
-    [repoId],
-    UI_STORE,
-  );
+  const handleClick = useSetUiValueCallback('repoId', () => repoId, [repoId]);
 
   const ref = useRef<HTMLButtonElement>(null);
   useEffect(() => {

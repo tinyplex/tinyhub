@@ -29,13 +29,12 @@ import {
   REPOS_VISIBILITY_CELL,
   useRepoCell,
 } from '../../../stores/ReposStore';
-import {REPO_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
 import {createElement, formatDate, formatNumber} from '../../common';
 import {repoHeader, repoHeaderSummary} from './index.css';
-import {useValue} from 'tinybase/ui-react';
+import {useUiValue} from '../../../stores/UiStore';
 
 export const RepoHeader = () => {
-  const repoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
+  const repoId = useUiValue('repoId');
   const homepage = useRepoCell(repoId, REPOS_HOMEPAGE_CELL) as string;
 
   return (

@@ -5,29 +5,25 @@ import {
   useCreateIndexes,
   useSliceIds,
   useStore,
-  useValue,
 } from 'tinybase/ui-react';
 import {
   REPOS_FORK_CELL,
   REPOS_GROUP_CELL,
   REPOS_NAME_CELL,
-  REPOS_STARGAZERS_COUNT_CELL,
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
-import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
-import {REPOS_SORT_CELL_VALUE} from '../../stores/SettingsStore';
 import {RepoGroup} from './RepoGroup';
 import {createElement} from '../common';
 import {createIndexes} from 'tinybase';
+import {useSettingsValue} from '../../stores/SettingsStore';
+import {useUiValue} from '../../stores/UiStore';
 
 export const REPO_GROUP_INDEX = 'repoOrg';
 
 export const RepoGroups = () => {
-  const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
-  const reposSortCell =
-    (useValue(REPOS_SORT_CELL_VALUE, UI_STORE) as string) ??
-    REPOS_STARGAZERS_COUNT_CELL;
+  const currentRepoId = useUiValue('repoId');
+  const reposSortCell = useSettingsValue('reposSortCell');
   const reposSortDirection =
     reposSortCell == REPOS_NAME_CELL || reposSortCell == REPOS_FORK_CELL
       ? 1

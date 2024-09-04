@@ -9,10 +9,11 @@ import {
   REPOS_STARGAZERS_COUNT_CELL,
   REPOS_UPDATED_AT_CELL,
 } from '../../stores/ReposStore';
-import {useSetValueCallback, useValue} from 'tinybase/ui-react';
+import {
+  useSetSettingsValueCallback,
+  useSettingsValue,
+} from '../../stores/SettingsStore';
 import type {ChangeEvent} from 'react';
-import {REPOS_SORT_CELL_VALUE} from '../../stores/SettingsStore';
-import {UI_STORE} from '../../stores/UiStore';
 import {createElement} from '../common';
 
 const OPTIONS = {
@@ -26,21 +27,17 @@ const OPTIONS = {
 };
 
 export const ReposSort = () => {
-  const reposSortCell =
-    (useValue(REPOS_SORT_CELL_VALUE, UI_STORE) as string) ??
-    REPOS_STARGAZERS_COUNT_CELL;
-
-  const handleChange = useSetValueCallback(
-    REPOS_SORT_CELL_VALUE,
+  const reposSortCell = useSettingsValue('reposSortCell');
+  const change = useSetSettingsValueCallback(
+    'reposSortCell',
     (event: ChangeEvent<HTMLSelectElement>) => event.target.value,
     [],
-    UI_STORE,
   );
 
   return (
     <div>
       <label>Repos sorted by</label>
-      <select onChange={handleChange} value={reposSortCell}>
+      <select onChange={change} value={reposSortCell}>
         {Object.entries(OPTIONS).map(([key, label]) => (
           <option value={key} key={key}>
             {label}

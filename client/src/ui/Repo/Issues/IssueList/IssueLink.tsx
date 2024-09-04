@@ -8,14 +8,14 @@ import {
   ISSUES_TABLE,
   ISSUES_TITLE_CELL,
 } from '../../../../stores/IssuesStore';
-import {ISSUE_ID_VALUE, UI_STORE} from '../../../../stores/UiStore';
 import {
   SCROLL_OPTIONS,
   createElement,
   useEffect,
   useRef,
 } from '../../../common';
-import {useCell, useSetValueCallback} from 'tinybase/ui-react';
+import {useCell} from 'tinybase/ui-react';
+import {useSetUiValueCallback} from '../../../../stores/UiStore';
 
 export const IssueLink = ({
   issueId,
@@ -24,12 +24,9 @@ export const IssueLink = ({
   readonly issueId: string;
   readonly isCurrent: boolean;
 }) => {
-  const handleClick = useSetValueCallback(
-    ISSUE_ID_VALUE,
-    () => issueId,
-    [issueId],
-    UI_STORE,
-  );
+  const handleClick = useSetUiValueCallback('issueId', () => issueId, [
+    issueId,
+  ]);
 
   const ref = useRef<HTMLButtonElement>(null);
   useEffect(() => {

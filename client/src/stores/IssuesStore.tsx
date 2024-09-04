@@ -1,16 +1,15 @@
 import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {REPO_ID_VALUE, UI_STORE} from './UiStore';
 import {type Store, type Table, createStore} from 'tinybase';
 import {
   useCell,
   useCreatePersister,
   useCreateStore,
   useProvideStore,
-  useValue,
 } from 'tinybase/ui-react';
 import {createCustomPersister} from 'tinybase/persisters';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser';
 import {octokit} from './octokit';
+import {useUiValue} from './UiStore';
 
 export const ISSUES_STORE = 'issues';
 
@@ -22,7 +21,7 @@ export const ISSUES_CREATED_AT_CELL = 'createdAt';
 export const ISSUES_UPDATED_AT_CELL = 'updatedAt';
 
 export const IssuesStore = () => {
-  const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
+  const currentRepoId = useUiValue('repoId');
 
   const issuesStore = useCreateStore(createStore, [currentRepoId]);
   useCreatePersister(

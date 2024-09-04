@@ -4,22 +4,18 @@ import {
   ISSUES_STORE,
   ISSUES_TABLE,
   ISSUES_TITLE_CELL,
-  ISSUES_UPDATED_AT_CELL,
 } from '../../../../stores/IssuesStore';
-import {useSortedRowIds, useValue} from 'tinybase/ui-react';
-import {ISSUES_SORT_CELL_VALUE} from '../../../../stores/SettingsStore';
 import {IssueLink} from './IssueLink';
-import {UI_STORE} from '../../../../stores/UiStore';
 import {createElement} from '../../../common';
+import {useSettingsValue} from '../../../../stores/SettingsStore';
+import {useSortedRowIds} from 'tinybase/ui-react';
 
 export const IssueList = ({
   currentIssueId,
 }: {
   readonly currentIssueId: string;
 }) => {
-  const issuesSortCell =
-    (useValue(ISSUES_SORT_CELL_VALUE, UI_STORE) as string) ??
-    ISSUES_UPDATED_AT_CELL;
+  const issuesSortCell = useSettingsValue('issuesSortCell');
   const issuesSortAscending = issuesSortCell == ISSUES_TITLE_CELL;
 
   const issueIds = useSortedRowIds(
