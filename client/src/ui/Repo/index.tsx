@@ -1,7 +1,7 @@
 /** @jsx createElement */
 /** @jsxFrag Fragment */
 
-import {Fragment, createElement} from '../../common';
+import {Fragment, createElement} from '../common';
 import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
 import {useHasRow, useValue} from 'tinybase/ui-react';

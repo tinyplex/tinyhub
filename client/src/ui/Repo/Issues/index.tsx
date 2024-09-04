@@ -12,7 +12,7 @@ import {useHasRow, useValue} from 'tinybase/ui-react';
 import {CircleDot} from 'lucide-react';
 import {Issue} from './Issue';
 import {IssueList} from './IssueList';
-import {createElement} from '../../../common';
+import {createElement} from '../../common';
 
 export const Issues = () => {
   const repoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';

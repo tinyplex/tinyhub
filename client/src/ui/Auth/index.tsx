@@ -5,7 +5,7 @@ import {Avatar, Axis, Button} from 'tinywidgets';
 import {useHasValues, useValue} from 'tinybase/ui-react';
 import {LogOut} from 'lucide-react';
 import {SiGithub} from '@icons-pack/react-simple-icons';
-import {createElement} from '../../common';
+import {createElement} from '../common';
 
 const login = () => location.assign('auth.html');
 const logout = () => location.assign('auth.html?logout');

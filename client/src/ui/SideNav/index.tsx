@@ -2,7 +2,7 @@
 /** @jsxFrag Fragment */
 
 import {Collapsible, Hr} from 'tinywidgets';
-import {Fragment, createElement} from '../../common';
+import {Fragment, createElement} from '../common';
 import {IssuesSort} from '../Repo/Issues/IssuesSort';
 import {RepoGroups} from './RepoGroups';
 import {ReposSort} from './ReposSort';

@@ -16,7 +16,7 @@ import {
   formatNumber,
   useEffect,
   useRef,
-} from '../../common';
+} from '../common';
 import {useCell, useSetValueCallback} from 'tinybase/ui-react';
 
 export const RepoLink = ({

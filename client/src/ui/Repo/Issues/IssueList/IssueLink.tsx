@@ -14,7 +14,7 @@ import {
   createElement,
   useEffect,
   useRef,
-} from '../../../../common';
+} from '../../../common';
 import {useCell, useSetValueCallback} from 'tinybase/ui-react';
 
 export const IssueLink = ({

@@ -5,7 +5,7 @@ import {ReposStore} from './stores/ReposStore';
 import {Ui} from './ui';
 import {UiStore} from './stores/UiStore';
 import {UserStore} from './stores/UserStore';
-import {createElement} from './common';
+import {createElement} from './ui/common';
 
 export const App = () => {
   return (

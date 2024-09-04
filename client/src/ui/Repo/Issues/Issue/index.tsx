@@ -2,7 +2,7 @@
 /** @jsxFrag Fragment */
 
 import {CircleDot, GitPullRequest} from 'lucide-react';
-import {Fragment, createElement, formatDate} from '../../../../common';
+import {Fragment, createElement, formatDate} from '../../../common';
 import {Hr, Summary} from 'tinywidgets';
 import {
   ISSUES_BODY_HTML_CELL,

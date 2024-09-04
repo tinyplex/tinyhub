@@ -9,7 +9,7 @@ import {
 } from '../../../../stores/IssuesStore';
 import {useSortedRowIds, useValue} from 'tinybase/ui-react';
 import {IssueLink} from './IssueLink';
-import {createElement} from '../../../../common';
+import {createElement} from '../../../common';
 
 export const IssueList = ({
   currentIssueId,

@@ -30,7 +30,7 @@ import {
   useRepoCell,
 } from '../../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
-import {createElement, formatDate, formatNumber} from '../../../common';
+import {createElement, formatDate, formatNumber} from '../../common';
 import {repoHeader, repoHeaderSummary} from './index.css';
 import {useValue} from 'tinybase/ui-react';
 

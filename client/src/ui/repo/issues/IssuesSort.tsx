@@ -9,7 +9,7 @@ import {
 import {ISSUES_SORT_CELL_VALUE, UI_STORE} from '../../../stores/UiStore';
 import {useSetValueCallback, useValue} from 'tinybase/ui-react';
 import type {ChangeEvent} from 'react';
-import {createElement} from '../../../common';
+import {createElement} from '../../common';
 
 const OPTIONS = {
   [ISSUES_TITLE_CELL]: 'title',

@@ -7,7 +7,7 @@ import {Title} from './Title';
 import {USER_STORE} from '../stores/UserStore';
 import {Ui as UiBase} from 'tinywidgets';
 import {Welcome} from './Welcome';
-import {createElement} from '../common';
+import {createElement} from './common';
 import {useHasValues} from 'tinybase/ui-react';
 
 export const Ui = () => {

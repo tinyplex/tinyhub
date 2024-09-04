@@ -21,7 +21,7 @@ import {
   UI_STORE,
 } from '../../stores/UiStore';
 import {RepoGroup} from './RepoGroup';
-import {createElement} from '../../common';
+import {createElement} from '../common';
 import {createIndexes} from 'tinybase';
 
 export const REPO_GROUP_INDEX = 'repoOrg';
