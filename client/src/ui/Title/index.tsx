@@ -1,12 +1,10 @@
 /** @jsx createElement */
 /** @jsxFrag Fragment */
 
+import {Fragment, createElement} from '../../common.ts';
 import {Button} from 'tinywidgets';
 import {CircleHelp} from 'lucide-react';
-import React from 'react';
 import {logo} from './index.css.ts';
-
-const {createElement, Fragment} = React;
 
 export const Title = () => {
   return (

@@ -1,3 +1,5 @@
+/** @jsx createElement */
+
 import {Archive, ArchiveX, CircleDot, Eye, GitFork, Star} from 'lucide-react';
 import {
   Axis,
@@ -28,9 +30,8 @@ import {
   useRepoCell,
 } from '../../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
-import {formatDate, formatNumber} from '../../common/common';
+import {createElement, formatDate, formatNumber} from '../../../common';
 import {repoHeader, repoHeaderSummary} from './index.css';
-import React from 'react';
 import {useValue} from 'tinybase/ui-react';
 
 export const RepoHeader = () => {

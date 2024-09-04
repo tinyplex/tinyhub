@@ -1,3 +1,7 @@
+import React from 'react';
+
+export const {createElement, Fragment, useEffect, useRef, useState} = React;
+
 export const SCROLL_OPTIONS: ScrollIntoViewOptions = {
   behavior: 'instant',
   block: 'nearest',

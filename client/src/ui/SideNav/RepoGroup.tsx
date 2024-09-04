@@ -1,8 +1,10 @@
+/** @jsx createElement */
+
 import {Collapsible, Tag} from 'tinywidgets';
 import {Star, Users} from 'lucide-react';
 import {REPO_GROUP_INDEX} from './RepoGroups';
-import React from 'react';
 import {RepoLink} from './RepoLink';
+import {createElement} from '../../common';
 import {useSliceRowIds} from 'tinybase/ui-react';
 
 export const RepoGroup = ({

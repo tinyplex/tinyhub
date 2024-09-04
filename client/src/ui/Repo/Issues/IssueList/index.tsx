@@ -1,3 +1,5 @@
+/** @jsx createElement */
+
 import {ISSUES_SORT_CELL_VALUE, UI_STORE} from '../../../../stores/UiStore';
 import {
   ISSUES_STORE,
@@ -7,7 +9,7 @@ import {
 } from '../../../../stores/IssuesStore';
 import {useSortedRowIds, useValue} from 'tinybase/ui-react';
 import {IssueLink} from './IssueLink';
-import React from 'react';
+import {createElement} from '../../../../common';
 
 export const IssueList = ({
   currentIssueId,

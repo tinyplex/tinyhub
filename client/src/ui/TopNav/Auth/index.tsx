@@ -1,3 +1,5 @@
+/** @jsx createElement */
+
 import {
   AVATAR_URL_VALUE,
   NAME_VALUE,
@@ -5,7 +7,7 @@ import {
 } from '../../../stores/UserStore';
 import {Avatar, Axis, Button} from 'tinywidgets';
 import {useHasValues, useValue} from 'tinybase/ui-react';
-import React from 'react';
+import {createElement} from '../../../common';
 
 const login = () => location.assign('auth.html');
 const logout = () => location.assign('auth.html?logout');

@@ -1,3 +1,5 @@
+/** @jsx createElement */
+
 import {
   ISSUES_CREATED_AT_CELL,
   ISSUES_IS_PULL_REQUEST_CELL,
@@ -5,8 +7,9 @@ import {
   ISSUES_UPDATED_AT_CELL,
 } from '../../../stores/IssuesStore';
 import {ISSUES_SORT_CELL_VALUE, UI_STORE} from '../../../stores/UiStore';
-import React, {type ChangeEvent} from 'react';
 import {useSetValueCallback, useValue} from 'tinybase/ui-react';
+import type {ChangeEvent} from 'react';
+import {createElement} from '../../../common';
 
 const OPTIONS = {
   [ISSUES_TITLE_CELL]: 'title',
@@ -28,7 +31,7 @@ export const IssuesSort = () => {
   );
 
   return (
-    <div className="sort">
+    <div>
       <label>Issues sorted by</label>
       <select onChange={handleChange} value={issuesSortCell}>
         {Object.entries(OPTIONS).map(([key, label]) => (

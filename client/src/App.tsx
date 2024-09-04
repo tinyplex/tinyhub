@@ -1,13 +1,11 @@
 /** @jsx createElement */
 
 import {Provider} from 'tinybase/ui-react';
-import React from 'react';
 import {ReposStore} from './stores/ReposStore';
 import {Ui} from './ui';
 import {UiStore} from './stores/UiStore';
 import {UserStore} from './stores/UserStore';
-
-const {createElement} = React;
+import {createElement} from './common';
 
 export const App = () => {
   return (

@@ -1,3 +1,5 @@
+/** @jsx createElement */
+
 import {Card, Collapsible, Tag} from 'tinywidgets';
 import {ISSUES_STORE, ISSUES_TABLE} from '../../../stores/IssuesStore';
 import {ISSUE_ID_VALUE, REPO_ID_VALUE, UI_STORE} from '../../../stores/UiStore';
@@ -10,7 +12,7 @@ import {useHasRow, useValue} from 'tinybase/ui-react';
 import {CircleDot} from 'lucide-react';
 import {Issue} from './Issue';
 import {IssueList} from './IssueList';
-import React from 'react';
+import {createElement} from '../../../common';
 
 export const Issues = () => {
   const repoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';

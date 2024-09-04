@@ -1,3 +1,5 @@
+/** @jsx createElement */
+
 import {BookMarked, GitFork, Star} from 'lucide-react';
 import {Button, Tag} from 'tinywidgets';
 import {
@@ -8,8 +10,13 @@ import {
   REPOS_TABLE,
 } from '../../stores/ReposStore';
 import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
-import React, {useEffect, useRef} from 'react';
-import {SCROLL_OPTIONS, formatNumber} from '../common/common';
+import {
+  SCROLL_OPTIONS,
+  createElement,
+  formatNumber,
+  useEffect,
+  useRef,
+} from '../../common';
 import {useCell, useSetValueCallback} from 'tinybase/ui-react';
 
 export const RepoLink = ({

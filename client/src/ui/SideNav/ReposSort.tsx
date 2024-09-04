@@ -1,3 +1,5 @@
+/** @jsx createElement */
+
 import {
   REPOS_CREATED_AT_CELL,
   REPOS_FORKS_COUNT_CELL,
@@ -8,8 +10,9 @@ import {
   REPOS_UPDATED_AT_CELL,
 } from '../../stores/ReposStore';
 import {REPOS_SORT_CELL_VALUE, UI_STORE} from '../../stores/UiStore';
-import React, {type ChangeEvent} from 'react';
 import {useSetValueCallback, useValue} from 'tinybase/ui-react';
+import type {ChangeEvent} from 'react';
+import {createElement} from '../../common';
 
 const OPTIONS = {
   [REPOS_NAME_CELL]: 'name',
@@ -34,7 +37,7 @@ export const ReposSort = () => {
   );
 
   return (
-    <div className="sort">
+    <div>
       <label>Repos sorted by</label>
       <select onChange={handleChange} value={reposSortCell}>
         {Object.entries(OPTIONS).map(([key, label]) => (
