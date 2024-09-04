@@ -1,10 +1,5 @@
 import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {
-  type Store,
-  type Table,
-  createCustomPersister,
-  createStore,
-} from 'tinybase';
+import {type Store, type Table, createStore} from 'tinybase';
 import {hasToken, octokit} from './octokit';
 import {
   useCell,
@@ -12,11 +7,12 @@ import {
   useCreateStore,
   useProvideStore,
 } from 'tinybase/ui-react';
+import {createCustomPersister} from 'tinybase/persisters';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser';
 
 type RepoData = {
   full_name: string;
-  owner: {login: string};
+  owner: {login: string; avatar_url: string};
   name: string;
   archived?: boolean;
   created_at?: string | null;
@@ -40,6 +36,7 @@ export const REPOS_STORE = 'repos';
 export const REPOS_TABLE = 'repos';
 export const REPOS_GROUP_CELL = 'group';
 export const REPOS_OWNER_CELL = 'owner';
+export const REPOS_AVATAR_URL_CELL = 'avatarUrl';
 export const REPOS_NAME_CELL = 'name';
 export const REPOS_ARCHIVED_CELL = 'archived';
 export const REPOS_CREATED_AT_CELL = 'createdAt';
@@ -123,6 +120,7 @@ const createGithubReposLoadingPersister = (store: Store) =>
           reposTable[full_name] = {
             [REPOS_GROUP_CELL]: group,
             [REPOS_OWNER_CELL]: owner.login,
+            [REPOS_AVATAR_URL_CELL]: owner.avatar_url,
             [REPOS_NAME_CELL]: name,
             [REPOS_ARCHIVED_CELL]: archived ?? false,
             [REPOS_CREATED_AT_CELL]: created_at ?? '',

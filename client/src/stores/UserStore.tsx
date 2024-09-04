@@ -1,9 +1,4 @@
-import {
-  type Store,
-  type Values,
-  createCustomPersister,
-  createStore,
-} from 'tinybase';
+import {type Store, type Values, createStore} from 'tinybase';
 import {hasToken, octokit} from './octokit';
 import {
   useCreatePersister,
@@ -11,6 +6,7 @@ import {
   useProvideStore,
 } from 'tinybase/ui-react';
 import {REFRESH_INTERVAL} from './common';
+import {createCustomPersister} from 'tinybase/persisters';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser';
 
 export const USER_STORE = 'user';

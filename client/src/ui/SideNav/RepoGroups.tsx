@@ -20,12 +20,11 @@ import {
 } from '../../stores/UiStore';
 import React from 'react';
 import {RepoGroup} from './RepoGroup';
-import {ReposSort} from './ReposSort';
 import {createIndexes} from 'tinybase';
 
 export const REPO_GROUP_INDEX = 'repoOrg';
 
-export const OrgList = () => {
+export const RepoGroups = () => {
   const currentRepoId = (useValue(REPO_ID_VALUE, UI_STORE) as string) ?? '';
   const reposSortCell =
     (useValue(REPOS_SORT_CELL_VALUE, UI_STORE) as string) ??
@@ -53,13 +52,9 @@ export const OrgList = () => {
 
   return (
     <Provider store={reposStore} indexes={reposIndexes}>
-      <ReposSort />
-      <hr />
-      <ul id="repoGroups">
-        {useSliceIds(REPO_GROUP_INDEX, reposIndexes).map((group) => (
-          <RepoGroup group={group} currentRepoId={currentRepoId} key={group} />
-        ))}
-      </ul>
+      {useSliceIds(REPO_GROUP_INDEX, reposIndexes).map((group) => (
+        <RepoGroup group={group} currentRepoId={currentRepoId} key={group} />
+      ))}
     </Provider>
   );
 };

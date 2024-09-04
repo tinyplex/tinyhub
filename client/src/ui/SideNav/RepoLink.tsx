@@ -1,7 +1,8 @@
+import {BookMarked, GitFork, Star} from 'lucide-react';
+import {Button, Tag} from 'tinywidgets';
 import {
   REPOS_FORK_CELL,
   REPOS_NAME_CELL,
-  REPOS_OWNER_CELL,
   REPOS_STARGAZERS_COUNT_CELL,
   REPOS_STORE,
   REPOS_TABLE,
@@ -18,16 +19,6 @@ export const RepoLink = ({
   readonly repoId: string;
   readonly isCurrent: boolean;
 }) => {
-  const classes: string[] = ['icon'];
-  if (isCurrent) {
-    classes.push('current');
-  }
-  classes.push(
-    useCell(REPOS_TABLE, repoId, REPOS_FORK_CELL, REPOS_STORE)
-      ? 'fork'
-      : 'repo',
-  );
-
   const handleClick = useSetValueCallback(
     REPO_ID_VALUE,
     () => repoId,
@@ -35,7 +26,7 @@ export const RepoLink = ({
     UI_STORE,
   );
 
-  const ref = useRef<HTMLLIElement>(null);
+  const ref = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (isCurrent) {
       ref.current?.scrollIntoView(SCROLL_OPTIONS);
@@ -43,27 +34,30 @@ export const RepoLink = ({
   }, [isCurrent]);
 
   return (
-    <li
+    <Button
+      variant="item"
       ref={ref}
       onClick={handleClick}
-      title={
-        useCell(REPOS_TABLE, repoId, REPOS_OWNER_CELL, REPOS_STORE) +
-        '/' +
-        useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)
+      icon={
+        useCell(REPOS_TABLE, repoId, REPOS_FORK_CELL, REPOS_STORE)
+          ? GitFork
+          : BookMarked
       }
-      className={classes.join(' ')}
-    >
-      {useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)}
-      <span className="meta star">
-        {formatNumber(
-          useCell(
-            REPOS_TABLE,
-            repoId,
-            REPOS_STARGAZERS_COUNT_CELL,
-            REPOS_STORE,
-          ),
-        )}
-      </span>
-    </li>
+      label={useCell(REPOS_TABLE, repoId, REPOS_NAME_CELL, REPOS_STORE)}
+      labelRight={
+        <Tag
+          icon={Star}
+          label={formatNumber(
+            useCell(
+              REPOS_TABLE,
+              repoId,
+              REPOS_STARGAZERS_COUNT_CELL,
+              REPOS_STORE,
+            ),
+          )}
+        />
+      }
+      current={isCurrent}
+    />
   );
 };

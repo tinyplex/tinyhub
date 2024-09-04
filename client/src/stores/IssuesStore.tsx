@@ -1,11 +1,6 @@
 import {PER_PAGE, REFRESH_INTERVAL} from './common';
 import {REPO_ID_VALUE, UI_STORE} from './UiStore';
-import {
-  type Store,
-  type Table,
-  createCustomPersister,
-  createStore,
-} from 'tinybase';
+import {type Store, type Table, createStore} from 'tinybase';
 import {
   useCell,
   useCreatePersister,
@@ -13,6 +8,7 @@ import {
   useProvideStore,
   useValue,
 } from 'tinybase/ui-react';
+import {createCustomPersister} from 'tinybase/persisters';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser';
 import {octokit} from './octokit';
 

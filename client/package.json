@@ -15,29 +15,31 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.16.1",
-    "@typescript-eslint/parser": "^7.16.1",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "@typescript-eslint/parser": "^8.4.0",
     "@vanilla-extract/css": "^1.15.5",
     "@vanilla-extract/vite-plugin": "^4.0.15",
     "@vitejs/plugin-react": "^4.3.1",
-    "cspell": "^8.11.0",
+    "cspell": "^8.14.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.34.4",
+    "eslint-plugin-react": "^7.35.2",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.8",
+    "eslint-plugin-react-refresh": "^0.4.11",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4",
-    "vite-plugin-minify": "^1.5.2",
-    "tinywidgets": "link:tinywidgets"
+    "typescript": "^5.5.4",
+    "vite": "^5.4.3",
+    "vite-plugin-minify": "^2.0.0",
+    "tinywidgets": "^0.0.3"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^10.0.0",
+    "lucide-react": "^0.438.0",
     "octokit": "^4.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tinybase": "^5.1.0"
+    "tinybase": "^5.2.1"
   }
 }
