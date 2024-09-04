@@ -8,11 +8,6 @@ import {createStore} from 'tinybase';
 
 export const UI_STORE = 'ui';
 
-export const DARK_MODE_VALUE = 'darkMode';
-export const AUTO = 'auto';
-export const DARK = 'dark';
-export const LIGHT = 'light';
-
 export const REPOS_SORT_CELL_VALUE = 'reposSortCell';
 export const REPO_ID_VALUE = 'repoId';
 export const ISSUES_SORT_CELL_VALUE = 'issuesSortCell';
