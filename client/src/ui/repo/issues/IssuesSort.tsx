@@ -6,9 +6,10 @@ import {
   ISSUES_TITLE_CELL,
   ISSUES_UPDATED_AT_CELL,
 } from '../../../stores/IssuesStore';
-import {ISSUES_SORT_CELL_VALUE, UI_STORE} from '../../../stores/UiStore';
 import {useSetValueCallback, useValue} from 'tinybase/ui-react';
 import type {ChangeEvent} from 'react';
+import {ISSUES_SORT_CELL_VALUE} from '../../../stores/SettingsStore';
+import {UI_STORE} from '../../../stores/UiStore';
 import {createElement} from '../../common';
 
 const OPTIONS = {

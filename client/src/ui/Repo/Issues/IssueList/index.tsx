@@ -1,6 +1,5 @@
 /** @jsx createElement */
 
-import {ISSUES_SORT_CELL_VALUE, UI_STORE} from '../../../../stores/UiStore';
 import {
   ISSUES_STORE,
   ISSUES_TABLE,
@@ -8,7 +7,9 @@ import {
   ISSUES_UPDATED_AT_CELL,
 } from '../../../../stores/IssuesStore';
 import {useSortedRowIds, useValue} from 'tinybase/ui-react';
+import {ISSUES_SORT_CELL_VALUE} from '../../../../stores/SettingsStore';
 import {IssueLink} from './IssueLink';
+import {UI_STORE} from '../../../../stores/UiStore';
 import {createElement} from '../../../common';
 
 export const IssueList = ({

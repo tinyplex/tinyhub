@@ -2,6 +2,7 @@
 
 import {Provider} from 'tinybase/ui-react';
 import {ReposStore} from './stores/ReposStore';
+import {SettingsStore} from './stores/SettingsStore';
 import {Ui} from './ui';
 import {UiStore} from './stores/UiStore';
 import {UserStore} from './stores/UserStore';
@@ -13,6 +14,8 @@ export const App = () => {
       <UserStore />
       <ReposStore />
       <UiStore />
+      <SettingsStore />
+
       <Ui />
     </Provider>
   );

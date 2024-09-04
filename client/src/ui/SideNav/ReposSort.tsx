@@ -9,9 +9,10 @@ import {
   REPOS_STARGAZERS_COUNT_CELL,
   REPOS_UPDATED_AT_CELL,
 } from '../../stores/ReposStore';
-import {REPOS_SORT_CELL_VALUE, UI_STORE} from '../../stores/UiStore';
 import {useSetValueCallback, useValue} from 'tinybase/ui-react';
 import type {ChangeEvent} from 'react';
+import {REPOS_SORT_CELL_VALUE} from '../../stores/SettingsStore';
+import {UI_STORE} from '../../stores/UiStore';
 import {createElement} from '../common';
 
 const OPTIONS = {

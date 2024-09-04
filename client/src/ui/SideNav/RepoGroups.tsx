@@ -15,11 +15,8 @@ import {
   REPOS_STORE,
   REPOS_TABLE,
 } from '../../stores/ReposStore';
-import {
-  REPOS_SORT_CELL_VALUE,
-  REPO_ID_VALUE,
-  UI_STORE,
-} from '../../stores/UiStore';
+import {REPO_ID_VALUE, UI_STORE} from '../../stores/UiStore';
+import {REPOS_SORT_CELL_VALUE} from '../../stores/SettingsStore';
 import {RepoGroup} from './RepoGroup';
 import {createElement} from '../common';
 import {createIndexes} from 'tinybase';
