@@ -1,4 +1,4 @@
-import {accent, accentContrast} from '../../../tinywidgets/src/index.css';
+import {accent, accentContrast} from 'tinywidgets/css';
 import {globalStyle} from '@vanilla-extract/css';
 
 globalStyle('*', {
