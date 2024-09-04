@@ -7,20 +7,19 @@ import {Inspector} from 'tinybase/ui-react-inspector';
 import {Repo} from './Repo';
 import {SideNav} from './SideNav';
 import {Title} from './Title';
-import {USER_STORE} from '../stores/UserStore';
 import {Ui as UiBase} from 'tinywidgets';
 import {Welcome} from './Welcome';
-import {useHasValues} from 'tinybase/ui-react';
+import {useUserValue} from '../stores/UserStore';
 
 export const Ui = () => {
-  const hasUser = useHasValues(USER_STORE);
+  const name = useUserValue('name');
   return (
     <>
       <UiBase
         title={<Title />}
         topNavRight={<Auth />}
-        sideNav={hasUser ? <SideNav /> : null}
-        article={hasUser ? <Repo /> : <Welcome />}
+        sideNav={name ? <SideNav /> : null}
+        article={name ? <Repo /> : <Welcome />}
       />
       <Inspector />
     </>

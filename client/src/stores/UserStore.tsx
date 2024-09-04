@@ -1,24 +1,48 @@
-import {type Store, type Values, createStore} from 'tinybase';
-import {hasToken, octokit} from './octokit';
+import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
-  useCreatePersister,
+  type NoTablesSchema,
+  type Store,
+  type Value,
+  type Values,
+  createStore,
+} from 'tinybase/with-schemas';
+import {hasToken, octokit} from './octokit';
+import {REFRESH_INTERVAL} from './common';
+import {createCustomPersister} from 'tinybase/persisters/with-schemas';
+import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
+
+const STORE_ID = 'user';
+
+const VALUES_SCHEMA = {
+  name: {type: 'string'},
+  avatarUrl: {type: 'string'},
+} as const;
+type Schemas = [NoTablesSchema, typeof VALUES_SCHEMA];
+const {
   useCreateStore,
   useProvideStore,
-} from 'tinybase/ui-react';
-import {REFRESH_INTERVAL} from './common';
-import {createCustomPersister} from 'tinybase/persisters';
-import {createLocalPersister} from 'tinybase/persisters/persister-browser';
+  useCreatePersister,
+  useValue,
+  useSetValueCallback,
+} = UiReact as UiReact.WithSchemas<Schemas>;
+type ValueIds = keyof typeof VALUES_SCHEMA;
 
-export const USER_STORE = 'user';
+export const useUserValue = <ValueId extends ValueIds>(valueId: ValueId) =>
+  useValue<ValueId>(valueId, STORE_ID);
 
-export const NAME_VALUE = 'name';
-export const AVATAR_URL_VALUE = 'avatarUrl';
+export const useSetUserValueCallback = <Parameter, ValueId extends ValueIds>(
+  valueId: ValueId,
+  getValue: (parameter: Parameter) => Value<Schemas[1], ValueId>,
+  getValueDeps?: React.DependencyList,
+) => useSetValueCallback(valueId, getValue, getValueDeps, STORE_ID);
 
 export const UserStore = () => {
-  const userStore = useCreateStore(createStore);
+  const userStore = useCreateStore(() =>
+    createStore().setValuesSchema(VALUES_SCHEMA),
+  );
   useCreatePersister(
     userStore,
-    (userStore) => createLocalPersister(userStore, USER_STORE),
+    (userStore) => createLocalPersister(userStore, STORE_ID),
     [],
     async (persister) => {
       await persister.startAutoLoad();
@@ -36,11 +60,11 @@ export const UserStore = () => {
     [],
   );
 
-  useProvideStore(USER_STORE, userStore);
+  useProvideStore(STORE_ID, userStore);
   return null;
 };
 
-const createGithubAuthenticatedUserLoadingPersister = (store: Store) =>
+const createGithubAuthenticatedUserLoadingPersister = (store: Store<Schemas>) =>
   createCustomPersister(
     store,
     async () => {
@@ -51,9 +75,9 @@ const createGithubAuthenticatedUserLoadingPersister = (store: Store) =>
           return [
             {},
             {
-              [NAME_VALUE]: name ?? login,
-              [AVATAR_URL_VALUE]: avatar_url,
-            } as Values,
+              name: name ?? login,
+              avatarUrl: avatar_url,
+            } as Values<Schemas[1]>,
           ];
         }
       }
