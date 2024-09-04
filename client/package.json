@@ -31,8 +31,7 @@
     "prettier": "^3.3.3",
     "typescript": "^5.5.4",
     "vite": "^5.4.3",
-    "vite-plugin-minify": "^2.0.0",
-    "tinywidgets": "^0.0.3"
+    "vite-plugin-minify": "^2.0.0"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^10.0.0",
@@ -40,6 +39,7 @@
     "octokit": "^4.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tinybase": "^5.2.1"
+    "tinybase": "^5.2.1",
+    "tinywidgets": "^0.0.4"
   }
 }
