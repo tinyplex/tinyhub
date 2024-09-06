@@ -1,14 +1,9 @@
 /** @jsx createElement */
 
-import {
-  ISSUES_STORE,
-  ISSUES_TABLE,
-  ISSUES_TITLE_CELL,
-} from '../../../../stores/IssuesStore';
 import {IssueLink} from './IssueLink';
-import {createElement} from '../../../common';
+import {createElement} from '../../../../common';
+import {useIssuesSortedRowIds} from '../../../../stores/IssuesStore';
 import {useSettingsValue} from '../../../../stores/SettingsStore';
-import {useSortedRowIds} from 'tinybase/ui-react';
 
 export const IssueList = ({
   currentIssueId,
@@ -16,15 +11,10 @@ export const IssueList = ({
   readonly currentIssueId: string;
 }) => {
   const issuesSortCell = useSettingsValue('issuesSortCell');
-  const issuesSortAscending = issuesSortCell == ISSUES_TITLE_CELL;
-
-  const issueIds = useSortedRowIds(
-    ISSUES_TABLE,
-    issuesSortCell,
+  const issuesSortAscending = issuesSortCell == 'title';
+  const issueIds = useIssuesSortedRowIds(
+    issuesSortCell as any,
     !issuesSortAscending,
-    undefined,
-    undefined,
-    ISSUES_STORE,
   );
 
   return issueIds.map((issueId) => (

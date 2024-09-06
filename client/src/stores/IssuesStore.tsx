@@ -1,36 +1,76 @@
+import * as UiReact from 'tinybase/ui-react/with-schemas';
+import type {Cell, Id, NoValuesSchema} from 'tinybase/with-schemas';
 import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {type Store, type Table, createStore} from 'tinybase';
-import {
-  useCell,
-  useCreatePersister,
-  useCreateStore,
-  useProvideStore,
-} from 'tinybase/ui-react';
-import {createCustomPersister} from 'tinybase/persisters';
-import {createLocalPersister} from 'tinybase/persisters/persister-browser';
+import {type Store, type Table, createStore} from 'tinybase/with-schemas';
+import type {DependencyList} from 'react';
+import {createCustomPersister} from 'tinybase/persisters/with-schemas';
+import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
 import {octokit} from './octokit';
 import {useUiValue} from './UiStore';
 
-export const ISSUES_STORE = 'issues';
+type AsId<Key> = Exclude<Key & Id, number>;
 
-export const ISSUES_TABLE = 'issues';
-export const ISSUES_TITLE_CELL = 'title';
-export const ISSUES_IS_PULL_REQUEST_CELL = 'pullRequest';
-export const ISSUES_BODY_HTML_CELL = 'bodyHtml';
-export const ISSUES_CREATED_AT_CELL = 'createdAt';
-export const ISSUES_UPDATED_AT_CELL = 'updatedAt';
+const STORE_ID = 'issues';
+const TABLE_ID = 'issues';
+
+const TABLES_SCHEMA = {
+  issues: {
+    title: {type: 'string', default: ''},
+    pullRequest: {type: 'boolean', default: false},
+    bodyHtml: {type: 'string', default: ''},
+    createdAt: {type: 'string', default: ''},
+    updatedAt: {type: 'string', default: ''},
+  },
+} as const;
+type Schemas = [typeof TABLES_SCHEMA, NoValuesSchema];
+const {
+  useCreateStore,
+  useProvideStore,
+  useCreatePersister,
+  useCell,
+  useSetCellCallback,
+  useSortedRowIds,
+} = UiReact as UiReact.WithSchemas<Schemas>;
+type TableIds = keyof typeof TABLES_SCHEMA;
+type CellIds<TableId extends TableIds> = AsId<
+  keyof (typeof TABLES_SCHEMA)[TableId]
+>;
+
+export const useIssueCell = <CellId extends CellIds<typeof TABLE_ID>>(
+  issueId: Id,
+  cellId: CellId,
+) => useCell(TABLE_ID, issueId, cellId, STORE_ID);
+
+export const useSetIssueCellCallback = <
+  Parameter,
+  CellId extends CellIds<typeof TABLE_ID>,
+>(
+  issueId: Id,
+  cellId: CellId,
+  getCell: (parameter: Parameter) => Cell<Schemas[0], typeof TABLE_ID, CellId>,
+  getCellDeps?: DependencyList,
+) =>
+  useSetCellCallback(TABLE_ID, issueId, cellId, getCell, getCellDeps, STORE_ID);
+
+export const useIssuesSortedRowIds = (
+  cellId: CellIds<typeof TABLE_ID>,
+  descending: boolean,
+) =>
+  useSortedRowIds(TABLE_ID, cellId, descending, undefined, undefined, STORE_ID);
 
 export const IssuesStore = () => {
   const currentRepoId = useUiValue('repoId');
-
-  const issuesStore = useCreateStore(createStore, [currentRepoId]);
+  const issuesStore = useCreateStore(
+    () => createStore().setTablesSchema(TABLES_SCHEMA),
+    [currentRepoId],
+  );
   useCreatePersister(
     issuesStore,
     (issuesStore) => {
       if (currentRepoId) {
         return createLocalPersister(
           issuesStore,
-          currentRepoId + '/' + ISSUES_STORE,
+          currentRepoId + '/' + STORE_ID,
         );
       }
     },
@@ -56,19 +96,19 @@ export const IssuesStore = () => {
     [],
   );
 
-  useProvideStore(ISSUES_STORE, issuesStore);
+  useProvideStore(STORE_ID, issuesStore);
   return null;
 };
 
-export const useIssueCell = (issueId: string, cellId: string) =>
-  useCell(ISSUES_TABLE, issueId, cellId, ISSUES_STORE);
-
-const createGithubIssuesLoadingPersister = (store: Store, repoId: string) =>
+const createGithubIssuesLoadingPersister = (
+  store: Store<Schemas>,
+  repoId: string,
+) =>
   createCustomPersister(
     store,
     async () => {
       const [owner, repo] = repoId.split('/');
-      const issuesTable: Table = {};
+      const issues: Table<Schemas[0], typeof TABLE_ID> = {};
       (
         await octokit.rest.issues.listForRepo({
           owner,
@@ -78,15 +118,15 @@ const createGithubIssuesLoadingPersister = (store: Store, repoId: string) =>
         })
       ).data.forEach(
         ({number, title, pull_request, body_html, created_at, updated_at}) =>
-          (issuesTable[number] = {
-            [ISSUES_TITLE_CELL]: title,
-            [ISSUES_IS_PULL_REQUEST_CELL]: pull_request != undefined,
-            [ISSUES_BODY_HTML_CELL]: body_html ?? '',
-            [ISSUES_CREATED_AT_CELL]: created_at,
-            [ISSUES_UPDATED_AT_CELL]: updated_at,
+          (issues[number] = {
+            title,
+            pullRequest: pull_request != undefined,
+            bodyHtml: body_html ?? '',
+            createdAt: created_at,
+            updatedAt: updated_at,
           }),
       );
-      return [{[ISSUES_TABLE]: issuesTable}, {}];
+      return [{issues}, {}];
     },
     async () => {},
     (listener) => setInterval(listener, REFRESH_INTERVAL),

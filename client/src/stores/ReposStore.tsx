@@ -1,14 +1,19 @@
-import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {type Store, type Table, createStore} from 'tinybase';
-import {hasToken, octokit} from './octokit';
+import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
-  useCell,
-  useCreatePersister,
-  useCreateStore,
-  useProvideStore,
-} from 'tinybase/ui-react';
-import {createCustomPersister} from 'tinybase/persisters';
-import {createLocalPersister} from 'tinybase/persisters/persister-browser';
+  type Id,
+  type NoValuesSchema,
+  type Store,
+  type Table,
+  createIndexes,
+  createStore,
+} from 'tinybase/with-schemas';
+import {PER_PAGE, REFRESH_INTERVAL} from './common';
+import {hasToken, octokit} from './octokit';
+import {createCustomPersister} from 'tinybase/persisters/with-schemas';
+import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
+import {useSettingsValue} from './SettingsStore';
+
+type AsId<Key> = Exclude<Key & Id, number>;
 
 type RepoData = {
   full_name: string;
@@ -31,36 +36,88 @@ type RepoData = {
   visibility?: string;
 };
 
-export const REPOS_STORE = 'repos';
+const STORE_ID = 'repos';
+const TABLE_ID = 'repos';
 
-export const REPOS_TABLE = 'repos';
-export const REPOS_GROUP_CELL = 'group';
-export const REPOS_OWNER_CELL = 'owner';
-export const REPOS_AVATAR_URL_CELL = 'avatarUrl';
-export const REPOS_NAME_CELL = 'name';
-export const REPOS_ARCHIVED_CELL = 'archived';
-export const REPOS_CREATED_AT_CELL = 'createdAt';
-export const REPOS_DESCRIPTION_CELL = 'description';
-export const REPOS_DISABLED_CELL = 'disabled';
-export const REPOS_FORK_CELL = 'fork';
-export const REPOS_FORKS_COUNT_CELL = 'forksCount';
-export const REPOS_HOMEPAGE_CELL = 'homepage';
-export const REPOS_LANGUAGE_CELL = 'language';
-export const REPOS_LICENSE_CELL = 'license';
-export const REPOS_OPEN_ISSUES_COUNT_CELL = 'openIssuesCount';
-export const REPOS_SIZE_CELL = 'size';
-export const REPOS_STARGAZERS_COUNT_CELL = 'stargazersCount';
-export const REPOS_TOPICS_CELL = 'topics';
-export const REPOS_UPDATED_AT_CELL = 'updatedAt';
-export const REPOS_VISIBILITY_CELL = 'visibility';
+const INDEXES_ID = 'repos';
+const INDEX_ID = 'reposByGroup';
 
-export const STARRED_GROUP = 'Starred';
+const TABLES_SCHEMA = {
+  repos: {
+    group: {type: 'string', default: ''},
+    owner: {type: 'string', default: ''},
+    avatarUrl: {type: 'string', default: ''},
+    name: {type: 'string', default: ''},
+    archived: {type: 'boolean', default: false},
+    createdAt: {type: 'string', default: ''},
+    description: {type: 'string', default: ''},
+    disabled: {type: 'boolean', default: false},
+    fork: {type: 'boolean', default: false},
+    forksCount: {type: 'number', default: 0},
+    homepage: {type: 'string', default: ''},
+    language: {type: 'string', default: ''},
+    license: {type: 'string', default: ''},
+    openIssuesCount: {type: 'number', default: 0},
+    size: {type: 'number', default: 0},
+    stargazersCount: {type: 'number', default: 0},
+    topics: {type: 'string', default: ''},
+    updatedAt: {type: 'string', default: ''},
+    visibility: {type: 'string', default: ''},
+  },
+} as const;
+type Schemas = [typeof TABLES_SCHEMA, NoValuesSchema];
+const {
+  useCell,
+  useCreatePersister,
+  useCreateStore,
+  useProvideStore,
+  useCreateIndexes,
+  useProvideIndexes,
+  useSliceRowIds,
+  useSliceIds,
+} = UiReact as UiReact.WithSchemas<Schemas>;
+type TableIds = keyof typeof TABLES_SCHEMA;
+type CellIds<TableId extends TableIds> = AsId<
+  keyof (typeof TABLES_SCHEMA)[TableId]
+>;
+
+export const useRepoCell = <CellId extends CellIds<typeof TABLE_ID>>(
+  repoId: Id,
+  cellId: CellId,
+) => useCell(TABLE_ID, repoId, cellId, STORE_ID);
+
+export const useGroupIds = () => useSliceIds(INDEX_ID, INDEXES_ID);
+
+export const useGroupRepoIds = (group: string) =>
+  useSliceRowIds(INDEX_ID, group, INDEXES_ID);
 
 export const ReposStore = () => {
-  const reposStore = useCreateStore(createStore);
+  const reposStore = useCreateStore(() =>
+    createStore().setTablesSchema(TABLES_SCHEMA),
+  );
+
+  const reposSortCell = useSettingsValue('reposSortCell') as CellIds<
+    typeof TABLE_ID
+  >;
+  const reposSortDirection =
+    reposSortCell == 'name' || reposSortCell == 'fork' ? 1 : -1;
+  const reposIndexes = useCreateIndexes(
+    reposStore,
+    (reposStore) =>
+      createIndexes(reposStore).setIndexDefinition(
+        INDEX_ID,
+        TABLE_ID,
+        'group',
+        reposSortCell,
+        undefined,
+        (cell1, cell2) => (cell1 > cell2 ? 1 : -1) * reposSortDirection,
+      ),
+    [reposSortCell],
+  );
+
   useCreatePersister(
     reposStore,
-    (reposStore) => createLocalPersister(reposStore, REPOS_STORE),
+    (reposStore) => createLocalPersister(reposStore, STORE_ID),
     [],
     async (persister) => {
       await persister.startAutoLoad();
@@ -80,19 +137,17 @@ export const ReposStore = () => {
     [],
   );
 
-  useProvideStore(REPOS_STORE, reposStore);
+  useProvideStore(STORE_ID, reposStore);
+  useProvideIndexes(INDEXES_ID, reposIndexes!);
   return null;
 };
 
-export const useRepoCell = (repoId: string, cellId: string) =>
-  useCell(REPOS_TABLE, repoId, cellId, REPOS_STORE);
-
-const createGithubReposLoadingPersister = (store: Store) =>
+const createGithubReposLoadingPersister = (store: Store<Schemas>) =>
   createCustomPersister(
     store,
     async () => {
       if (hasToken()) {
-        const reposTable: Table = {};
+        const repos: Table<Schemas[0], typeof TABLE_ID> = {};
 
         const addRepo = (
           {
@@ -117,26 +172,26 @@ const createGithubReposLoadingPersister = (store: Store) =>
           }: RepoData,
           group: string = owner.login,
         ) => {
-          reposTable[full_name] = {
-            [REPOS_GROUP_CELL]: group,
-            [REPOS_OWNER_CELL]: owner.login,
-            [REPOS_AVATAR_URL_CELL]: owner.avatar_url,
-            [REPOS_NAME_CELL]: name,
-            [REPOS_ARCHIVED_CELL]: archived ?? false,
-            [REPOS_CREATED_AT_CELL]: created_at ?? '',
-            [REPOS_DESCRIPTION_CELL]: description ?? '',
-            [REPOS_DISABLED_CELL]: disabled ?? false,
-            [REPOS_FORK_CELL]: fork,
-            [REPOS_FORKS_COUNT_CELL]: forks_count ?? 0,
-            [REPOS_HOMEPAGE_CELL]: homepage ?? '',
-            [REPOS_LANGUAGE_CELL]: language ?? '',
-            [REPOS_LICENSE_CELL]: license?.name ?? '',
-            [REPOS_OPEN_ISSUES_COUNT_CELL]: open_issues_count ?? 0,
-            [REPOS_SIZE_CELL]: size ?? 0,
-            [REPOS_STARGAZERS_COUNT_CELL]: stargazers_count ?? 0,
-            [REPOS_TOPICS_CELL]: topics?.join(', ') ?? '',
-            [REPOS_UPDATED_AT_CELL]: updated_at ?? '',
-            [REPOS_VISIBILITY_CELL]: visibility ?? '',
+          repos[full_name] = {
+            group,
+            owner: owner.login,
+            avatarUrl: owner.avatar_url,
+            name,
+            archived: archived ?? false,
+            createdAt: created_at ?? '',
+            description: description ?? '',
+            disabled: disabled ?? false,
+            fork,
+            forksCount: forks_count ?? 0,
+            homepage: homepage ?? '',
+            language: language ?? '',
+            license: license?.name ?? '',
+            openIssuesCount: open_issues_count ?? 0,
+            size: size ?? 0,
+            stargazersCount: stargazers_count ?? 0,
+            topics: topics?.join(', ') ?? '',
+            updatedAt: updated_at ?? '',
+            visibility: visibility ?? '',
           };
         };
 
@@ -144,7 +199,7 @@ const createGithubReposLoadingPersister = (store: Store) =>
           await octokit.rest.activity.listReposStarredByAuthenticatedUser(
             PER_PAGE,
           )
-        ).data.forEach((repo) => addRepo(repo, STARRED_GROUP));
+        ).data.forEach((repo) => addRepo(repo, 'Starred'));
 
         (
           await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)
@@ -162,7 +217,7 @@ const createGithubReposLoadingPersister = (store: Store) =>
           ),
         );
 
-        return [{[REPOS_TABLE]: reposTable}, {}];
+        return [{repos}, {}];
       }
       return [{}, {}];
     },

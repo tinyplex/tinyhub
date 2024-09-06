@@ -2,10 +2,9 @@
 
 import {Collapsible, Tag} from 'tinywidgets';
 import {Star, Users} from 'lucide-react';
-import {REPO_GROUP_INDEX} from './RepoGroups';
 import {RepoLink} from './RepoLink';
-import {createElement} from '../common';
-import {useSliceRowIds} from 'tinybase/ui-react';
+import {createElement} from '../../common';
+import {useGroupRepoIds} from '../../stores/ReposStore';
 
 export const RepoGroup = ({
   group,
@@ -14,7 +13,7 @@ export const RepoGroup = ({
   readonly group: string;
   readonly currentRepoId: string;
 }) => {
-  const repoIds = useSliceRowIds(REPO_GROUP_INDEX, group);
+  const repoIds = useGroupRepoIds(group);
   return (
     <Collapsible
       id={`repoGroup/${group}`}

@@ -3,7 +3,7 @@
 import {Axis, Card, Hr} from 'tinywidgets';
 import {card, logo} from './index.css';
 import {Auth} from '../Auth';
-import {createElement} from '../common';
+import {createElement} from '../../common';
 
 export const Welcome = () => {
   return (

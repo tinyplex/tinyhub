@@ -1,23 +1,17 @@
 /** @jsx createElement */
 
 import {
-  ISSUES_CREATED_AT_CELL,
-  ISSUES_IS_PULL_REQUEST_CELL,
-  ISSUES_TITLE_CELL,
-  ISSUES_UPDATED_AT_CELL,
-} from '../../../stores/IssuesStore';
-import {
   useSetSettingsValueCallback,
   useSettingsValue,
 } from '../../../stores/SettingsStore';
 import type {ChangeEvent} from 'react';
-import {createElement} from '../../common';
+import {createElement} from '../../../common';
 
 const OPTIONS = {
-  [ISSUES_TITLE_CELL]: 'title',
-  [ISSUES_CREATED_AT_CELL]: 'most recently created',
-  [ISSUES_UPDATED_AT_CELL]: 'most recently updated',
-  [ISSUES_IS_PULL_REQUEST_CELL]: 'pull requests then issues',
+  title: 'title',
+  createdAt: 'most recently created',
+  updatedAt: 'most recently updated',
+  pullRequest: 'pull requests then issues',
 };
 
 export const IssuesSort = () => {

@@ -1,7 +1,7 @@
 /** @jsx createElement */
 /** @jsxFrag Fragment */
 
-import {Fragment, createElement} from '../common.ts';
+import {Fragment, createElement} from '../../common.ts';
 import {Button} from 'tinywidgets';
 import {CircleHelp} from 'lucide-react';
 import {logo} from './index.css.ts';

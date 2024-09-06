@@ -3,7 +3,7 @@
 import {Avatar, Axis, Button} from 'tinywidgets';
 import {LogOut} from 'lucide-react';
 import {SiGithub} from '@icons-pack/react-simple-icons';
-import {createElement} from '../common';
+import {createElement} from '../../common';
 import {useUserValue} from '../../stores/UserStore';
 
 const login = () => location.assign('auth.html');

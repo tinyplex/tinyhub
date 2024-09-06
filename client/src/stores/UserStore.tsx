@@ -7,6 +7,7 @@ import {
   createStore,
 } from 'tinybase/with-schemas';
 import {hasToken, octokit} from './octokit';
+import type {DependencyList} from 'react';
 import {REFRESH_INTERVAL} from './common';
 import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
@@ -33,7 +34,7 @@ export const useUserValue = <ValueId extends ValueIds>(valueId: ValueId) =>
 export const useSetUserValueCallback = <Parameter, ValueId extends ValueIds>(
   valueId: ValueId,
   getValue: (parameter: Parameter) => Value<Schemas[1], ValueId>,
-  getValueDeps?: React.DependencyList,
+  getValueDeps?: DependencyList,
 ) => useSetValueCallback(valueId, getValue, getValueDeps, STORE_ID);
 
 export const UserStore = () => {

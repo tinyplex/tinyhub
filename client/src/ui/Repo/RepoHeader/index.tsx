@@ -10,32 +10,14 @@ import {
   Summary,
   Tag,
 } from 'tinywidgets';
-import {
-  REPOS_ARCHIVED_CELL,
-  REPOS_AVATAR_URL_CELL,
-  REPOS_CREATED_AT_CELL,
-  REPOS_DESCRIPTION_CELL,
-  REPOS_DISABLED_CELL,
-  REPOS_FORKS_COUNT_CELL,
-  REPOS_FORK_CELL,
-  REPOS_HOMEPAGE_CELL,
-  REPOS_LANGUAGE_CELL,
-  REPOS_LICENSE_CELL,
-  REPOS_NAME_CELL,
-  REPOS_OPEN_ISSUES_COUNT_CELL,
-  REPOS_OWNER_CELL,
-  REPOS_STARGAZERS_COUNT_CELL,
-  REPOS_UPDATED_AT_CELL,
-  REPOS_VISIBILITY_CELL,
-  useRepoCell,
-} from '../../../stores/ReposStore';
-import {createElement, formatDate, formatNumber} from '../../common';
+import {createElement, formatDate, formatNumber} from '../../../common';
 import {repoHeader, repoHeaderSummary} from './index.css';
+import {useRepoCell} from '../../../stores/ReposStore';
 import {useUiValue} from '../../../stores/UiStore';
 
 export const RepoHeader = () => {
   const repoId = useUiValue('repoId');
-  const homepage = useRepoCell(repoId, REPOS_HOMEPAGE_CELL) as string;
+  const homepage = useRepoCell(repoId, 'homepage') as string;
 
   return (
     <Collapsible
@@ -43,33 +25,34 @@ export const RepoHeader = () => {
       labelRight={
         <Axis>
           <Tag
-            label={useRepoCell(repoId, REPOS_VISIBILITY_CELL)}
+            label={useRepoCell(repoId, 'visibility')}
             icon={Eye}
             variant="accent"
           />
-          {useRepoCell(repoId, REPOS_FORK_CELL) ? (
+          {useRepoCell(repoId, 'fork') ? (
             <Tag label="fork" icon={GitFork} variant="accent" />
           ) : null}
-          {useRepoCell(repoId, REPOS_ARCHIVED_CELL) ? (
+          {useRepoCell(repoId, 'archived') ? (
             <Tag label="archived" icon={Archive} variant="accent" />
           ) : null}
-          {useRepoCell(repoId, REPOS_DISABLED_CELL) ? (
+          {useRepoCell(repoId, 'disabled') ? (
             <Tag label="disabled" icon={ArchiveX} variant="accent" />
           ) : null}
         </Axis>
       }
       id="repoHeader"
+      startOpen={true}
       className={repoHeader}
     >
       <Summary
-        src={useRepoCell(repoId, REPOS_AVATAR_URL_CELL) as string}
-        label={useRepoCell(repoId, REPOS_NAME_CELL)}
+        src={useRepoCell(repoId, 'avatarUrl') as string}
+        label={useRepoCell(repoId, 'name')}
         className={repoHeaderSummary}
       >
-        <p>{useRepoCell(repoId, REPOS_DESCRIPTION_CELL)}</p>
+        <p>{useRepoCell(repoId, 'description')}</p>
         <p>
-          Created {formatDate(useRepoCell(repoId, REPOS_CREATED_AT_CELL))},
-          updated {formatDate(useRepoCell(repoId, REPOS_UPDATED_AT_CELL))}.
+          Created {formatDate(useRepoCell(repoId, 'createdAt'))}, updated{' '}
+          {formatDate(useRepoCell(repoId, 'updatedAt'))}.
         </p>
         {homepage ? (
           <p>
@@ -82,9 +65,9 @@ export const RepoHeader = () => {
       <Card>
         <Detail
           data={{
-            Owner: useRepoCell(repoId, REPOS_OWNER_CELL),
-            Language: useRepoCell(repoId, REPOS_LANGUAGE_CELL),
-            License: useRepoCell(repoId, REPOS_LICENSE_CELL),
+            Owner: useRepoCell(repoId, 'owner'),
+            Language: useRepoCell(repoId, 'language'),
+            License: useRepoCell(repoId, 'license'),
           }}
         />
       </Card>
@@ -92,25 +75,21 @@ export const RepoHeader = () => {
         <Metric
           icon={Star}
           label="Stars"
-          number={formatNumber(
-            useRepoCell(repoId, REPOS_STARGAZERS_COUNT_CELL),
-          )}
+          number={formatNumber(useRepoCell(repoId, 'stargazersCount'))}
         />
       </Card>
       <Card>
         <Metric
           icon={GitFork}
           label="Forks"
-          number={formatNumber(useRepoCell(repoId, REPOS_FORKS_COUNT_CELL))}
+          number={formatNumber(useRepoCell(repoId, 'forksCount'))}
         />
       </Card>
       <Card>
         <Metric
           icon={CircleDot}
           label="Open issues"
-          number={formatNumber(
-            useRepoCell(repoId, REPOS_OPEN_ISSUES_COUNT_CELL),
-          )}
+          number={formatNumber(useRepoCell(repoId, 'openIssuesCount'))}
         />
       </Card>
     </Collapsible>

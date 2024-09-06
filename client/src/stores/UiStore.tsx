@@ -4,6 +4,7 @@ import {
   type Value,
   createStore,
 } from 'tinybase/with-schemas';
+import type {DependencyList} from 'react';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
 
 const STORE_ID = 'ui';
@@ -28,7 +29,7 @@ export const useUiValue = <ValueId extends ValueIds>(valueId: ValueId) =>
 export const useSetUiValueCallback = <Parameter, ValueId extends ValueIds>(
   valueId: ValueId,
   getValue: (parameter: Parameter) => Value<Schemas[1], ValueId>,
-  getValueDeps?: React.DependencyList,
+  getValueDeps?: DependencyList,
 ) => useSetValueCallback(valueId, getValue, getValueDeps, STORE_ID);
 
 export const UiStore = () => {

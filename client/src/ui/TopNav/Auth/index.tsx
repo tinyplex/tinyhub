@@ -1,7 +1,7 @@
 /** @jsx createElement */
 
 import {Avatar, Axis, Button} from 'tinywidgets';
-import {createElement} from '../../common';
+import {createElement} from '../../../common';
 import {useUserValue} from '../../../stores/UserStore';
 
 const login = () => location.assign('auth.html');

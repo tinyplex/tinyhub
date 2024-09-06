@@ -1,18 +1,15 @@
 /** @jsx createElement */
 /** @jsxFrag Fragment */
 
-import {Fragment, createElement} from '../common';
-import {REPOS_STORE, REPOS_TABLE} from '../../stores/ReposStore';
+import {Fragment, createElement} from '../../common';
 import {Issues} from './Issues';
-import {IssuesStore} from '../../stores/IssuesStore';
 import {RepoHeader} from './RepoHeader';
-import {useHasRow} from 'tinybase/ui-react';
+import {useRepoCell} from '../../stores/ReposStore';
 import {useUiValue} from '../../stores/UiStore';
 
 export const Repo = () =>
-  useHasRow(REPOS_TABLE, useUiValue('repoId'), REPOS_STORE) ? (
+  useRepoCell(useUiValue('repoId'), 'name') ? (
     <>
-      <IssuesStore />
       <RepoHeader />
       <Issues />
     </>
