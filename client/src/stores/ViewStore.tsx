@@ -5,9 +5,9 @@ import {
   createStore,
 } from 'tinybase/with-schemas';
 import type {DependencyList} from 'react';
-import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
+import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 
-const STORE_ID = 'ui';
+const STORE_ID = 'view';
 
 const VALUES_SCHEMA = {
   repoId: {type: 'string', default: ''},
@@ -32,13 +32,34 @@ export const useSetUiValueCallback = <Parameter, ValueId extends ValueIds>(
   getValueDeps?: DependencyList,
 ) => useSetValueCallback(valueId, getValue, getValueDeps, STORE_ID);
 
-export const UiStore = () => {
-  const uiStore = useCreateStore(() =>
+export const ViewStore = () => {
+  const viewStore = useCreateStore(() =>
     createStore().setValuesSchema(VALUES_SCHEMA),
   );
   useCreatePersister(
-    uiStore,
-    (uiStore) => createLocalPersister(uiStore, STORE_ID),
+    viewStore,
+    (viewStore) =>
+      createCustomPersister(
+        viewStore,
+        async () => {
+          const [owner, name, issueId] = location.hash.slice(1).split('/');
+          return [
+            {},
+            {repoId: owner && name ? owner + '/' + name : '', issueId},
+          ];
+        },
+        async (getContent) => {
+          const {repoId, issueId} = getContent()[1];
+          location.hash = repoId + '/' + issueId;
+        },
+        (listener) => {
+          const hashListener = () => listener();
+          window.addEventListener('hashchange', hashListener);
+          return hashListener;
+        },
+        (hashListener) =>
+          window.removeEventListener('hashchange', hashListener),
+      ),
     [],
     async (persister) => {
       await persister.startAutoLoad();
@@ -46,6 +67,6 @@ export const UiStore = () => {
     },
   );
 
-  useProvideStore(STORE_ID, uiStore);
+  useProvideStore(STORE_ID, viewStore);
   return null;
 };

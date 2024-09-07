@@ -3,7 +3,7 @@
 import {RepoGroup} from './RepoGroup';
 import {createElement} from '../../common';
 import {useGroupIds} from '../../stores/ReposStore';
-import {useUiValue} from '../../stores/UiStore';
+import {useUiValue} from '../../stores/ViewStore';
 
 export const RepoGroups = () => {
   const currentRepoId = useUiValue('repoId');

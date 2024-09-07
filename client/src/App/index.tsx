@@ -9,8 +9,8 @@ import {RepoStore} from '../stores/RepoStore.tsx';
 import {ReposStore} from '../stores/ReposStore';
 import {SettingsStore} from '../stores/SettingsStore';
 import {Ui} from '../Ui/index.tsx';
-import {UiStore} from '../stores/UiStore';
 import {UserStore} from '../stores/UserStore';
+import {ViewStore} from '../stores/ViewStore.tsx';
 
 export const App = () => {
   return (
@@ -27,7 +27,7 @@ export const App = () => {
           <ReposStore />
           <RepoStore />
           <IssuesStore />
-          <UiStore />
+          <ViewStore />
           <SettingsStore />
         </>
       }

@@ -9,7 +9,7 @@ import {Title} from './Title';
 import {Ui as UiBase} from 'tinywidgets';
 import {Welcome} from './Welcome';
 import {createElement} from '../common';
-import {useUiValue} from '../stores/UiStore';
+import {useUiValue} from '../stores/ViewStore';
 import {useUserValue} from '../stores/UserStore';
 
 export const Ui = () => {

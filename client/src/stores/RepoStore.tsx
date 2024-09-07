@@ -5,7 +5,7 @@ import type {NoTablesSchema} from 'tinybase/with-schemas';
 import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
 import {octokit} from './octokit';
-import {useUiValue} from './UiStore';
+import {useUiValue} from './ViewStore';
 
 type RepoData = {
   full_name: string;

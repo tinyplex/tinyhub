@@ -9,7 +9,7 @@ import {
   useRef,
 } from '../../../../common';
 import {useIssueCell} from '../../../../stores/IssuesStore';
-import {useSetUiValueCallback} from '../../../../stores/UiStore';
+import {useSetUiValueCallback} from '../../../../stores/ViewStore';
 
 export const IssueLink = ({
   issueId,

@@ -4,7 +4,7 @@
 import {Button, Collapsible, Hr} from 'tinywidgets';
 import {Fragment, createElement} from '../../common';
 import {Home, Settings} from 'lucide-react';
-import {useSetUiValueCallback, useUiValue} from '../../stores/UiStore';
+import {useSetUiValueCallback, useUiValue} from '../../stores/ViewStore';
 import {IssuesSort} from '../Repo/Issues/IssuesSort';
 import {RepoGroups} from './RepoGroups';
 import {ReposSort} from './ReposSort';

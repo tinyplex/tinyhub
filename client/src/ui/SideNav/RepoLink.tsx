@@ -10,7 +10,7 @@ import {
   useRef,
 } from '../../common';
 import {useRepoCell} from '../../stores/ReposStore';
-import {useSetUiValueCallback} from '../../stores/UiStore';
+import {useSetUiValueCallback} from '../../stores/ViewStore';
 
 export const RepoLink = ({
   repoId,

@@ -7,8 +7,10 @@
     "linebreak",
     "lockb",
     "lucide",
+    "ohmyzsh",
     "tinybase",
     "tinyhub",
-    "tinyplex"
+    "tinyplex",
+    "vuejs"
   ]
 }

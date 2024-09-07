@@ -8,7 +8,7 @@ import {IssueList} from './IssueList';
 import {createElement} from '../../../common';
 import {useIssueCell} from '../../../stores/IssuesStore';
 import {useRepoCell} from '../../../stores/ReposStore';
-import {useUiValue} from '../../../stores/UiStore';
+import {useUiValue} from '../../../stores/ViewStore';
 
 export const Issues = () => {
   const repoId = useUiValue('repoId');

@@ -6,7 +6,7 @@ export const issues = style([
   {
     display: 'grid',
     gap: '1rem',
-    height: 'calc(100vh - 8.5rem)',
+    height: 'calc(100dvh - 8.5rem)',
     gridTemplateColumns: '1fr',
   },
   large({
@@ -17,7 +17,7 @@ export const issues = style([
 export const issueList = style([
   {
     overflowX: 'hidden',
-    height: 'calc(30vh - 5rem)',
+    height: 'calc(30dvh - 5rem)',
   },
   large({
     height: '100%',
@@ -30,7 +30,7 @@ export const issue = style([
     paddingLeft: '1rem',
     borderLeft: `1px solid ${theme.border}`,
     overflow: 'auto',
-    height: 'calc(70vh - 6.5rem)',
+    height: 'calc(70dvh - 6.5rem)',
   },
   large({
     gridColumn: '2 / 4',
