@@ -12,30 +12,24 @@ import {
 } from 'tinywidgets';
 import {createElement, formatDate, formatNumber} from '../../../common';
 import {repoHeader, repoHeaderSummary} from './index.css';
-import {useRepoCell} from '../../../stores/ReposStore';
-import {useUiValue} from '../../../stores/UiStore';
+import {useRepoValue} from '../../../stores/RepoStore';
 
 export const RepoHeader = () => {
-  const repoId = useUiValue('repoId');
-  const homepage = useRepoCell(repoId, 'homepage') as string;
+  const homepage = useRepoValue('homepage') as string;
 
   return (
     <Collapsible
       label={<b>Summary</b>}
       labelRight={
         <Axis>
-          <Tag
-            label={useRepoCell(repoId, 'visibility')}
-            icon={Eye}
-            variant="accent"
-          />
-          {useRepoCell(repoId, 'fork') ? (
+          <Tag label={useRepoValue('visibility')} icon={Eye} variant="accent" />
+          {useRepoValue('fork') ? (
             <Tag label="fork" icon={GitFork} variant="accent" />
           ) : null}
-          {useRepoCell(repoId, 'archived') ? (
+          {useRepoValue('archived') ? (
             <Tag label="archived" icon={Archive} variant="accent" />
           ) : null}
-          {useRepoCell(repoId, 'disabled') ? (
+          {useRepoValue('disabled') ? (
             <Tag label="disabled" icon={ArchiveX} variant="accent" />
           ) : null}
         </Axis>
@@ -45,14 +39,14 @@ export const RepoHeader = () => {
       className={repoHeader}
     >
       <Summary
-        src={useRepoCell(repoId, 'avatarUrl') as string}
-        label={useRepoCell(repoId, 'name')}
+        src={useRepoValue('avatarUrl') as string}
+        label={useRepoValue('name')}
         className={repoHeaderSummary}
       >
-        <p>{useRepoCell(repoId, 'description')}</p>
+        <p>{useRepoValue('description')}</p>
         <p>
-          Created {formatDate(useRepoCell(repoId, 'createdAt'))}, updated{' '}
-          {formatDate(useRepoCell(repoId, 'updatedAt'))}.
+          Created {formatDate(useRepoValue('createdAt'))}, updated{' '}
+          {formatDate(useRepoValue('updatedAt'))}.
         </p>
         {homepage ? (
           <p>
@@ -65,9 +59,9 @@ export const RepoHeader = () => {
       <Card>
         <Detail
           data={{
-            Owner: useRepoCell(repoId, 'owner'),
-            Language: useRepoCell(repoId, 'language'),
-            License: useRepoCell(repoId, 'license'),
+            Owner: useRepoValue('owner'),
+            Language: useRepoValue('language'),
+            License: useRepoValue('license'),
           }}
         />
       </Card>
@@ -75,21 +69,21 @@ export const RepoHeader = () => {
         <Metric
           icon={Star}
           label="Stars"
-          number={formatNumber(useRepoCell(repoId, 'stargazersCount'))}
+          number={formatNumber(useRepoValue('stargazersCount'))}
         />
       </Card>
       <Card>
         <Metric
           icon={GitFork}
           label="Forks"
-          number={formatNumber(useRepoCell(repoId, 'forksCount'))}
+          number={formatNumber(useRepoValue('forksCount'))}
         />
       </Card>
       <Card>
         <Metric
           icon={CircleDot}
           label="Open issues"
-          number={formatNumber(useRepoCell(repoId, 'openIssuesCount'))}
+          number={formatNumber(useRepoValue('openIssuesCount'))}
         />
       </Card>
     </Collapsible>

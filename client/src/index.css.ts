@@ -1,4 +1,4 @@
-import {accent, accentContrast} from 'tinywidgets/css';
+import {accentHue} from '../../../tinywidgets/src/index.css';
 import {globalStyle} from '@vanilla-extract/css';
 
 globalStyle('*', {
@@ -15,8 +15,7 @@ globalStyle('pre,code', {
 
 globalStyle('#app', {
   vars: {
-    [accent]: 'rgb(113,19,120)',
-    [accentContrast]: '#fff',
+    [accentHue]: '325',
   },
 });
 

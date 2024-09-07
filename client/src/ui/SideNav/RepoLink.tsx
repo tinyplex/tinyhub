@@ -14,10 +14,12 @@ import {useSetUiValueCallback} from '../../stores/UiStore';
 
 export const RepoLink = ({
   repoId,
-  isCurrent,
+  isCurrent = false,
+  hardcodedName,
 }: {
   readonly repoId: string;
-  readonly isCurrent: boolean;
+  readonly isCurrent?: boolean;
+  readonly hardcodedName?: string;
 }) => {
   const handleClick = useSetUiValueCallback('repoId', () => repoId, [repoId]);
 
@@ -28,18 +30,20 @@ export const RepoLink = ({
     }
   }, [isCurrent]);
 
+  const name = useRepoCell(repoId, 'name');
+  const starGazersCount = useRepoCell(repoId, 'stargazersCount');
+
   return (
     <Button
       variant="item"
       ref={ref}
       onClick={handleClick}
       icon={useRepoCell(repoId, 'fork') ? GitFork : BookMarked}
-      label={useRepoCell(repoId, 'name')}
+      label={hardcodedName ?? name}
       labelRight={
-        <Tag
-          icon={Star}
-          label={formatNumber(useRepoCell(repoId, 'stargazersCount'))}
-        />
+        hardcodedName ? null : (
+          <Tag icon={Star} label={formatNumber(starGazersCount)} />
+        )
       }
       current={isCurrent}
     />

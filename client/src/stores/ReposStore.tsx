@@ -19,21 +19,12 @@ type RepoData = {
   full_name: string;
   owner: {login: string; avatar_url: string};
   name: string;
-  archived?: boolean;
   created_at?: string | null;
-  description: string | null;
-  disabled?: boolean;
   fork: boolean;
   forks_count?: number;
-  homepage?: string | null;
-  language?: string | null;
-  license?: {name?: string} | null;
   open_issues_count?: number;
-  size?: number;
   stargazers_count?: number;
-  topics?: string[];
   updated_at?: string | null;
-  visibility?: string;
 };
 
 const STORE_ID = 'repos';
@@ -46,23 +37,13 @@ const TABLES_SCHEMA = {
   repos: {
     group: {type: 'string', default: ''},
     owner: {type: 'string', default: ''},
-    avatarUrl: {type: 'string', default: ''},
     name: {type: 'string', default: ''},
-    archived: {type: 'boolean', default: false},
     createdAt: {type: 'string', default: ''},
-    description: {type: 'string', default: ''},
-    disabled: {type: 'boolean', default: false},
     fork: {type: 'boolean', default: false},
     forksCount: {type: 'number', default: 0},
-    homepage: {type: 'string', default: ''},
-    language: {type: 'string', default: ''},
-    license: {type: 'string', default: ''},
     openIssuesCount: {type: 'number', default: 0},
-    size: {type: 'number', default: 0},
     stargazersCount: {type: 'number', default: 0},
-    topics: {type: 'string', default: ''},
     updatedAt: {type: 'string', default: ''},
-    visibility: {type: 'string', default: ''},
   },
 } as const;
 type Schemas = [typeof TABLES_SCHEMA, NoValuesSchema];
@@ -154,44 +135,25 @@ const createGithubReposLoadingPersister = (store: Store<Schemas>) =>
             full_name,
             owner,
             name,
-            archived,
             created_at,
-            description,
-            disabled,
             fork,
             forks_count,
-            homepage,
-            language,
-            license,
             open_issues_count,
-            size,
             stargazers_count,
-            topics,
             updated_at,
-            visibility,
           }: RepoData,
           group: string = owner.login,
         ) => {
           repos[full_name] = {
             group,
             owner: owner.login,
-            avatarUrl: owner.avatar_url,
             name,
-            archived: archived ?? false,
             createdAt: created_at ?? '',
-            description: description ?? '',
-            disabled: disabled ?? false,
             fork,
             forksCount: forks_count ?? 0,
-            homepage: homepage ?? '',
-            language: language ?? '',
-            license: license?.name ?? '',
             openIssuesCount: open_issues_count ?? 0,
-            size: size ?? 0,
             stargazersCount: stargazers_count ?? 0,
-            topics: topics?.join(', ') ?? '',
             updatedAt: updated_at ?? '',
-            visibility: visibility ?? '',
           };
         };
 

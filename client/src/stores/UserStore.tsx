@@ -55,9 +55,7 @@ export const UserStore = () => {
     userStore,
     createGithubAuthenticatedUserLoadingPersister,
     [],
-    async (persister) => {
-      await persister?.load();
-    },
+    async (persister) => await persister?.load(),
     [],
   );
 
