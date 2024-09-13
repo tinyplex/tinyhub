@@ -1,4 +1,4 @@
-import {accentHue} from '../../../tinywidgets/src/index.css';
+import {accentHue} from 'tinywidgets/css';
 import {globalStyle} from '@vanilla-extract/css';
 
 globalStyle('*', {

@@ -13,6 +13,8 @@ type AsId<Key> = Exclude<Key & Id, number>;
 const STORE_ID = 'issues';
 const TABLE_ID = 'issues';
 
+const PERSISTER_ID = 'issues';
+
 const TABLES_SCHEMA = {
   issues: {
     title: {type: 'string', default: ''},
@@ -28,8 +30,10 @@ const {
   useProvideStore,
   useCreatePersister,
   useCell,
+  useProvidePersister,
   useSetCellCallback,
   useSortedRowIds,
+  usePersisterStatus,
 } = UiReact as UiReact.WithSchemas<Schemas>;
 type TableIds = keyof typeof TABLES_SCHEMA;
 type CellIds<TableId extends TableIds> = AsId<
@@ -58,12 +62,16 @@ export const useIssuesSortedRowIds = (
 ) =>
   useSortedRowIds(TABLE_ID, cellId, descending, undefined, undefined, STORE_ID);
 
+export const useIssuesPersisterStatus = () => usePersisterStatus(PERSISTER_ID);
+
 export const IssuesStore = () => {
   const currentRepoId = useUiValue('repoId');
   const issuesStore = useCreateStore(
     () => createStore().setTablesSchema(TABLES_SCHEMA),
     [currentRepoId],
   );
+  useProvideStore(STORE_ID, issuesStore);
+
   useCreatePersister(
     issuesStore,
     (issuesStore) => {
@@ -82,7 +90,7 @@ export const IssuesStore = () => {
     [],
   );
 
-  useCreatePersister(
+  const issuesPersister = useCreatePersister(
     issuesStore,
     (issuesStore) => {
       if (currentRepoId) {
@@ -95,8 +103,8 @@ export const IssuesStore = () => {
     },
     [],
   );
+  useProvidePersister(PERSISTER_ID, issuesPersister);
 
-  useProvideStore(STORE_ID, issuesStore);
   return null;
 };
 

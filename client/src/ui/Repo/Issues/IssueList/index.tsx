@@ -2,21 +2,14 @@
 
 import {IssueLink} from './IssueLink';
 import {createElement} from '../../../../common';
-import {useIssuesSortedRowIds} from '../../../../stores/IssuesStore';
-import {useSettingsValue} from '../../../../stores/SettingsStore';
 
 export const IssueList = ({
   currentIssueId,
+  issueIds,
 }: {
   readonly currentIssueId: string;
+  readonly issueIds: string[];
 }) => {
-  const issuesSortCell = useSettingsValue('issuesSortCell');
-  const issuesSortAscending = issuesSortCell == 'title';
-  const issueIds = useIssuesSortedRowIds(
-    issuesSortCell as any,
-    !issuesSortAscending,
-  );
-
   return issueIds.map((issueId) => (
     <IssueLink
       key={issueId}

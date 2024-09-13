@@ -1,4 +1,4 @@
-import {large} from 'tinywidgets/media';
+import {large} from 'tinywidgets/utils';
 import {style} from '@vanilla-extract/css';
 import {theme} from 'tinywidgets/css';
 

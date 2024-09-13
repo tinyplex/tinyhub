@@ -30,6 +30,8 @@ type RepoData = {
 
 const STORE_ID = 'repo';
 
+const PERSISTER_ID = 'repo';
+
 const VALUES_SCHEMA = {
   id: {type: 'string', default: ''},
   owner: {type: 'string', default: ''},
@@ -52,12 +54,20 @@ const VALUES_SCHEMA = {
   visibility: {type: 'string', default: ''},
 } as const;
 type Schemas = [NoTablesSchema, typeof VALUES_SCHEMA];
-const {useCreateStore, useProvideStore, useCreatePersister, useValue} =
-  UiReact as UiReact.WithSchemas<Schemas>;
+const {
+  useCreateStore,
+  useProvideStore,
+  useCreatePersister,
+  usePersisterStatus,
+  useValue,
+  useProvidePersister,
+} = UiReact as UiReact.WithSchemas<Schemas>;
 type ValueIds = keyof typeof VALUES_SCHEMA;
 
 export const useRepoValue = <ValueId extends ValueIds>(valueId: ValueId) =>
   useValue<ValueId>(valueId, STORE_ID);
+
+export const useRepoPersisterStatus = () => usePersisterStatus(PERSISTER_ID);
 
 export const RepoStore = () => {
   const currentRepoId = useUiValue('repoId');
@@ -65,6 +75,8 @@ export const RepoStore = () => {
     () => createStore().setValuesSchema(VALUES_SCHEMA),
     [currentRepoId],
   );
+  useProvideStore(STORE_ID, repoStore);
+
   useCreatePersister(
     repoStore,
     (repoStore) => {
@@ -80,7 +92,7 @@ export const RepoStore = () => {
     [],
   );
 
-  useCreatePersister(
+  const repoPersister = useCreatePersister(
     repoStore,
     (repoStore) => {
       if (repoStore) {
@@ -88,11 +100,13 @@ export const RepoStore = () => {
       }
     },
     [currentRepoId],
-    async (persister) => await persister?.load(),
+    async (persister) => {
+      await persister?.load();
+    },
     [],
   );
+  useProvidePersister(PERSISTER_ID, repoPersister);
 
-  useProvideStore(STORE_ID, repoStore);
   return null;
 };
 
