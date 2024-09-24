@@ -1,9 +1,7 @@
-/** @jsx createElement */
-
 import {Collapsible, Tag} from 'tinywidgets';
 import {Star, Users} from 'lucide-react';
+import React from 'react';
 import {RepoLink} from './RepoLink';
-import {createElement} from '../../common';
 import {useGroupRepoIds} from '../../stores/ReposStore';
 
 export const RepoGroup = ({

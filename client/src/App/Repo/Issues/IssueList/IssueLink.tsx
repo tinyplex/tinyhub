@@ -1,13 +1,7 @@
-/** @jsx createElement */
-
 import {Button, Tag} from 'tinywidgets';
 import {CircleDot, GitPullRequest} from 'lucide-react';
-import {
-  SCROLL_OPTIONS,
-  createElement,
-  useEffect,
-  useRef,
-} from '../../../../common';
+import {SCROLL_OPTIONS, useEffect, useRef} from '../../../../common';
+import React from 'react';
 import {useIssueCell} from '../../../../stores/IssuesStore';
 import {useSetUiValueCallback} from '../../../../stores/ViewStore';
 

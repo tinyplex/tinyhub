@@ -1,0 +1,54 @@
+@font-face {
+  font-family: inter;
+  src: url(inter.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: inconsolata;
+  src: url(inconsolata.woff2) format('woff2');
+}
+
+:root {
+  --tinyWidgets-accentHue: 325;
+
+  font-family: 'inter';
+}
+
+pre,
+code {
+  font-family: 'inconsolata';
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+h2 {
+  font-size: 1.25rem;
+}
+h3 {
+  font-size: 1.125rem;
+}
+
+main {
+  line-height: 1.5em;
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  ul,
+  ol,
+  pre {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  li {
+    margin-left: 2rem;
+  }
+}

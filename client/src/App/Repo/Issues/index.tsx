@@ -1,14 +1,11 @@
-/** @jsx createElement */
-
 import {Card, Collapsible, Row, Tag} from 'tinywidgets';
+import React, {useEffect} from 'react';
 import {issue, issueList} from './index.css';
 import {useIssueCell, useIssuesSortedRowIds} from '../../../stores/IssuesStore';
 import {useSetUiValueCallback, useUiValue} from '../../../stores/ViewStore';
 import {CircleDot} from 'lucide-react';
 import {Issue} from './Issue';
 import {IssueList} from './IssueList';
-import {createElement} from '../../../common';
-import {useEffect} from 'react';
 import {useRepoCell} from '../../../stores/ReposStore';
 import {useSettingsValue} from '../../../stores/SettingsStore';
 

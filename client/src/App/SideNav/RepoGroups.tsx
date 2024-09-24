@@ -1,7 +1,5 @@
-/** @jsx createElement */
-
+import React from 'react';
 import {RepoGroup} from './RepoGroup';
-import {createElement} from '../../common';
 import {useGroupIds} from '../../stores/ReposStore';
 import {useUiValue} from '../../stores/ViewStore';
 

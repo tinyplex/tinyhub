@@ -1,8 +1,5 @@
-/** @jsx createElement */
-/** @jsxFrag Fragment */
-
-import {Fragment, createElement} from '../../common';
 import {Issues} from './Issues';
+import React from 'react';
 import {RepoHeader} from './RepoHeader';
 import {useRepoValue} from '../../stores/RepoStore';
 import {useUiValue} from '../../stores/ViewStore';

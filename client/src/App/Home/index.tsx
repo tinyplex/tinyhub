@@ -1,9 +1,7 @@
-/** @jsx createElement */
-
 import {Card, Hr} from 'tinywidgets';
 import {card, logo} from './index.css';
+import React from 'react';
 import {RepoLink} from '../SideNav/RepoLink';
-import {createElement} from '../../common';
 
 export const Home = () => {
   return (

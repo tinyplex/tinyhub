@@ -1,5 +1,3 @@
-/** @jsx createElement */
-
 import {Archive, ArchiveX, CircleDot, Eye, GitFork, Star} from 'lucide-react';
 import {
   Card,
@@ -11,7 +9,8 @@ import {
   Summary,
   Tag,
 } from 'tinywidgets';
-import {createElement, formatDate, formatNumber} from '../../../common';
+import {formatDate, formatNumber} from '../../../common';
+import React from 'react';
 import {tags} from './index.css';
 import {useRepoValue} from '../../../stores/RepoStore';
 

@@ -1,11 +1,9 @@
-/** @jsx createElement */
-
 import {
   useSetSettingsValueCallback,
   useSettingsValue,
 } from '../../stores/SettingsStore';
 import type {ChangeEvent} from 'react';
-import {createElement} from '../../common';
+import React from 'react';
 
 const OPTIONS = {
   name: 'name',

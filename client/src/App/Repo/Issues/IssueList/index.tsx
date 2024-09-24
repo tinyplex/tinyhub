@@ -1,7 +1,5 @@
-/** @jsx createElement */
-
 import {IssueLink} from './IssueLink';
-import {createElement} from '../../../../common';
+import React from 'react';
 
 export const IssueList = ({
   currentIssueId,

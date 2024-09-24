@@ -1,9 +1,7 @@
-/** @jsx createElement */
-
 import {Card, Hr} from 'tinywidgets';
 import {card, logo} from './Welcome.css';
 import {Auth} from './Auth';
-import {createElement} from '../common';
+import React from 'react';
 
 export const Welcome = () => {
   return (
