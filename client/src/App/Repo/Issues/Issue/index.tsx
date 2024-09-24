@@ -1,5 +1,5 @@
 import {CircleDot, GitPullRequest} from 'lucide-react';
-import {Hr, Summary} from 'tinywidgets';
+import {Hr, Summary} from '../../../../../../../tinywidgets/package/src';
 import React from 'react';
 import {formatDate} from '../../../../common';
 import {useIssueCell} from '../../../../stores/IssuesStore';

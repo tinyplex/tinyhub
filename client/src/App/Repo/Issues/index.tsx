@@ -1,4 +1,9 @@
-import {Card, Collapsible, Row, Tag} from 'tinywidgets';
+import {
+  Card,
+  Collapsible,
+  Row,
+  Tag,
+} from '../../../../../../tinywidgets/package/src';
 import React, {useEffect} from 'react';
 import {issue, issueList} from './index.css';
 import {useIssueCell, useIssuesSortedRowIds} from '../../../stores/IssuesStore';

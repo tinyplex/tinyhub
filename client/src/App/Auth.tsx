@@ -1,4 +1,4 @@
-import {Button, Image} from 'tinywidgets';
+import {Button, Image} from '../../../../tinywidgets/package/src';
 import {LogOut} from 'lucide-react';
 import React from 'react';
 import {SiGithub} from '@icons-pack/react-simple-icons';

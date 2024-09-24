@@ -1,7 +1,5 @@
 {
-  "ignorePaths": [
-    "bun.lockb"
-  ],
+  "ignorePaths": ["bun.lockb"],
   "words": [
     "jamesgpearce",
     "linebreak",
@@ -11,6 +9,8 @@
     "tinybase",
     "tinyhub",
     "tinyplex",
+    "tinywidgets",
+    "oklch",
     "vuejs"
   ]
 }

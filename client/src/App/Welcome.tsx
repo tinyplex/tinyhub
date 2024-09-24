@@ -1,4 +1,4 @@
-import {Card, Hr} from 'tinywidgets';
+import {Card, Hr} from '../../../../tinywidgets/package/src';
 import {card, logo} from './Welcome.css';
 import {Auth} from './Auth';
 import React from 'react';

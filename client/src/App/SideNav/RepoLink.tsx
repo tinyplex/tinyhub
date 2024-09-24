@@ -1,5 +1,5 @@
 import {BookMarked, GitFork, Star} from 'lucide-react';
-import {Button, Tag} from 'tinywidgets';
+import {Button, Tag} from '../../../../../tinywidgets/package/src';
 import {SCROLL_OPTIONS, formatNumber, useEffect, useRef} from '../../common';
 import React from 'react';
 import {useRepoCell} from '../../stores/ReposStore';
