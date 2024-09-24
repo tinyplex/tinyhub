@@ -13,7 +13,7 @@ export default defineConfig({
         manualChunks: {
           'react-dom': ['react-dom'],
           octokit: ['octokit'],
-          tinywidgets: ['tinywidgets'],
+          // tinywidgets: ['tinywidgets'],
         },
       },
     },
