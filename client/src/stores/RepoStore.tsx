@@ -95,7 +95,7 @@ export const RepoStore = () => {
   const repoPersister = useCreatePersister(
     repoStore,
     (repoStore) => {
-      if (repoStore) {
+      if (repoStore && currentRepoId) {
         return createGithubRepoLoadingPersister(repoStore, currentRepoId);
       }
     },
