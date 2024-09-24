@@ -1,4 +1,4 @@
-import {small} from 'tinywidgets/utils';
+import {screens} from 'tinywidgets/css';
 import {style} from '@vanilla-extract/css';
 
 export const logo = style({
@@ -14,7 +14,7 @@ export const spinning = style({
 });
 
 export const button = style({
-  ...small({
-    display: 'none',
-  }),
+  '@media': {
+    [`screen and (max-width: ${screens.small}px)`]: {display: 'none'},
+  },
 });

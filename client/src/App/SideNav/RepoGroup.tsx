@@ -18,8 +18,8 @@ export const RepoGroup = ({
     <Collapsible
       id={`repoGroup/${group}`}
       icon={group == 'Starred' ? Star : Users}
-      label={group}
-      labelRight={<Tag variant="accent" label={repoIds.length} />}
+      title={group}
+      titleRight={<Tag variant="accent" title={repoIds.length} />}
       key={group}
     >
       {repoIds.map((repoId) => (

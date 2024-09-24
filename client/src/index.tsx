@@ -1,8 +1,5 @@
-/** @jsx createElement */
-
-import './index.css.ts';
 import {App} from './App';
-import {createElement} from './common.ts';
+import React from 'react';
 import {createRoot} from 'react-dom/client';
 
 addEventListener('load', () =>

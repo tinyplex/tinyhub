@@ -1,7 +1,7 @@
 /** @jsx createElement */
 
-import {Card, Collapsible, Tag} from 'tinywidgets';
-import {issue, issueList, issues} from './index.css';
+import {Card, Collapsible, Row, Tag} from 'tinywidgets';
+import {issue, issueList} from './index.css';
 import {useIssueCell, useIssuesSortedRowIds} from '../../../stores/IssuesStore';
 import {useSetUiValueCallback, useUiValue} from '../../../stores/ViewStore';
 import {CircleDot} from 'lucide-react';
@@ -36,24 +36,25 @@ export const Issues = () => {
   return (
     <Collapsible
       id="issues"
-      label="Issues"
-      className={issues}
-      labelRight={
+      title="Issues"
+      titleRight={
         <Tag
           icon={CircleDot}
           variant="accent"
-          label={useRepoCell(repoId, 'openIssuesCount')}
+          title={useRepoCell(repoId, 'openIssuesCount')}
         />
       }
     >
-      <Card className={issueList}>
-        <IssueList currentIssueId={issueId} issueIds={issueIds} />
-      </Card>
-      {useIssueCell(issueId, 'title') ? (
-        <Card className={issue}>
-          <Issue issueId={issueId} />
+      <Row variant="1|2">
+        <Card className={issueList}>
+          <IssueList currentIssueId={issueId} issueIds={issueIds} />
         </Card>
-      ) : null}
+        {useIssueCell(issueId, 'title') ? (
+          <Card className={issue}>
+            <Issue issueId={issueId} />
+          </Card>
+        ) : null}
+      </Row>
     </Collapsible>
   );
 };

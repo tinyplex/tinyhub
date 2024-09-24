@@ -39,10 +39,10 @@ export const RepoLink = ({
       ref={ref}
       onClick={handleClick}
       icon={useRepoCell(repoId, 'fork') ? GitFork : BookMarked}
-      label={hardcodedName ?? name}
-      labelRight={
+      title={hardcodedName ?? name}
+      titleRight={
         hardcodedName ? null : (
-          <Tag icon={Star} label={formatNumber(starGazersCount)} />
+          <Tag icon={Star} title={formatNumber(starGazersCount)} />
         )
       }
       current={isCurrent}

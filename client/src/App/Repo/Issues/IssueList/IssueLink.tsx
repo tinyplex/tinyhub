@@ -35,8 +35,8 @@ export const IssueLink = ({
       ref={ref}
       onClick={handleClick}
       icon={useIssueCell(issueId, 'pullRequest') ? GitPullRequest : CircleDot}
-      label={useIssueCell(issueId, 'title')}
-      labelRight={<Tag label={`#${issueId}`} />}
+      title={useIssueCell(issueId, 'title')}
+      titleRight={<Tag title={`#${issueId}`} />}
       current={isCurrent}
     />
   );

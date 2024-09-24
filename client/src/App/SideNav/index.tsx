@@ -19,13 +19,13 @@ export const SideNav = () => {
         variant="item"
         onClick={handleClick}
         icon={Home}
-        label="Home"
+        title="Home"
         current={!currentRepoId}
       />
       <Hr />
       <RepoGroups />
       <Hr />
-      <Collapsible icon={Settings} label="Settings">
+      <Collapsible icon={Settings} title="Settings">
         <ReposSort />
         <IssuesSort />
       </Collapsible>
