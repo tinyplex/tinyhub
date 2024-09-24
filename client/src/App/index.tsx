@@ -1,7 +1,7 @@
 import './index.css.ts';
 import {UserStore, useUserValue} from '../stores/UserStore.tsx';
 import {ViewStore, useUiValue} from '../stores/ViewStore.tsx';
-import {App as AppBase} from '../../../../tinywidgets/package/src/index.ts';
+import {App as AppBase} from 'tinywidgets';
 import {Auth} from './Auth.tsx';
 import {Home} from './Home/index.tsx';
 import {Inspector} from 'tinybase/ui-react-inspector';

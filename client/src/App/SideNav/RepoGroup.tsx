@@ -1,4 +1,4 @@
-import {Collapsible, Tag} from '../../../../../tinywidgets/package/src';
+import {Collapsible, Tag} from 'tinywidgets';
 import {Star, Users} from 'lucide-react';
 import React from 'react';
 import {RepoLink} from './RepoLink';

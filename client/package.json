@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/react": "^18.3.8",
+    "@types/react": "^18.3.9",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
@@ -38,6 +38,6 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tinybase": "^5.3.1",
-    "tinywidgets": "^1.0.0"
+    "tinywidgets": "^1.0.1"
   }
 }

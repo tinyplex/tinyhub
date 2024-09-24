@@ -1,4 +1,4 @@
-import {Button, classNames} from '../../../../tinywidgets/package/src/index.ts';
+import {Button, classNames} from 'tinywidgets';
 import {button, logo, spinning} from './Title.css.ts';
 import {CircleHelp} from 'lucide-react';
 import React from 'react';

@@ -1,4 +1,4 @@
-import {Button, Collapsible, Hr} from '../../../../../tinywidgets/package/src';
+import {Button, Collapsible, Hr} from 'tinywidgets';
 import {Home, Settings} from 'lucide-react';
 import {useSetUiValueCallback, useUiValue} from '../../stores/ViewStore';
 import {IssuesSort} from '../Repo/Issues/IssuesSort';

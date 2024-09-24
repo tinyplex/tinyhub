@@ -1,4 +1,4 @@
-import {Card, Hr} from '../../../../../tinywidgets/package/src';
+import {Card, Hr} from 'tinywidgets';
 import {card, logo} from './index.css';
 import React from 'react';
 import {RepoLink} from '../SideNav/RepoLink';

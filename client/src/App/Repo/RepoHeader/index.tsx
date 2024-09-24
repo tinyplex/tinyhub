@@ -8,7 +8,7 @@ import {
   Row,
   Summary,
   Tag,
-} from '../../../../../../tinywidgets/package/src';
+} from 'tinywidgets';
 import {formatDate, formatNumber} from '../../../common';
 import React from 'react';
 import {tags} from './index.css';

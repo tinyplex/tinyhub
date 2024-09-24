@@ -1,4 +1,4 @@
-import {Button, Tag} from '../../../../../../../tinywidgets/package/src';
+import {Button, Tag} from 'tinywidgets';
 import {CircleDot, GitPullRequest} from 'lucide-react';
 import {SCROLL_OPTIONS, useEffect, useRef} from '../../../../common';
 import React from 'react';
