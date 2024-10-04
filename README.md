@@ -34,7 +34,17 @@ Run in development mode:
 bun run dev
 ```
 
-## The server
+You can also create a production build with `bun run prePublish`.
+
+## Forking
+
+Feel free to fork, change, and deploy this app yourself! See the notes below on
+updating the server logic if you do.
+
+Also you should remove the Google Analytics code in `index.html` or update the
+tracking code to match your own site.
+
+## The Server
 
 The server is simply a proxy to assist in the GitHub OAuth flow and is already
 deployed on `api.tinyhub.org`. If you want to run your own server instance (for
@@ -61,7 +71,7 @@ currently:
 - It doesn't paginate the GitHub API, so records max out at 100
 - It doesn't work without logging in
 
-## How it works
+## How It Works
 
 The app is in TypeScript, using React (for the UI) and TinyBase (for the state
 and data store). The CSS is hand-crafted, so don't expect anything amazing on
@@ -96,4 +106,4 @@ would be better.
 As for the UI, the React components for each part of the app should be fairly
 simple and self-explanatory.
 
-Enjoy!
+## Enjoy!
