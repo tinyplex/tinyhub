@@ -9,10 +9,10 @@ import {
   Summary,
   Tag,
 } from 'tinywidgets';
-import {formatDate, formatNumber} from '../../../common';
+import {formatDate, formatNumber} from '../../common';
 import React from 'react';
-import {tags} from './index.css';
-import {useRepoValue} from '../../../stores/RepoStore';
+import {tags} from './RepoHeader.css';
+import {useRepoValue} from '../../stores/RepoStore';
 
 export const RepoHeader = () => {
   const homepage = useRepoValue('homepage') as string;

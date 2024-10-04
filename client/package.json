@@ -1,43 +1,43 @@
 {
   "name": "tinyhub",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "jamesgpearce",
   "repository": "github:tinyplex/tinyhub",
   "license": "MIT",
   "description": "A local-first GitHub client, built in public.",
   "module": "index.ts",
-  "type": "module",
   "scripts": {
     "dev": "vite --force",
     "prePublish": "eslint . && cspell --quiet . && tsc && vite build"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/react": "^18.3.9",
+    "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.7.0",
-    "@typescript-eslint/parser": "^8.7.0",
-    "@vanilla-extract/css": "^1.15.5",
-    "@vanilla-extract/vite-plugin": "^4.0.15",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "@vanilla-extract/css": "^1.16.0",
+    "@vanilla-extract/vite-plugin": "^4.0.16",
+    "@vitejs/plugin-react": "^4.3.2",
     "cspell": "^8.14.4",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.12",
     "prettier": "^3.3.3",
+    "rollup-plugin-license": "^3.5.3",
     "typescript": "^5.6.2",
-    "vite": "^5.4.7",
+    "vite": "^5.4.8",
     "vite-plugin-minify": "^2.0.0"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^10.0.0",
-    "lucide-react": "^0.445.0",
+    "lucide-react": "^0.447.0",
     "octokit": "^4.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tinybase": "^5.3.1",
-    "tinywidgets": "^1.0.1"
+    "tinybase": "^5.3.2",
+    "tinywidgets": "^1.0.14"
   }
 }

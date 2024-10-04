@@ -1,8 +1,8 @@
 import {CircleDot, GitPullRequest} from 'lucide-react';
 import {Hr, Summary} from 'tinywidgets';
 import React from 'react';
-import {formatDate} from '../../../../common';
-import {useIssueCell} from '../../../../stores/IssuesStore';
+import {formatDate} from '../../../common';
+import {useIssueCell} from '../../../stores/IssuesStore';
 
 export const Issue = ({issueId}: {readonly issueId: string}) => {
   return (
