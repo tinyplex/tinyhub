@@ -787,11 +787,12 @@ SOFTWARE.
 ---
 
 Name: tinywidgets
-Version: 1.0.14
+Version: 1.0.16
 License: MIT
 Private: false
-Description: A collection of tiny, reusable, React components
+Description: A collection of tiny, reusable, UI components - wrapped in a helpful app layout with header, side bar, dark mode, and more.
 Repository: undefined
+Homepage: https://tinywidgets.org
 Author: jamesgpearce
 
 ---
