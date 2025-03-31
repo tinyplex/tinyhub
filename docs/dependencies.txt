@@ -233,7 +233,7 @@ License Copyright:
 ---
 
 Name: @octokit/endpoint
-Version: 10.1.1
+Version: 10.1.3
 License: MIT
 Private: false
 Description: Turns REST API endpoints into generic request options
@@ -266,8 +266,51 @@ THE SOFTWARE.
 
 ---
 
+Name: fast-content-type-parse
+Version: 2.0.1
+License: MIT
+Private: false
+Description: Parse HTTP Content-Type header according to RFC 7231
+Repository: git+https://github.com/fastify/fast-content-type-parse.git
+Homepage: https://github.com/fastify/fast-content-type-parse#readme
+Author: Aras Abbasi <aras.abbasi@gmail.com>
+Contributors:
+  Gürgün Dayıoğlu <hey@gurgun.day> (https://heyhey.to/G)
+  Manuel Spigolon <behemoth89@gmail.com>
+  James Sumners (https://james.sumners.info)
+  Frazer Smith <frazer.dev@icloud.com> (https://github.com/fdawgs)
+License Copyright:
+===
+
+MIT License
+
+Copyright (c) 2023 The Fastify Team
+
+The Fastify team members are listed at https://github.com/fastify/fastify#team
+and in the README file.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
 Name: @octokit/request-error
-Version: 6.1.5
+Version: 6.1.7
 License: MIT
 Private: false
 Description: Error class for Octokit request errors
@@ -301,7 +344,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/request
-Version: 9.1.3
+Version: 9.2.2
 License: MIT
 Private: false
 Description: Send parameterized requests to GitHub's APIs with sensible defaults in browsers and Node
@@ -335,7 +378,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/graphql
-Version: 8.1.1
+Version: 8.2.1
 License: MIT
 Private: false
 Description: GitHub GraphQL API client for browsers and Node
@@ -403,7 +446,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/core
-Version: 6.1.2
+Version: 6.1.4
 License: MIT
 Private: false
 Description: Extendable client for GitHub's REST & GraphQL APIs
@@ -437,7 +480,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/plugin-paginate-rest
-Version: 11.3.3
+Version: 11.6.0
 License: MIT
 Private: false
 Description: Octokit plugin to paginate REST API endpoint responses
@@ -456,7 +499,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: @octokit/plugin-paginate-graphql
-Version: 5.2.3
+Version: 5.2.4
 License: MIT
 Private: false
 Description: Octokit plugin to paginate GraphQL API endpoint responses
@@ -475,7 +518,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: @octokit/plugin-rest-endpoint-methods
-Version: 13.2.4
+Version: 13.5.0
 License: MIT
 Private: false
 Description: Octokit plugin adding one method for all of api.github.com REST API endpoints
@@ -528,7 +571,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ---
 
 Name: @octokit/plugin-retry
-Version: 7.1.2
+Version: 7.2.0
 License: MIT
 Private: false
 Description: Automatic retry plugin for octokit
@@ -562,7 +605,7 @@ SOFTWARE.
 ---
 
 Name: @octokit/plugin-throttling
-Version: 9.3.1
+Version: 9.6.0
 License: MIT
 Private: false
 Description: Octokit plugin for GitHub's recommended request throttling
@@ -596,7 +639,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/oauth-app
-Version: 7.1.3
+Version: 7.1.6
 License: MIT
 Private: false
 Description: GitHub OAuth toolset for Node.js
@@ -616,7 +659,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: octokit
-Version: 4.0.2
+Version: 4.1.2
 License: MIT
 Private: false
 Description: The all-batteries-included GitHub SDK for Browsers, Node.js, and Deno
@@ -650,18 +693,18 @@ THE SOFTWARE.
 ---
 
 Name: react
-Version: 18.3.1
+Version: 19.1.0
 License: MIT
 Private: false
 Description: React is a JavaScript library for building user interfaces.
 Repository: https://github.com/facebook/react.git
-Homepage: https://reactjs.org/
+Homepage: https://react.dev/
 License Copyright:
 ===
 
 MIT License
 
-Copyright (c) Facebook, Inc. and its affiliates.
+Copyright (c) Meta Platforms, Inc. and affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -684,18 +727,18 @@ SOFTWARE.
 ---
 
 Name: react-dom
-Version: 18.3.1
+Version: 19.1.0
 License: MIT
 Private: false
 Description: React package for working with the DOM.
 Repository: https://github.com/facebook/react.git
-Homepage: https://reactjs.org/
+Homepage: https://react.dev/
 License Copyright:
 ===
 
 MIT License
 
-Copyright (c) Facebook, Inc. and its affiliates.
+Copyright (c) Meta Platforms, Inc. and affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -718,18 +761,18 @@ SOFTWARE.
 ---
 
 Name: scheduler
-Version: 0.23.2
+Version: 0.26.0
 License: MIT
 Private: false
 Description: Cooperative scheduler for the browser environment.
 Repository: https://github.com/facebook/react.git
-Homepage: https://reactjs.org/
+Homepage: https://react.dev/
 License Copyright:
 ===
 
 MIT License
 
-Copyright (c) Facebook, Inc. and its affiliates.
+Copyright (c) Meta Platforms, Inc. and affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -752,10 +795,10 @@ SOFTWARE.
 ---
 
 Name: tinybase
-Version: 5.3.2
+Version: 6.0.0
 License: MIT
 Private: false
-Description: The reactive data store for local-first apps.
+Description: A reactive data store and sync engine.
 Repository: undefined
 Homepage: https://tinybase.org
 Author: jamesgpearce
@@ -786,19 +829,8 @@ SOFTWARE.
 
 ---
 
-Name: tinywidgets
-Version: 1.0.16
-License: MIT
-Private: false
-Description: A collection of tiny, reusable, UI components - wrapped in a helpful app layout with header, side bar, dark mode, and more.
-Repository: undefined
-Homepage: https://tinywidgets.org
-Author: jamesgpearce
-
----
-
 Name: lucide-react
-Version: 0.447.0
+Version: 0.485.0
 License: ISC
 Private: false
 Description: A Lucide icon library package for React applications
@@ -826,8 +858,19 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ---
 
+Name: tinywidgets
+Version: 1.1.5
+License: MIT
+Private: false
+Description: A collection of tiny, reusable, UI components - wrapped in a helpful app layout with header, side bar, dark mode, and more.
+Repository: undefined
+Homepage: https://tinywidgets.org
+Author: jamesgpearce
+
+---
+
 Name: @icons-pack/react-simple-icons
-Version: 10.0.0
+Version: 12.3.0
 License: MIT
 Private: false
 Description: This package provides the Simple Icons packaged as a set of React components.
