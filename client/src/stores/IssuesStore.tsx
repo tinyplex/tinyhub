@@ -1,7 +1,13 @@
 import * as UiReact from 'tinybase/ui-react/with-schemas';
-import type {Cell, Id, NoValuesSchema} from 'tinybase/with-schemas';
 import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {type Store, type Table, createStore} from 'tinybase/with-schemas';
+import {
+  createStore,
+  type Store,
+  type Table,
+  type Cell,
+  type Id,
+  type NoValuesSchema,
+} from 'tinybase/with-schemas';
 import type {DependencyList} from 'react';
 import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';

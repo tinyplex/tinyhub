@@ -16,7 +16,6 @@ export const Issue = ({issueId}: {readonly issueId: string}) => {
       </Summary>
       <Hr />
       <div
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: useIssueCell(issueId, 'bodyHtml') ?? '',
         }}

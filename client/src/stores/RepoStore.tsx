@@ -1,9 +1,12 @@
-import * as UiReact from 'tinybase/ui-react/with-schemas';
-import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {type Store, createStore} from 'tinybase/with-schemas';
-import type {NoTablesSchema} from 'tinybase/with-schemas';
-import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
+import {createCustomPersister} from 'tinybase/persisters/with-schemas';
+import * as UiReact from 'tinybase/ui-react/with-schemas';
+import {
+  type Store,
+  type NoTablesSchema,
+  createStore,
+} from 'tinybase/with-schemas';
+import {PER_PAGE, REFRESH_INTERVAL} from './common';
 import {octokit} from './octokit';
 import {useUiValue} from './ViewStore';
 
