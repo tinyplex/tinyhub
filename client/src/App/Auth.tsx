@@ -1,9 +1,9 @@
-import {Button, Image} from 'tinywidgets';
+import {SiGithub} from '@icons-pack/react-simple-icons';
 import {LogOut} from 'lucide-react';
 import React from 'react';
-import {SiGithub} from '@icons-pack/react-simple-icons';
-import {auth} from './Auth.css';
+import {Button, Image} from 'tinywidgets';
 import {useUserValue} from '../stores/UserStore';
+import {auth} from './Auth.css';
 
 const login = () => location.assign('auth.html');
 const logout = () => location.assign('auth.html?logout');

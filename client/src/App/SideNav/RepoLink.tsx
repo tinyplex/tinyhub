@@ -1,7 +1,7 @@
 import {BookMarked, GitFork, Star} from 'lucide-react';
+import React from 'react';
 import {Button, Tag} from 'tinywidgets';
 import {SCROLL_OPTIONS, formatNumber, useEffect, useRef} from '../../common';
-import React from 'react';
 import {useRepoCell} from '../../stores/ReposStore';
 import {useSetUiValueCallback} from '../../stores/ViewStore';
 

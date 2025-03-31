@@ -1,7 +1,7 @@
-import {Card, Hr} from 'tinywidgets';
-import {card, logo} from './Welcome.css';
-import {Auth} from './Auth';
 import React from 'react';
+import {Card, Hr} from 'tinywidgets';
+import {Auth} from './Auth';
+import {card, logo} from './Welcome.css';
 
 export const Welcome = () => {
   return (

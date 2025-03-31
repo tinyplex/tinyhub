@@ -1,9 +1,9 @@
+import type {ChangeEvent} from 'react';
+import React from 'react';
 import {
   useSetSettingsValueCallback,
   useSettingsValue,
 } from '../../stores/SettingsStore';
-import type {ChangeEvent} from 'react';
-import React from 'react';
 
 const OPTIONS = {
   name: 'name',

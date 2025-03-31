@@ -1,5 +1,5 @@
-import {dimensions} from 'tinywidgets/css';
 import {style} from '@vanilla-extract/css';
+import {dimensions} from 'tinywidgets/css';
 
 export const summary = style({
   display: 'flex',

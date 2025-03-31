@@ -1,5 +1,5 @@
-import {dimensions} from 'tinywidgets/css';
 import {style} from '@vanilla-extract/css';
+import {dimensions} from 'tinywidgets/css';
 
 export const auth = style({
   display: 'flex',

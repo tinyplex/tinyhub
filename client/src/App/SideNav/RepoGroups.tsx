@@ -1,7 +1,7 @@
 import React from 'react';
-import {RepoGroup} from './RepoGroup';
 import {useGroupIds} from '../../stores/ReposStore';
 import {useUiValue} from '../../stores/ViewStore';
+import {RepoGroup} from './RepoGroup';
 
 export const RepoGroups = () => {
   const currentRepoId = useUiValue('repoId');

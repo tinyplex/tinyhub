@@ -1,5 +1,5 @@
-import {screens} from 'tinywidgets/css';
 import {style} from '@vanilla-extract/css';
+import {screens} from 'tinywidgets/css';
 
 export const logo = style({
   width: '2rem',

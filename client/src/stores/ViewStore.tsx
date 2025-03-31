@@ -1,11 +1,11 @@
+import type {DependencyList} from 'react';
+import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
   type NoTablesSchema,
   type Value,
   createStore,
 } from 'tinybase/with-schemas';
-import type {DependencyList} from 'react';
-import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 
 const STORE_ID = 'view';
 

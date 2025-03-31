@@ -1,3 +1,6 @@
+import type {DependencyList} from 'react';
+import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
+import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
   type NoTablesSchema,
@@ -6,11 +9,8 @@ import {
   type Values,
   createStore,
 } from 'tinybase/with-schemas';
-import {hasToken, octokit} from './octokit';
-import type {DependencyList} from 'react';
 import {REFRESH_INTERVAL} from './common';
-import {createCustomPersister} from 'tinybase/persisters/with-schemas';
-import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
+import {hasToken, octokit} from './octokit';
 
 const STORE_ID = 'user';
 

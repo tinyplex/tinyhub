@@ -1,3 +1,5 @@
+import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
+import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
   type Id,
@@ -9,8 +11,6 @@ import {
 } from 'tinybase/with-schemas';
 import {PER_PAGE, REFRESH_INTERVAL} from './common';
 import {hasToken, octokit} from './octokit';
-import {createCustomPersister} from 'tinybase/persisters/with-schemas';
-import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
 import {useSettingsValue} from './SettingsStore';
 
 type AsId<Key> = Exclude<Key & Id, number>;

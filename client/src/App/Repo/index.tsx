@@ -1,8 +1,8 @@
-import {Issues} from './Issues';
 import React from 'react';
-import {RepoHeader} from './RepoHeader';
 import {useRepoValue} from '../../stores/RepoStore';
 import {useUiValue} from '../../stores/ViewStore';
+import {Issues} from './Issues';
+import {RepoHeader} from './RepoHeader';
 
 export const Repo = () => {
   const currentRepoId = useUiValue('repoId');

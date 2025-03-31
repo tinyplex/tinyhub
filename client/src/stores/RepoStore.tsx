@@ -2,8 +2,8 @@ import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-s
 import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
-  type Store,
   type NoTablesSchema,
+  type Store,
   createStore,
 } from 'tinybase/with-schemas';
 import {PER_PAGE, REFRESH_INTERVAL} from './common';

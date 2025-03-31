@@ -1,5 +1,5 @@
-import {colors, dimensions} from 'tinywidgets/css';
 import {globalStyle} from '@vanilla-extract/css';
+import {colors, dimensions} from 'tinywidgets/css';
 
 globalStyle('pre', {
   padding: dimensions.padding,

@@ -1,5 +1,5 @@
-import {IssueLink} from './IssueLink';
 import React from 'react';
+import {IssueLink} from './IssueLink';
 
 export const IssueList = ({
   currentIssueId,

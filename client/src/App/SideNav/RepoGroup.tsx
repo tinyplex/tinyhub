@@ -1,8 +1,8 @@
-import {Collapsible, Tag} from 'tinywidgets';
 import {Star, Users} from 'lucide-react';
 import React from 'react';
-import {RepoLink} from './RepoLink';
+import {Collapsible, Tag} from 'tinywidgets';
 import {useGroupRepoIds} from '../../stores/ReposStore';
+import {RepoLink} from './RepoLink';
 
 export const RepoGroup = ({
   group,

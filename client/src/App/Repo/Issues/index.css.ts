@@ -1,5 +1,5 @@
-import {screens} from 'tinywidgets/css';
 import {style} from '@vanilla-extract/css';
+import {screens} from 'tinywidgets/css';
 
 export const issueList = style({
   overflowX: 'scroll',

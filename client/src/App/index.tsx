@@ -1,20 +1,20 @@
-import './index.css.ts';
-import {UserStore, useUserValue} from '../stores/UserStore.tsx';
-import {ViewStore, useUiValue} from '../stores/ViewStore.tsx';
-import {App as AppBase} from 'tinywidgets';
-import {Auth} from './Auth.tsx';
-import {Home} from './Home/index.tsx';
-import {Inspector} from 'tinybase/ui-react-inspector';
-import {IssuesStore} from '../stores/IssuesStore.tsx';
-import {Provider} from 'tinybase/ui-react';
 import React from 'react';
-import {Repo} from './Repo/index.tsx';
+import {Provider} from 'tinybase/ui-react';
+import {Inspector} from 'tinybase/ui-react-inspector';
+import {App as AppBase} from 'tinywidgets';
+import {IssuesStore} from '../stores/IssuesStore.tsx';
 import {RepoStore} from '../stores/RepoStore.tsx';
 import {ReposStore} from '../stores/ReposStore.tsx';
 import {SettingsStore} from '../stores/SettingsStore.tsx';
+import {UserStore, useUserValue} from '../stores/UserStore.tsx';
+import {ViewStore, useUiValue} from '../stores/ViewStore.tsx';
+import {Auth} from './Auth.tsx';
+import {Home} from './Home/index.tsx';
+import {Repo} from './Repo/index.tsx';
 import {SideNav} from './SideNav/index.tsx';
 import {Title} from './Title.tsx';
 import {Welcome} from './Welcome.tsx';
+import './index.css.ts';
 
 export const App = () => {
   return (

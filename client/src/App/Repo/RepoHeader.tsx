@@ -1,4 +1,5 @@
 import {Archive, ArchiveX, CircleDot, Eye, GitFork, Star} from 'lucide-react';
+import React from 'react';
 import {
   Card,
   Collapsible,
@@ -10,9 +11,8 @@ import {
   Tag,
 } from 'tinywidgets';
 import {formatDate, formatNumber} from '../../common';
-import React from 'react';
-import {tags} from './RepoHeader.css';
 import {useRepoValue} from '../../stores/RepoStore';
+import {tags} from './RepoHeader.css';
 
 export const RepoHeader = () => {
   const homepage = useRepoValue('homepage') as string;

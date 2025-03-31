@@ -1,10 +1,10 @@
-import {Button, classNames} from 'tinywidgets';
-import {button, logo, spinning} from './Title.css.ts';
 import {CircleHelp} from 'lucide-react';
 import React from 'react';
+import {Button, classNames} from 'tinywidgets';
 import {useIssuesPersisterStatus} from '../stores/IssuesStore.tsx';
 import {useRepoPersisterStatus} from '../stores/RepoStore.tsx';
 import {useReposPersisterStatus} from '../stores/ReposStore.tsx';
+import {button, logo, spinning} from './Title.css.ts';
 
 export const Title = () => {
   const persisterStatus =

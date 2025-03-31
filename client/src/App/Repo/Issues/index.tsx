@@ -1,13 +1,13 @@
-import {Card, Collapsible, Row, Tag} from 'tinywidgets';
-import React, {useEffect} from 'react';
-import {issue, issueList} from './index.css';
-import {useIssueCell, useIssuesSortedRowIds} from '../../../stores/IssuesStore';
-import {useSetUiValueCallback, useUiValue} from '../../../stores/ViewStore';
 import {CircleDot} from 'lucide-react';
-import {Issue} from './Issue';
-import {IssueList} from './IssueList';
+import React, {useEffect} from 'react';
+import {Card, Collapsible, Row, Tag} from 'tinywidgets';
+import {useIssueCell, useIssuesSortedRowIds} from '../../../stores/IssuesStore';
 import {useRepoCell} from '../../../stores/ReposStore';
 import {useSettingsValue} from '../../../stores/SettingsStore';
+import {useSetUiValueCallback, useUiValue} from '../../../stores/ViewStore';
+import {issue, issueList} from './index.css';
+import {Issue} from './Issue';
+import {IssueList} from './IssueList';
 
 export const Issues = () => {
   const repoId = useUiValue('repoId');
