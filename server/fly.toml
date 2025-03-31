@@ -9,14 +9,14 @@ primary_region = 'iad'
 [build]
 
 [http_service]
-  internal_port = 8000
-  force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 0
-  processes = ['app']
+internal_port = 8000
+force_https = true
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 0
+processes = ['app']
 
 [[vm]]
-  memory = '256MB'
-  cpu_kind = 'shared'
-  cpus = 1
+memory = '256MB'
+cpu_kind = 'shared'
+cpus = 1
