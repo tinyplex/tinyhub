@@ -1,6 +1,5 @@
 import {SiGithub} from '@icons-pack/react-simple-icons';
 import {LogOut} from 'lucide-react';
-import React from 'react';
 import {Button, Image} from 'tinywidgets';
 import {useUserValue} from '../stores/UserStore';
 import {auth} from './Auth.css';

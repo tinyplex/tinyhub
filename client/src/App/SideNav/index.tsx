@@ -1,5 +1,4 @@
 import {Home, Settings} from 'lucide-react';
-import React from 'react';
 import {Button, Collapsible, Hr} from 'tinywidgets';
 import {useSetUiValueCallback, useUiValue} from '../../stores/ViewStore';
 import {IssuesSort} from '../Repo/Issues/IssuesSort';

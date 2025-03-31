@@ -1,5 +1,4 @@
 import {CircleHelp} from 'lucide-react';
-import React from 'react';
 import {Button, classNames} from 'tinywidgets';
 import {useIssuesPersisterStatus} from '../stores/IssuesStore.tsx';
 import {useRepoPersisterStatus} from '../stores/RepoStore.tsx';

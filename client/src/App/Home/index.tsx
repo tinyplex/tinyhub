@@ -1,4 +1,3 @@
-import React from 'react';
 import {Card, Hr} from 'tinywidgets';
 import {RepoLink} from '../SideNav/RepoLink';
 import {card, logo} from './index.css';

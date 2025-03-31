@@ -1,5 +1,4 @@
 import {BookMarked, GitFork, Star} from 'lucide-react';
-import React from 'react';
 import {Button, Tag} from 'tinywidgets';
 import {SCROLL_OPTIONS, formatNumber, useEffect, useRef} from '../../common';
 import {useRepoCell} from '../../stores/ReposStore';

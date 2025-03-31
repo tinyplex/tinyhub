@@ -1,4 +1,3 @@
-import React from 'react';
 import {Provider} from 'tinybase/ui-react';
 import {Inspector} from 'tinybase/ui-react-inspector';
 import {App as AppBase} from 'tinywidgets';

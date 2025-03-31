@@ -1,5 +1,4 @@
 import {Archive, ArchiveX, CircleDot, Eye, GitFork, Star} from 'lucide-react';
-import React from 'react';
 import {
   Card,
   Collapsible,

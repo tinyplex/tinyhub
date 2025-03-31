@@ -1,5 +1,4 @@
 import type {ChangeEvent} from 'react';
-import React from 'react';
 import {
   useSetSettingsValueCallback,
   useSettingsValue,

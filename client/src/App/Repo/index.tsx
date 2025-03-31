@@ -1,4 +1,3 @@
-import React from 'react';
 import {useRepoValue} from '../../stores/RepoStore';
 import {useUiValue} from '../../stores/ViewStore';
 import {Issues} from './Issues';

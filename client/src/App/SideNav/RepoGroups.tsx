@@ -1,4 +1,3 @@
-import React from 'react';
 import {useGroupIds} from '../../stores/ReposStore';
 import {useUiValue} from '../../stores/ViewStore';
 import {RepoGroup} from './RepoGroup';

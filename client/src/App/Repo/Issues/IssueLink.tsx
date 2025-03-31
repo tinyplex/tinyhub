@@ -1,5 +1,4 @@
 import {CircleDot, GitPullRequest} from 'lucide-react';
-import React from 'react';
 import {Button, Tag} from 'tinywidgets';
 import {SCROLL_OPTIONS, useEffect, useRef} from '../../../common';
 import {useIssueCell} from '../../../stores/IssuesStore';

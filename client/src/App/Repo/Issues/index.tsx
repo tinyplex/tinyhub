@@ -1,5 +1,5 @@
 import {CircleDot} from 'lucide-react';
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {Card, Collapsible, Row, Tag} from 'tinywidgets';
 import {useIssueCell, useIssuesSortedRowIds} from '../../../stores/IssuesStore';
 import {useRepoCell} from '../../../stores/ReposStore';

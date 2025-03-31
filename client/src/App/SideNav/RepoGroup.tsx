@@ -1,5 +1,4 @@
 import {Star, Users} from 'lucide-react';
-import React from 'react';
 import {Collapsible, Tag} from 'tinywidgets';
 import {useGroupRepoIds} from '../../stores/ReposStore';
 import {RepoLink} from './RepoLink';
