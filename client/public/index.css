@@ -10,6 +10,7 @@
 
 :root {
   --tinyWidgets-accentHue: 325;
+  --tinyWidgets-footerHeight: 25px;
 
   font-family: 'inter';
 }

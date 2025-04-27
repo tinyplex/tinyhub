@@ -1,17 +1,16 @@
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
-import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
   type Id,
   type NoValuesSchema,
-  type Store,
-  type Table,
+  Store,
   createIndexes,
   createStore,
 } from 'tinybase/with-schemas';
-import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {hasToken, octokit} from './octokit';
+import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
 import {useSettingsValue} from './SettingsStore';
+import {PER_PAGE} from './common';
+import {hasToken, octokit} from './octokit';
 
 type AsId<Key> = Exclude<Key & Id, number>;
 
@@ -55,7 +54,6 @@ const {
   useCreateStore,
   useProvideStore,
   useCreateIndexes,
-  useProvidePersister,
   useProvideIndexes,
   useSliceRowIds,
   usePersisterStatus,
@@ -114,83 +112,63 @@ export const ReposStore = () => {
     },
   );
 
-  const reposPersister = useCreatePersister(
+  useSetTask('fetchRepos', async () => await fetchRepos(reposStore), [
     reposStore,
-    (reposStore) => {
-      return createGithubReposLoadingPersister(reposStore);
-    },
-    [],
-    async (persister) => {
-      await persister?.load();
-    },
-    [],
-  );
-  useProvidePersister(PERSISTER_ID, reposPersister);
+  ]);
+
+  useScheduleTaskRun('fetchRepos');
 
   return null;
 };
 
-const createGithubReposLoadingPersister = (store: Store<Schemas>) =>
-  createCustomPersister(
-    store,
-    async () => {
-      if (hasToken()) {
-        const repos: Table<Schemas[0], typeof TABLE_ID> = {};
+const fetchRepos = async (reposStore: Store<Schemas>) => {
+  if (!hasToken()) {
+    return;
+  }
+  const addRepo = (
+    {
+      full_name,
+      owner,
+      name,
+      created_at,
+      fork,
+      forks_count,
+      open_issues_count,
+      stargazers_count,
+      updated_at,
+    }: RepoData,
+    group: string = owner.login,
+  ) => {
+    reposStore.setRow('repos', full_name, {
+      group,
+      owner: owner.login,
+      name,
+      createdAt: created_at ?? '',
+      fork,
+      forksCount: forks_count ?? 0,
+      openIssuesCount: open_issues_count ?? 0,
+      stargazersCount: stargazers_count ?? 0,
+      updatedAt: updated_at ?? '',
+    });
+  };
 
-        const addRepo = (
-          {
-            full_name,
-            owner,
-            name,
-            created_at,
-            fork,
-            forks_count,
-            open_issues_count,
-            stargazers_count,
-            updated_at,
-          }: RepoData,
-          group: string = owner.login,
-        ) => {
-          repos[full_name] = {
-            group,
-            owner: owner.login,
-            name,
-            createdAt: created_at ?? '',
-            fork,
-            forksCount: forks_count ?? 0,
-            openIssuesCount: open_issues_count ?? 0,
-            stargazersCount: stargazers_count ?? 0,
-            updatedAt: updated_at ?? '',
-          };
-        };
+  (
+    await octokit.rest.activity.listReposStarredByAuthenticatedUser(PER_PAGE)
+  ).data.forEach((repo) => addRepo(repo, 'Starred'));
 
-        (
-          await octokit.rest.activity.listReposStarredByAuthenticatedUser(
-            PER_PAGE,
-          )
-        ).data.forEach((repo) => addRepo(repo, 'Starred'));
-
-        (
-          await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)
-        ).data.forEach((repo) => addRepo(repo));
-
-        await Promise.all(
-          (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.map(
-            async ({login}) => {
-              const repos = await octokit.rest.repos.listForOrg({
-                org: login,
-                ...PER_PAGE,
-              });
-              repos.data.forEach((repo) => addRepo(repo));
-            },
-          ),
-        );
-
-        return [{repos}, {}];
-      }
-      return [{}, {}];
-    },
-    async () => {},
-    (listener) => setInterval(listener, REFRESH_INTERVAL),
-    (intervalId) => clearInterval(intervalId),
+  (await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)).data.forEach(
+    (repo) => addRepo(repo),
   );
+
+  await Promise.all(
+    (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.map(
+      async ({login}) => {
+        const repos = await octokit.rest.repos.listForOrg({
+          org: login,
+          ...PER_PAGE,
+        });
+        repos.data.forEach((repo) => addRepo(repo));
+      },
+    ),
+  );
+};
