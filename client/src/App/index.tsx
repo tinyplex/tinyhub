@@ -52,7 +52,21 @@ const Layout = () => {
 
 const useTaskManager = () =>
   useCreateManager(() => {
-    const manager = createManager();
-    manager.start();
+    const manager = createManager()
+      .setCategory('github', {
+        maxDuration: 5000,
+        maxRetries: 2,
+        retryDelay: 5000,
+      })
+      .start();
+    manager.addTaskRunFailedListener(
+      null,
+      null,
+      (_, taskId, taskRunId, reason, message) =>
+        // eslint-disable-next-line no-console
+        console.error(
+          `Task ${taskId}/${taskRunId} failed: ${reason} (${message})`,
+        ),
+    );
     return manager;
   });

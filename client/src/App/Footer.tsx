@@ -6,9 +6,11 @@ export const Footer = () => {
   const runningCount = useRunningTaskRunIds()?.length ?? 0;
   return (
     <div className={footer}>
-      {scheduledCount > 0 || runningCount > 0
-        ? `Tasks: ${runningCount} running, ${scheduledCount} scheduled`
-        : 'Idle'}
+      {runningCount > 0
+        ? `${runningCount} tasks running`
+        : scheduledCount > 0
+          ? `${scheduledCount} tasks scheduled`
+          : 'Idle'}
     </div>
   );
 };

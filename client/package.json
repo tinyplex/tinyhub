@@ -40,7 +40,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tinybase": "^6.0.4",
-    "tinytick": "^1.2.1",
+    "tinytick": "^1.2.3",
     "tinywidgets": "^1.2.1"
   }
 }

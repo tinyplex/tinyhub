@@ -3,13 +3,13 @@ import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
   type Id,
   type NoValuesSchema,
-  Store,
+  type Store,
   createIndexes,
   createStore,
 } from 'tinybase/with-schemas';
 import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
 import {useSettingsValue} from './SettingsStore';
-import {PER_PAGE} from './common';
+import {PER_PAGE, REFRESH_INTERVAL} from './common';
 import {hasToken, octokit} from './octokit';
 
 type AsId<Key> = Exclude<Key & Id, number>;
@@ -112,9 +112,13 @@ export const ReposStore = () => {
     },
   );
 
-  useSetTask('fetchRepos', async () => await fetchRepos(reposStore), [
-    reposStore,
-  ]);
+  useSetTask(
+    'fetchRepos',
+    async () => await fetchRepos(reposStore),
+    [reposStore],
+    'github',
+    {repeatDelay: REFRESH_INTERVAL},
+  );
 
   useScheduleTaskRun('fetchRepos');
 
@@ -125,6 +129,10 @@ const fetchRepos = async (reposStore: Store<Schemas>) => {
   if (!hasToken()) {
     return;
   }
+
+  const previousIds = new Set(reposStore.getRowIds(TABLE_ID));
+  const newIds = new Set<string>();
+
   const addRepo = (
     {
       full_name,
@@ -139,17 +147,21 @@ const fetchRepos = async (reposStore: Store<Schemas>) => {
     }: RepoData,
     group: string = owner.login,
   ) => {
-    reposStore.setRow('repos', full_name, {
-      group,
-      owner: owner.login,
-      name,
-      createdAt: created_at ?? '',
-      fork,
-      forksCount: forks_count ?? 0,
-      openIssuesCount: open_issues_count ?? 0,
-      stargazersCount: stargazers_count ?? 0,
-      updatedAt: updated_at ?? '',
-    });
+    const id = full_name;
+    if (!newIds.has(id)) {
+      reposStore.setRow(TABLE_ID, id, {
+        group,
+        owner: owner.login,
+        name,
+        createdAt: created_at ?? '',
+        fork,
+        forksCount: forks_count ?? 0,
+        openIssuesCount: open_issues_count ?? 0,
+        stargazersCount: stargazers_count ?? 0,
+        updatedAt: updated_at ?? '',
+      });
+      newIds.add(id);
+    }
   };
 
   (
@@ -171,4 +183,8 @@ const fetchRepos = async (reposStore: Store<Schemas>) => {
       },
     ),
   );
+
+  previousIds
+    .difference(newIds)
+    .forEach((id) => reposStore.delRow(TABLE_ID, id));
 };
