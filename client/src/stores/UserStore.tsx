@@ -1,15 +1,13 @@
 import type {DependencyList} from 'react';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
-import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
   type NoTablesSchema,
   type Store,
   type Value,
-  type Values,
   createStore,
 } from 'tinybase/with-schemas';
-import {REFRESH_INTERVAL} from './common';
+import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
 import {hasToken, octokit} from './octokit';
 
 const STORE_ID = 'user';
@@ -51,40 +49,30 @@ export const UserStore = () => {
     },
   );
 
-  useCreatePersister(
-    userStore,
-    createGithubAuthenticatedUserLoadingPersister,
-    [],
-    async (persister) => {
-      await persister?.load();
-    },
-    [],
-  );
-
   useProvideStore(STORE_ID, userStore);
+
+  useFetchTask(userStore);
+
   return null;
 };
 
-const createGithubAuthenticatedUserLoadingPersister = (store: Store<Schemas>) =>
-  createCustomPersister(
-    store,
+const useFetchTask = (store: Store<Schemas>) => {
+  useSetTask(
+    'fetchUser',
     async () => {
       if (hasToken()) {
         const response = await octokit.rest.users.getAuthenticated();
         if (response.status == 200) {
           const {name, login, avatar_url} = response.data;
-          return [
-            {},
-            {
-              name: name ?? login,
-              avatarUrl: avatar_url,
-            } as Values<Schemas[1]>,
-          ];
+          store.setValues({
+            name: (name ?? login) + Math.random(),
+            avatarUrl: avatar_url,
+          });
         }
       }
-      return [{}, {}];
     },
-    async () => {},
-    (listener) => setInterval(listener, REFRESH_INTERVAL),
-    (intervalId) => clearInterval(intervalId),
+    [store],
+    'github',
   );
+  useScheduleTaskRun({taskId: 'fetchUser', config: {repeatDelay: 3600000}});
+};
