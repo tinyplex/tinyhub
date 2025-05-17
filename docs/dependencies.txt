@@ -233,7 +233,7 @@ License Copyright:
 ---
 
 Name: @octokit/endpoint
-Version: 10.1.3
+Version: 10.1.4
 License: MIT
 Private: false
 Description: Turns REST API endpoints into generic request options
@@ -310,7 +310,7 @@ SOFTWARE.
 ---
 
 Name: @octokit/request-error
-Version: 6.1.7
+Version: 6.1.8
 License: MIT
 Private: false
 Description: Error class for Octokit request errors
@@ -344,7 +344,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/request
-Version: 9.2.2
+Version: 9.2.3
 License: MIT
 Private: false
 Description: Send parameterized requests to GitHub's APIs with sensible defaults in browsers and Node
@@ -378,7 +378,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/graphql
-Version: 8.2.1
+Version: 8.2.2
 License: MIT
 Private: false
 Description: GitHub GraphQL API client for browsers and Node
@@ -446,7 +446,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/core
-Version: 6.1.4
+Version: 6.1.5
 License: MIT
 Private: false
 Description: Extendable client for GitHub's REST & GraphQL APIs
@@ -480,7 +480,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/plugin-paginate-rest
-Version: 11.6.0
+Version: 12.0.0
 License: MIT
 Private: false
 Description: Octokit plugin to paginate REST API endpoint responses
@@ -518,7 +518,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: @octokit/plugin-rest-endpoint-methods
-Version: 13.5.0
+Version: 14.0.0
 License: MIT
 Private: false
 Description: Octokit plugin adding one method for all of api.github.com REST API endpoints
@@ -571,7 +571,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ---
 
 Name: @octokit/plugin-retry
-Version: 7.2.0
+Version: 7.2.1
 License: MIT
 Private: false
 Description: Automatic retry plugin for octokit
@@ -605,7 +605,7 @@ SOFTWARE.
 ---
 
 Name: @octokit/plugin-throttling
-Version: 9.6.0
+Version: 10.0.0
 License: MIT
 Private: false
 Description: Octokit plugin for GitHub's recommended request throttling
@@ -659,7 +659,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: octokit
-Version: 4.1.2
+Version: 4.1.3
 License: MIT
 Private: false
 Description: The all-batteries-included GitHub SDK for Browsers, Node.js, and Deno
@@ -795,7 +795,7 @@ SOFTWARE.
 ---
 
 Name: tinybase
-Version: 6.0.0
+Version: 6.1.0
 License: MIT
 Private: false
 Description: A reactive data store and sync engine.
@@ -830,10 +830,10 @@ SOFTWARE.
 ---
 
 Name: lucide-react
-Version: 0.485.0
+Version: 0.511.0
 License: ISC
 Private: false
-Description: A Lucide icon library package for React applications
+Description: A Lucide icon library package for React applications.
 Repository: https://github.com/lucide-icons/lucide.git
 Homepage: https://lucide.dev
 Author: Eric Fennis
@@ -859,7 +859,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ---
 
 Name: tinywidgets
-Version: 1.1.5
+Version: 1.2.3
 License: MIT
 Private: false
 Description: A collection of tiny, reusable, UI components - wrapped in a helpful app layout with header, side bar, dark mode, and more.
@@ -869,8 +869,43 @@ Author: jamesgpearce
 
 ---
 
+Name: tinytick
+Version: 1.2.5
+License: MIT
+Private: false
+Description: A tiny but very useful JavaScript task orchestrator.
+Repository: undefined
+Homepage: https://tinytick.org
+Author: jamesgpearce
+License Copyright:
+===
+
+MIT License
+
+Copyright (c) James Pearce, 2025-
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
 Name: @icons-pack/react-simple-icons
-Version: 12.3.0
+Version: 12.8.0
 License: MIT
 Private: false
 Description: This package provides the Simple Icons packaged as a set of React components.
