@@ -10,6 +10,8 @@ import {
 import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
 import {hasToken, octokit} from './octokit';
 
+const REFRESH_DELAY = 1000 * 60 * 60;
+
 const STORE_ID = 'user';
 
 const VALUES_SCHEMA = {
@@ -51,12 +53,12 @@ export const UserStore = () => {
 
   useProvideStore(STORE_ID, userStore);
 
-  useFetchTask(userStore);
+  useFetch(userStore);
 
   return null;
 };
 
-const useFetchTask = (store: Store<Schemas>) => {
+const useFetch = (userStore: Store<Schemas>) => {
   useSetTask(
     'fetchUser',
     async () => {
@@ -64,15 +66,16 @@ const useFetchTask = (store: Store<Schemas>) => {
         const response = await octokit.rest.users.getAuthenticated();
         if (response.status == 200) {
           const {name, login, avatar_url} = response.data;
-          store.setValues({
+          userStore.setValues({
             name: (name ?? login) + Math.random(),
             avatarUrl: avatar_url,
           });
         }
       }
     },
-    [store],
+    [userStore],
     'github',
+    {repeatDelay: REFRESH_DELAY},
   );
-  useScheduleTaskRun({taskId: 'fetchUser', config: {repeatDelay: 3600000}});
+  useScheduleTaskRun({taskId: 'fetchUser'});
 };

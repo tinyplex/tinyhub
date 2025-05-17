@@ -1,3 +1,4 @@
+import {useCallback} from 'react';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
@@ -9,8 +10,8 @@ import {
 } from 'tinybase/with-schemas';
 import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
 import {useSettingsValue} from './SettingsStore';
-import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {hasToken, octokit} from './octokit';
+import {PER_PAGE} from './common';
+import {octokit} from './octokit';
 
 type AsId<Key> = Exclude<Key & Id, number>;
 
@@ -26,6 +27,8 @@ type RepoData = {
   updated_at?: string | null;
 };
 
+const REFRESH_DELAY = 1000 * 60 * 60;
+
 const STORE_ID = 'repos';
 const TABLE_ID = 'repos';
 
@@ -36,9 +39,9 @@ const PERSISTER_ID = 'repos';
 
 const TABLES_SCHEMA = {
   repos: {
-    group: {type: 'string', default: ''},
     owner: {type: 'string', default: ''},
     name: {type: 'string', default: ''},
+    starred: {type: 'boolean', default: false},
     createdAt: {type: 'string', default: ''},
     fork: {type: 'boolean', default: false},
     forksCount: {type: 'number', default: 0},
@@ -93,7 +96,7 @@ export const ReposStore = () => {
       createIndexes(reposStore).setIndexDefinition(
         INDEX_ID,
         TABLE_ID,
-        'group',
+        (getCell) => (getCell('starred') ? 'Starred' : getCell('owner')),
         reposSortCell,
         undefined,
         (cell1, cell2) => (cell1 > cell2 ? 1 : -1) * reposSortDirection,
@@ -112,45 +115,28 @@ export const ReposStore = () => {
     },
   );
 
-  useSetTask(
-    'fetchRepos',
-    async () => await fetchRepos(reposStore),
-    [reposStore],
-    'github',
-    {repeatDelay: REFRESH_INTERVAL},
-  );
-
-  useScheduleTaskRun('fetchRepos');
+  useFetch(reposStore);
 
   return null;
 };
 
-const fetchRepos = async (reposStore: Store<Schemas>) => {
-  if (!hasToken()) {
-    return;
-  }
-
-  const previousIds = new Set(reposStore.getRowIds(TABLE_ID));
-  const newIds = new Set<string>();
-
-  const addRepo = (
-    {
-      full_name,
-      owner,
-      name,
-      created_at,
-      fork,
-      forks_count,
-      open_issues_count,
-      stargazers_count,
-      updated_at,
-    }: RepoData,
-    group: string = owner.login,
-  ) => {
-    const id = full_name;
-    if (!newIds.has(id)) {
-      reposStore.setRow(TABLE_ID, id, {
-        group,
+const useFetch = (reposStore: Store<Schemas>) => {
+  const addRepo = useCallback(
+    (
+      {
+        full_name,
+        owner,
+        name,
+        created_at,
+        fork,
+        forks_count,
+        open_issues_count,
+        stargazers_count,
+        updated_at,
+      }: RepoData,
+      starred: boolean = false,
+    ) => {
+      reposStore.setPartialRow(TABLE_ID, full_name, {
         owner: owner.login,
         name,
         createdAt: created_at ?? '',
@@ -160,31 +146,66 @@ const fetchRepos = async (reposStore: Store<Schemas>) => {
         stargazersCount: stargazers_count ?? 0,
         updatedAt: updated_at ?? '',
       });
-      newIds.add(id);
-    }
-  };
-
-  (
-    await octokit.rest.activity.listReposStarredByAuthenticatedUser(PER_PAGE)
-  ).data.forEach((repo) => addRepo(repo, 'Starred'));
-
-  (await octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)).data.forEach(
-    (repo) => addRepo(repo),
+      if (starred) {
+        reposStore.setCell(TABLE_ID, full_name, 'starred', starred);
+      }
+    },
+    [reposStore],
   );
 
-  await Promise.all(
-    (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.map(
-      async ({login}) => {
-        const repos = await octokit.rest.repos.listForOrg({
-          org: login,
-          ...PER_PAGE,
-        });
-        repos.data.forEach((repo) => addRepo(repo));
-      },
-    ),
+  const addRepos = useCallback(
+    async (response: Promise<{data: RepoData[]}>, starred?: boolean) =>
+      (await response).data.forEach((repo) => addRepo(repo, starred)),
+    [addRepo],
   );
 
-  previousIds
-    .difference(newIds)
-    .forEach((id) => reposStore.delRow(TABLE_ID, id));
+  useSetTask(
+    'fetchReposStarred',
+    () =>
+      addRepos(
+        octokit.rest.activity.listReposStarredByAuthenticatedUser(PER_PAGE),
+        true,
+      ),
+    [addRepos],
+    'github',
+  );
+
+  useSetTask(
+    'fetchReposOwned',
+    () => addRepos(octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)),
+    [addRepos],
+    'github',
+  );
+
+  useSetTask(
+    'fetchReposForOrg',
+    (org: string = '') =>
+      addRepos(octokit.rest.repos.listForOrg({org, ...PER_PAGE})),
+    [addRepos],
+    'github',
+  );
+
+  useSetTask(
+    'fetchOrgs',
+    async (_arg, _abort, {manager}) =>
+      (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.forEach(
+        ({login}, i) =>
+          manager.scheduleTaskRun('fetchReposForOrg', login, i * 100),
+      ),
+    [addRepos],
+    'github',
+  );
+
+  useSetTask(
+    'fetchRepos',
+    async (_arg, _abort, {manager}) => {
+      manager.scheduleTaskRun({taskId: 'fetchReposStarred', startAfter: 0});
+      manager.scheduleTaskRun({taskId: 'fetchReposOwned', startAfter: 100});
+      manager.scheduleTaskRun({taskId: 'fetchOrgs', startAfter: 200});
+    },
+    [],
+    'github',
+    {repeatDelay: REFRESH_DELAY},
+  );
+  useScheduleTaskRun('fetchRepos');
 };
