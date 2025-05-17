@@ -11,7 +11,7 @@ import {
 import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
 import {useSettingsValue} from './SettingsStore';
 import {PER_PAGE} from './common';
-import {octokit} from './octokit';
+import {hasToken, octokit} from './octokit';
 
 type AsId<Key> = Exclude<Key & Id, number>;
 
@@ -109,10 +109,7 @@ export const ReposStore = () => {
     reposStore,
     (reposStore) => createLocalPersister(reposStore, STORE_ID),
     [],
-    async (persister) => {
-      await persister.startAutoLoad();
-      await persister.startAutoSave();
-    },
+    (persister) => persister.startAutoPersisting(),
   );
 
   useFetch(reposStore);
@@ -161,50 +158,63 @@ const useFetch = (reposStore: Store<Schemas>) => {
 
   useSetTask(
     'fetchReposStarred',
-    () =>
-      addRepos(
+    async () =>
+      hasToken() &&
+      (await addRepos(
         octokit.rest.activity.listReposStarredByAuthenticatedUser(PER_PAGE),
         true,
-      ),
+      )),
     [addRepos],
-    'github',
+    'singleFetch',
   );
 
   useSetTask(
     'fetchReposOwned',
-    () => addRepos(octokit.rest.repos.listForAuthenticatedUser(PER_PAGE)),
+    async () =>
+      hasToken() &&
+      (await addRepos(octokit.rest.repos.listForAuthenticatedUser(PER_PAGE))),
     [addRepos],
-    'github',
+    'singleFetch',
   );
 
   useSetTask(
     'fetchReposForOrg',
-    (org: string = '') =>
-      addRepos(octokit.rest.repos.listForOrg({org, ...PER_PAGE})),
+    async (org: string = '') =>
+      hasToken() &&
+      (await addRepos(octokit.rest.repos.listForOrg({org, ...PER_PAGE}))),
     [addRepos],
-    'github',
+    'singleFetch',
   );
 
   useSetTask(
     'fetchOrgs',
     async (_arg, _abort, {manager}) =>
+      hasToken() &&
       (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.forEach(
         ({login}, i) =>
           manager.scheduleTaskRun('fetchReposForOrg', login, i * 100),
       ),
     [addRepos],
-    'github',
+    'multiFetch',
   );
 
   useSetTask(
     'fetchRepos',
     async (_arg, _abort, {manager}) => {
-      manager.scheduleTaskRun({taskId: 'fetchReposStarred', startAfter: 0});
-      manager.scheduleTaskRun({taskId: 'fetchReposOwned', startAfter: 100});
-      manager.scheduleTaskRun({taskId: 'fetchOrgs', startAfter: 200});
+      reposStore.delTables();
+      if (hasToken()) {
+        await Promise.all(
+          ['fetchReposStarred', 'fetchReposOwned', 'fetchOrgs'].map(
+            (taskId, i) =>
+              manager.untilTaskRunDone(
+                manager.scheduleTaskRun({taskId, startAfter: i * 5000})!,
+              ),
+          ),
+        );
+      }
     },
     [],
-    'github',
+    'multiFetch',
     {repeatDelay: REFRESH_DELAY},
   );
   useScheduleTaskRun('fetchRepos');

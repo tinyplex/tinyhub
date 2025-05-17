@@ -1,17 +1,14 @@
 import {Provider as TinyBaseProvider} from 'tinybase/ui-react';
 import {Inspector} from 'tinybase/ui-react-inspector';
-import {createManager} from 'tinytick';
-import {
-  Provider as TinyTickProvider,
-  useCreateManager,
-} from 'tinytick/ui-react';
+import {Provider as TinyTickProvider} from 'tinytick/ui-react';
 import {App as AppBase} from 'tinywidgets';
 import {IssuesStore} from '../stores/IssuesStore.tsx';
 import {RepoStore} from '../stores/RepoStore.tsx';
 import {ReposStore} from '../stores/ReposStore.tsx';
 import {SettingsStore} from '../stores/SettingsStore.tsx';
 import {UserStore, useUserValue} from '../stores/UserStore.tsx';
-import {ViewStore, useUiValue} from '../stores/ViewStore.tsx';
+import {useUiValue, ViewStore} from '../stores/ViewStore.tsx';
+import {useTaskManager} from '../tasks/useTaskManager.tsx';
 import {Auth} from './Auth.tsx';
 import {Footer} from './Footer.tsx';
 import {Home} from './Home/index.tsx';
@@ -49,24 +46,3 @@ const Layout = () => {
     />
   );
 };
-
-const useTaskManager = () =>
-  useCreateManager(() => {
-    const manager = createManager()
-      .setCategory('github', {
-        maxDuration: 5000,
-        maxRetries: 2,
-        retryDelay: 5000,
-      })
-      .start();
-    manager.addTaskRunFailedListener(
-      null,
-      null,
-      (_, taskId, taskRunId, reason, message) =>
-        // eslint-disable-next-line no-console
-        console.error(
-          `Task ${taskId}/${taskRunId} failed: ${reason} (${message})`,
-        ),
-    );
-    return manager;
-  });

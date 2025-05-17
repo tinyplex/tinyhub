@@ -39,8 +39,8 @@
     "octokit": "^4.1.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tinybase": "^6.1.0",
-    "tinytick": "^1.2.5",
+    "tinybase": "^6.1.1",
+    "tinytick": "^1.2.6",
     "tinywidgets": "^1.2.3"
   }
 }

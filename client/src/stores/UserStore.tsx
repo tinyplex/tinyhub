@@ -67,10 +67,12 @@ const useFetch = (userStore: Store<Schemas>) => {
         if (response.status == 200) {
           const {name, login, avatar_url} = response.data;
           userStore.setValues({
-            name: (name ?? login) + Math.random(),
+            name: name ?? login,
             avatarUrl: avatar_url,
           });
         }
+      } else {
+        userStore.delValues();
       }
     },
     [userStore],
