@@ -1,13 +1,13 @@
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
-import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
   type NoTablesSchema,
   type Store,
   createStore,
 } from 'tinybase/with-schemas';
-import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {octokit} from './octokit';
+import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
+import {PER_PAGE} from './common';
+import {hasToken, octokit} from './octokit';
 import {useUiValue} from './ViewStore';
 
 type RepoData = {
@@ -21,6 +21,7 @@ type RepoData = {
   fork: boolean;
   forks_count?: number;
   homepage?: string | null;
+  html_url?: string | null;
   language?: string | null;
   license?: {name?: string} | null;
   open_issues_count?: number;
@@ -47,6 +48,7 @@ const VALUES_SCHEMA = {
   fork: {type: 'boolean', default: false},
   forksCount: {type: 'number', default: 0},
   homepage: {type: 'string', default: ''},
+  githubUrl: {type: 'string', default: ''},
   language: {type: 'string', default: ''},
   license: {type: 'string', default: ''},
   openIssuesCount: {type: 'number', default: 0},
@@ -63,7 +65,6 @@ const {
   useCreatePersister,
   usePersisterStatus,
   useValue,
-  useProvidePersister,
 } = UiReact as UiReact.WithSchemas<Schemas>;
 type ValueIds = keyof typeof VALUES_SCHEMA;
 
@@ -88,63 +89,44 @@ export const RepoStore = () => {
       }
     },
     [currentRepoId],
-    async (persister) => {
-      await persister?.startAutoLoad();
-      await persister?.startAutoSave();
-    },
+    (persister) => persister?.startAutoPersisting(),
     [],
   );
 
-  const repoPersister = useCreatePersister(
-    repoStore,
-    (repoStore) => {
-      if (repoStore && currentRepoId) {
-        return createGithubRepoLoadingPersister(repoStore, currentRepoId);
-      }
-    },
-    [currentRepoId],
-    async (persister) => {
-      await persister?.load();
-    },
-    [],
-  );
-  useProvidePersister(PERSISTER_ID, repoPersister);
+  useFetch(repoStore, currentRepoId);
 
   return null;
 };
 
-const createGithubRepoLoadingPersister = (
-  store: Store<Schemas>,
-  repoId: string,
-) =>
-  createCustomPersister(
-    store,
-    async () => {
-      const [owner, repo] = repoId.split('/');
-      const {
-        owner: ownerObject,
-        name,
-        archived,
-        created_at,
-        description,
-        disabled,
-        fork,
-        forks_count,
-        homepage,
-        language,
-        license,
-        open_issues_count,
-        size,
-        stargazers_count,
-        topics,
-        updated_at,
-        visibility,
-      }: RepoData = (await octokit.rest.repos.get({owner, repo, ...PER_PAGE}))
-        .data;
+const useFetch = (repoStore: Store<Schemas>, repoId: string) => {
+  useSetTask(
+    'fetchRepo',
+    async (repoId: string = '') => {
+      if (hasToken() && repoId) {
+        const [owner, repo] = repoId.split('/');
+        const {
+          owner: ownerObject,
+          name,
+          archived,
+          created_at,
+          description,
+          disabled,
+          fork,
+          forks_count,
+          homepage,
+          html_url,
+          language,
+          license,
+          open_issues_count,
+          size,
+          stargazers_count,
+          topics,
+          updated_at,
+          visibility,
+        }: RepoData = (await octokit.rest.repos.get({owner, repo, ...PER_PAGE}))
+          .data;
 
-      return [
-        {},
-        {
+        repoStore.setValues({
           id: ownerObject.login + '/' + name,
           owner: ownerObject.login,
           avatarUrl: ownerObject.avatar_url,
@@ -155,6 +137,7 @@ const createGithubRepoLoadingPersister = (
           disabled: disabled ?? false,
           fork,
           forksCount: forks_count ?? 0,
+          githubUrl: html_url ?? '',
           homepage: homepage ?? '',
           language: language ?? '',
           license: license?.name ?? '',
@@ -164,10 +147,12 @@ const createGithubRepoLoadingPersister = (
           topics: topics?.join(', ') ?? '',
           updatedAt: updated_at ?? '',
           visibility: visibility ?? '',
-        },
-      ];
+        });
+      }
     },
-    async () => {},
-    (listener) => setInterval(listener, REFRESH_INTERVAL),
-    (intervalId) => clearInterval(intervalId),
+    [repoStore],
+    'singleFetch',
   );
+
+  useScheduleTaskRun('fetchRepo', repoId);
+};

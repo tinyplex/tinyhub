@@ -9,9 +9,15 @@ import {
   createStore,
 } from 'tinybase/with-schemas';
 import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
+import {STAGGER} from './common';
+import {
+  getNextPage,
+  getPageOptions,
+  hasToken,
+  HeadersWithLink,
+  octokit,
+} from './octokit';
 import {useSettingsValue} from './SettingsStore';
-import {PER_PAGE} from './common';
-import {hasToken, octokit} from './octokit';
 
 type AsId<Key> = Exclude<Key & Id, number>;
 
@@ -48,6 +54,7 @@ const TABLES_SCHEMA = {
     openIssuesCount: {type: 'number', default: 0},
     stargazersCount: {type: 'number', default: 0},
     updatedAt: {type: 'string', default: ''},
+    stale: {type: 'boolean', default: false},
   },
 } as const;
 type Schemas = [typeof TABLES_SCHEMA, NoValuesSchema];
@@ -98,7 +105,14 @@ export const ReposStore = () => {
         TABLE_ID,
         (getCell) => (getCell('starred') ? 'Starred' : getCell('owner')),
         reposSortCell,
-        undefined,
+        (slice1, slice2) =>
+          slice1 == 'Starred'
+            ? -1
+            : slice2 == 'Starred'
+              ? 1
+              : slice1 > slice2
+                ? 1
+                : -1,
         (cell1, cell2) => (cell1 > cell2 ? 1 : -1) * reposSortDirection,
       ),
     [reposSortCell],
@@ -133,6 +147,9 @@ const useFetch = (reposStore: Store<Schemas>) => {
       }: RepoData,
       starred: boolean = false,
     ) => {
+      if (starred || reposStore.getCell(TABLE_ID, full_name, 'stale')) {
+        reposStore.setCell(TABLE_ID, full_name, 'starred', starred);
+      }
       reposStore.setPartialRow(TABLE_ID, full_name, {
         owner: owner.login,
         name,
@@ -142,80 +159,145 @@ const useFetch = (reposStore: Store<Schemas>) => {
         openIssuesCount: open_issues_count ?? 0,
         stargazersCount: stargazers_count ?? 0,
         updatedAt: updated_at ?? '',
+        stale: false,
       });
-      if (starred) {
-        reposStore.setCell(TABLE_ID, full_name, 'starred', starred);
-      }
     },
     [reposStore],
   );
 
   const addRepos = useCallback(
-    async (response: Promise<{data: RepoData[]}>, starred?: boolean) =>
-      (await response).data.forEach((repo) => addRepo(repo, starred)),
+    async (
+      responsePromise: Promise<{data: RepoData[]; headers: HeadersWithLink}>,
+      starred?: boolean,
+    ) => {
+      const response = await responsePromise;
+      response.data.forEach((repo) => addRepo(repo, starred));
+      return getNextPage(response);
+    },
     [addRepo],
   );
 
   useSetTask(
     'fetchReposStarred',
-    async () =>
-      hasToken() &&
-      (await addRepos(
-        octokit.rest.activity.listReposStarredByAuthenticatedUser(PER_PAGE),
-        true,
-      )),
+    async (page = '1', _signal, {manager, taskId}) => {
+      if (hasToken()) {
+        const nextPage = await addRepos(
+          octokit.rest.activity.listReposStarredByAuthenticatedUser(
+            getPageOptions(page),
+          ),
+          true,
+        );
+        if (nextPage) {
+          await manager.untilTaskRunDone(
+            manager.scheduleTaskRun(taskId, nextPage, STAGGER)!,
+          );
+        }
+      }
+    },
     [addRepos],
-    'singleFetch',
+    'multiFetch',
   );
 
   useSetTask(
     'fetchReposOwned',
-    async () =>
-      hasToken() &&
-      (await addRepos(octokit.rest.repos.listForAuthenticatedUser(PER_PAGE))),
+    async (page = '1', _signal, {manager, taskId}) => {
+      if (hasToken()) {
+        const nextPage = await addRepos(
+          octokit.rest.repos.listForAuthenticatedUser(getPageOptions(page)),
+        );
+        if (nextPage) {
+          await manager.untilTaskRunDone(
+            manager.scheduleTaskRun(taskId, nextPage, STAGGER)!,
+          );
+        }
+      }
+    },
     [addRepos],
-    'singleFetch',
+    'multiFetch',
   );
 
   useSetTask(
     'fetchReposForOrg',
-    async (org: string = '') =>
-      hasToken() &&
-      (await addRepos(octokit.rest.repos.listForOrg({org, ...PER_PAGE}))),
+    async (orgAndPage: string = '[""]', _signal, {manager, taskId}) => {
+      if (hasToken()) {
+        const [org, page = '1'] = JSON.parse(orgAndPage);
+        const nextPage = await addRepos(
+          octokit.rest.repos.listForOrg({org, ...getPageOptions(page)}),
+        );
+        if (nextPage) {
+          await manager.untilTaskRunDone(
+            manager.scheduleTaskRun(
+              taskId,
+              JSON.stringify([org, nextPage]),
+              STAGGER,
+            )!,
+          );
+        }
+      }
+    },
     [addRepos],
-    'singleFetch',
+    'multiFetch',
   );
 
   useSetTask(
     'fetchOrgs',
-    async (_arg, _abort, {manager}) =>
-      hasToken() &&
-      (await octokit.rest.orgs.listForAuthenticatedUser(PER_PAGE)).data.forEach(
-        ({login}, i) =>
-          manager.scheduleTaskRun('fetchReposForOrg', login, i * 100),
-      ),
+    async (page: string | undefined, _abort, {manager, taskId}) => {
+      if (hasToken()) {
+        const response = await octokit.rest.orgs.listForAuthenticatedUser(
+          getPageOptions(page),
+        );
+        const nextPage = getNextPage(response);
+        if (nextPage) {
+          await manager.untilTaskRunDone(
+            manager.scheduleTaskRun(taskId, nextPage, STAGGER)!,
+          );
+        }
+
+        await Promise.all(
+          response.data.map(({login}, i) =>
+            manager.untilTaskRunDone(
+              manager.scheduleTaskRun(
+                'fetchReposForOrg',
+                JSON.stringify([login]),
+                i * STAGGER,
+              )!,
+            ),
+          ),
+        );
+      }
+    },
     [addRepos],
     'multiFetch',
   );
 
   useSetTask(
     'fetchRepos',
-    async (_arg, _abort, {manager}) => {
-      reposStore.delTables();
+    async (_arg, _signal, {manager}) => {
+      reposStore.forEachRow(TABLE_ID, (repoId, _) =>
+        reposStore.setCell(TABLE_ID, repoId, 'stale', true),
+      );
+
       if (hasToken()) {
         await Promise.all(
           ['fetchReposStarred', 'fetchReposOwned', 'fetchOrgs'].map(
             (taskId, i) =>
               manager.untilTaskRunDone(
-                manager.scheduleTaskRun({taskId, startAfter: i * 5000})!,
+                manager.scheduleTaskRun({taskId, startAfter: i * STAGGER})!,
               ),
           ),
         );
       }
+
+      reposStore.forEachRow(TABLE_ID, (repoId, _) => {
+        if (reposStore.getCell(TABLE_ID, repoId, 'stale')) {
+          reposStore.delRow(TABLE_ID, repoId);
+        }
+      });
     },
-    [],
+    [reposStore],
     'multiFetch',
     {repeatDelay: REFRESH_DELAY},
   );
+
   useScheduleTaskRun('fetchRepos');
 };

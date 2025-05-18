@@ -45,10 +45,7 @@ export const UserStore = () => {
     userStore,
     (userStore) => createLocalPersister(userStore, STORE_ID),
     [],
-    async (persister) => {
-      await persister.startAutoLoad();
-      await persister.startAutoSave();
-    },
+    (persister) => persister.startAutoPersisting(),
   );
 
   useProvideStore(STORE_ID, userStore);

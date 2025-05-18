@@ -1,6 +1,5 @@
 import type {DependencyList} from 'react';
 import {createLocalPersister} from 'tinybase/persisters/persister-browser/with-schemas';
-import {createCustomPersister} from 'tinybase/persisters/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas';
 import {
   createStore,
@@ -8,10 +7,10 @@ import {
   type Id,
   type NoValuesSchema,
   type Store,
-  type Table,
 } from 'tinybase/with-schemas';
-import {PER_PAGE, REFRESH_INTERVAL} from './common';
-import {octokit} from './octokit';
+import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
+import {STAGGER} from './common';
+import {getNextPage, getPageOptions, hasToken, octokit} from './octokit';
 import {useUiValue} from './ViewStore';
 
 type AsId<Key> = Exclude<Key & Id, number>;
@@ -36,7 +35,6 @@ const {
   useProvideStore,
   useCreatePersister,
   useCell,
-  useProvidePersister,
   useSetCellCallback,
   useSortedRowIds,
   usePersisterStatus,
@@ -89,60 +87,56 @@ export const IssuesStore = () => {
       }
     },
     [currentRepoId],
-    async (persister) => {
-      await persister?.startAutoLoad();
-      await persister?.startAutoSave();
-    },
+    async (persister) => persister?.startAutoPersisting(),
     [],
   );
 
-  const issuesPersister = useCreatePersister(
-    issuesStore,
-    (issuesStore) => {
-      if (currentRepoId) {
-        return createGithubIssuesLoadingPersister(issuesStore, currentRepoId);
-      }
-    },
-    [currentRepoId],
-    async (persister) => {
-      await persister?.load();
-    },
-    [],
-  );
-  useProvidePersister(PERSISTER_ID, issuesPersister);
+  useFetch(issuesStore, currentRepoId);
 
   return null;
 };
 
-const createGithubIssuesLoadingPersister = (
-  store: Store<Schemas>,
-  repoId: string,
-) =>
-  createCustomPersister(
-    store,
-    async () => {
-      const [owner, repo] = repoId.split('/');
-      const issues: Table<Schemas[0], typeof TABLE_ID> = {};
-      (
-        await octokit.rest.issues.listForRepo({
+const useFetch = (issuesStore: Store<Schemas>, repoId: string) => {
+  useSetTask(
+    'fetchIssues',
+    async (repoIdAndPage: string = '[""]', _abort, {manager, taskId}) => {
+      const [repoId, page = '1'] = JSON.parse(repoIdAndPage);
+
+      if (hasToken() && repoId) {
+        const [owner, repo] = repoId.split('/');
+        const response = await octokit.rest.issues.listForRepo({
           owner,
           repo,
           mediaType: {format: 'html'},
-          ...PER_PAGE,
-        })
-      ).data.forEach(
-        ({number, title, pull_request, body_html, created_at, updated_at}) =>
-          (issues[number] = {
-            title,
-            pullRequest: pull_request != undefined,
-            bodyHtml: body_html ?? '',
-            createdAt: created_at,
-            updatedAt: updated_at,
-          }),
-      );
-      return [{issues}, {}];
+          ...getPageOptions(page),
+        });
+
+        response.data.forEach(
+          ({number, title, pull_request, body_html, created_at, updated_at}) =>
+            issuesStore.setRow(TABLE_ID, number + '', {
+              title,
+              pullRequest: pull_request != undefined,
+              bodyHtml: body_html ?? '',
+              createdAt: created_at,
+              updatedAt: updated_at,
+            }),
+        );
+
+        const nextPage = getNextPage(response);
+        if (nextPage) {
+          await manager.untilTaskRunDone(
+            manager.scheduleTaskRun(
+              taskId,
+              JSON.stringify([repoId, nextPage]),
+              STAGGER,
+            )!,
+          );
+        }
+      }
     },
-    async () => {},
-    (listener) => setInterval(listener, REFRESH_INTERVAL),
-    (intervalId) => clearInterval(intervalId),
+    [issuesStore],
+    'multiFetch',
   );
+
+  useScheduleTaskRun('fetchIssues', JSON.stringify([repoId]));
+};

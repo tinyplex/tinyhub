@@ -56,6 +56,15 @@ export const RepoHeader = () => {
           <Detail
             data={{
               Owner: useRepoValue('owner'),
+              Link: (
+                <a
+                  href={useRepoValue('githubUrl')}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub
+                </a>
+              ),
               Language: useRepoValue('language'),
               License: useRepoValue('license'),
             }}

@@ -795,7 +795,7 @@ SOFTWARE.
 ---
 
 Name: tinybase
-Version: 6.1.0
+Version: 6.1.1
 License: MIT
 Private: false
 Description: A reactive data store and sync engine.
@@ -870,7 +870,7 @@ Author: jamesgpearce
 ---
 
 Name: tinytick
-Version: 1.2.5
+Version: 1.2.6
 License: MIT
 Private: false
 Description: A tiny but very useful JavaScript task orchestrator.
