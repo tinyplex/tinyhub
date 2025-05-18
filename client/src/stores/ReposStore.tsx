@@ -41,8 +41,6 @@ const TABLE_ID = 'repos';
 const INDEXES_ID = 'repos';
 const INDEX_ID = 'reposByGroup';
 
-const PERSISTER_ID = 'repos';
-
 const TABLES_SCHEMA = {
   repos: {
     owner: {type: 'string', default: ''},
@@ -66,7 +64,6 @@ const {
   useCreateIndexes,
   useProvideIndexes,
   useSliceRowIds,
-  usePersisterStatus,
   useSliceIds,
 } = UiReact as UiReact.WithSchemas<Schemas>;
 type TableIds = keyof typeof TABLES_SCHEMA;
@@ -83,8 +80,6 @@ export const useGroupIds = () => useSliceIds(INDEX_ID, INDEXES_ID);
 
 export const useGroupRepoIds = (group: string) =>
   useSliceRowIds(INDEX_ID, group, INDEXES_ID);
-
-export const useReposPersisterStatus = () => usePersisterStatus(PERSISTER_ID);
 
 export const ReposStore = () => {
   const reposStore = useCreateStore(() =>

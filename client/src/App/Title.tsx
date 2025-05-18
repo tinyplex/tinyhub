@@ -1,22 +1,16 @@
 import {CircleHelp} from 'lucide-react';
+import {useRunningTaskRunIds} from 'tinytick/ui-react';
 import {Button, classNames} from 'tinywidgets';
-import {useIssuesPersisterStatus} from '../stores/IssuesStore.tsx';
-import {useRepoPersisterStatus} from '../stores/RepoStore.tsx';
-import {useReposPersisterStatus} from '../stores/ReposStore.tsx';
 import {button, logo, spinning} from './Title.css.ts';
 
 export const Title = () => {
-  const persisterStatus =
-    useReposPersisterStatus() +
-    useRepoPersisterStatus() +
-    useIssuesPersisterStatus();
-
+  const running = (useRunningTaskRunIds()?.length ?? 0) > 0;
   return (
     <>
       <img
         src="/favicon.svg"
         alt="TinyHub logo"
-        className={classNames(logo, persisterStatus > 0 && spinning)}
+        className={classNames(logo, running && spinning)}
       />
       <h1>TinyHub</h1>
       <Button

@@ -11,9 +11,9 @@ export const useTaskManager = () =>
         retryDelay: 5000,
       })
       .setCategory('multiFetch', {
-        maxDuration: 30000,
+        maxDuration: 60000,
         maxRetries: 2,
-        retryDelay: 15000,
+        retryDelay: 30000,
       })
       .start();
 
@@ -39,7 +39,8 @@ export const useTaskManager = () =>
           // eslint-disable-next-line no-console
           console.error(
             `Task ${taskId}/${taskRunId} failed: ` +
-              `${getTaskRunReasonText(reason)} (${message})`,
+              `${getTaskRunReasonText(reason)} (${message}) ` +
+              (manager.getTaskRunInfo(taskRunId)?.arg ?? ''),
           ),
       );
     }
