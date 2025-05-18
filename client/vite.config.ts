@@ -16,12 +16,12 @@ export default defineConfig({
         manualChunks: (id) =>
           id.includes('node_modules/react')
             ? 'react'
-            : id.includes('node_modules/tinybase')
-              ? 'tinybase'
-              : id.includes('node_modules/octokit')
-                ? 'octokit'
-                : id.includes('node_modules/tinywidgets')
-                  ? 'tinywidgets'
+            : id.includes('node_modules/tinywidgets')
+              ? 'tinywidgets'
+              : id.includes('node_modules/tinybase')
+                ? 'tinybase'
+                : id.includes('node_modules/octokit')
+                  ? 'octokit'
                   : null,
       },
     },
