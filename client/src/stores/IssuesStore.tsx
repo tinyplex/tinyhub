@@ -9,8 +9,13 @@ import {
   type Store,
 } from 'tinybase/with-schemas';
 import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
-import {STAGGER} from './common';
-import {getNextPage, getPageOptions, hasToken, octokit} from './octokit';
+import {
+  getNextPage,
+  getPageOptions,
+  hasToken,
+  octokit,
+  STAGGER,
+} from './octokit';
 import {useUiValue} from './ViewStore';
 
 type AsId<Key> = Exclude<Key & Id, number>;

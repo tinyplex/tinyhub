@@ -1,10 +1,12 @@
 import {Octokit} from 'octokit';
 
-const PER_PAGE = 5;
+export type HeadersWithLink = {link?: string};
+
+const PER_PAGE = 100;
 
 const LINK_REGEX = /<([^>]+)>/;
 
-export type HeadersWithLink = {link?: string};
+export const STAGGER = 100;
 
 export const octokit = new Octokit({auth: localStorage.getItem('token')});
 

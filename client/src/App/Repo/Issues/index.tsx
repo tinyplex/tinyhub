@@ -43,9 +43,9 @@ export const Issues = () => {
       }
     >
       <Row variant="1|2">
-        <Card className={issueList}>
+        <nav className={issueList}>
           <IssueList currentIssueId={issueId} issueIds={issueIds} />
-        </Card>
+        </nav>
         {useIssueCell(issueId, 'title') ? (
           <Card className={issue}>
             <Issue issueId={issueId} />

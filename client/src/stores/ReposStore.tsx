@@ -9,13 +9,13 @@ import {
   createStore,
 } from 'tinybase/with-schemas';
 import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
-import {STAGGER} from './common';
 import {
   getNextPage,
   getPageOptions,
   hasToken,
   HeadersWithLink,
   octokit,
+  STAGGER,
 } from './octokit';
 import {useSettingsValue} from './SettingsStore';
 

@@ -6,7 +6,6 @@ import {
   createStore,
 } from 'tinybase/with-schemas';
 import {useScheduleTaskRun, useSetTask} from 'tinytick/ui-react';
-import {PER_PAGE} from './common';
 import {hasToken, octokit} from './octokit';
 import {useUiValue} from './ViewStore';
 
@@ -123,8 +122,7 @@ const useFetch = (repoStore: Store<Schemas>, repoId: string) => {
           topics,
           updated_at,
           visibility,
-        }: RepoData = (await octokit.rest.repos.get({owner, repo, ...PER_PAGE}))
-          .data;
+        }: RepoData = (await octokit.rest.repos.get({owner, repo})).data;
 
         repoStore.setValues({
           id: ownerObject.login + '/' + name,
