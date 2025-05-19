@@ -20,6 +20,8 @@ import {useUiValue} from './ViewStore';
 
 type AsId<Key> = Exclude<Key & Id, number>;
 
+const REFRESH_DELAY = 1000 * 60 * 10;
+
 const STORE_ID = 'issues';
 const TABLE_ID = 'issues';
 
@@ -30,6 +32,7 @@ const TABLES_SCHEMA = {
     bodyHtml: {type: 'string', default: ''},
     createdAt: {type: 'string', default: ''},
     updatedAt: {type: 'string', default: ''},
+    stale: {type: 'boolean', default: false},
   },
 } as const;
 type Schemas = [typeof TABLES_SCHEMA, NoValuesSchema];
@@ -98,10 +101,8 @@ export const IssuesStore = () => {
 
 const useFetch = (issuesStore: Store<Schemas>, repoId: string) => {
   useSetTask(
-    'fetchIssues',
-    async (repoIdAndPage: string = '[""]', _abort, {manager, taskId}) => {
-      const [repoId, page = '1'] = JSON.parse(repoIdAndPage);
-
+    'fetchIssues ' + repoId,
+    async (page: string = '1', signal, {manager, taskId}) => {
       if (hasToken() && repoId) {
         const [owner, repo] = repoId.split('/');
         const response = await octokit.rest.issues.listForRepo({
@@ -109,6 +110,7 @@ const useFetch = (issuesStore: Store<Schemas>, repoId: string) => {
           repo,
           mediaType: {format: 'html'},
           ...getPageOptions(page),
+          request: {signal},
         });
 
         response.data.forEach(
@@ -125,18 +127,37 @@ const useFetch = (issuesStore: Store<Schemas>, repoId: string) => {
         const nextPage = getNextPage(response);
         if (nextPage) {
           await manager.untilTaskRunDone(
-            manager.scheduleTaskRun(
-              taskId,
-              JSON.stringify([repoId, nextPage]),
-              STAGGER,
-            )!,
+            manager.scheduleTaskRun(taskId, nextPage, STAGGER)!,
           );
         }
       }
     },
-    [issuesStore],
+    [issuesStore, repoId],
     'multiFetch',
   );
 
-  useScheduleTaskRun('fetchIssues', JSON.stringify([repoId]));
+  useSetTask(
+    'fetchAllIssues ' + repoId,
+    async (_arg, _signal, {manager}) => {
+      issuesStore.forEachRow(TABLE_ID, (issueId, _) =>
+        issuesStore.setCell(TABLE_ID, issueId, 'stale', true),
+      );
+
+      if (hasToken() && repoId) {
+        await manager.untilTaskRunDone(
+          manager.scheduleTaskRun('fetchIssues ' + repoId)!,
+        );
+        issuesStore.forEachRow(TABLE_ID, (issueId, _) => {
+          if (issuesStore.getCell(TABLE_ID, issueId, 'stale')) {
+            issuesStore.delRow(TABLE_ID, issueId);
+          }
+        });
+      }
+    },
+    [issuesStore, repoId],
+    'multiFetch',
+    {repeatDelay: REFRESH_DELAY},
+  );
+
+  useScheduleTaskRun('fetchAllIssues ' + repoId);
 };

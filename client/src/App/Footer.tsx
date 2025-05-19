@@ -30,6 +30,7 @@ export const Footer = () => {
 
 const useTaskIds = (taskRunIds: Ids) => {
   const manager = useManager();
+
   return taskRunIds
     .map((taskRunId) => {
       const {taskId, nextTimestamp = 0} =

@@ -6,12 +6,12 @@ export const useTaskManager = () =>
     const manager = createManager()
       .setManagerConfig({tickInterval: 10})
       .setCategory('singleFetch', {
-        maxDuration: 5000,
+        maxDuration: 10000,
         maxRetries: 2,
         retryDelay: 5000,
       })
       .setCategory('multiFetch', {
-        maxDuration: 60000,
+        maxDuration: 120000,
         maxRetries: 2,
         retryDelay: 30000,
       })

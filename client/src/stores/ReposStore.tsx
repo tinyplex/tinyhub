@@ -174,12 +174,13 @@ const useFetch = (reposStore: Store<Schemas>) => {
 
   useSetTask(
     'fetchReposStarred',
-    async (page = '1', _signal, {manager, taskId}) => {
+    async (page = '1', signal, {manager, taskId}) => {
       if (hasToken()) {
         const nextPage = await addRepos(
-          octokit.rest.activity.listReposStarredByAuthenticatedUser(
-            getPageOptions(page),
-          ),
+          octokit.rest.activity.listReposStarredByAuthenticatedUser({
+            ...getPageOptions(page),
+            request: {signal},
+          }),
           true,
         );
         if (nextPage) {
@@ -195,10 +196,13 @@ const useFetch = (reposStore: Store<Schemas>) => {
 
   useSetTask(
     'fetchReposOwned',
-    async (page = '1', _signal, {manager, taskId}) => {
+    async (page = '1', signal, {manager, taskId}) => {
       if (hasToken()) {
         const nextPage = await addRepos(
-          octokit.rest.repos.listForAuthenticatedUser(getPageOptions(page)),
+          octokit.rest.repos.listForAuthenticatedUser({
+            ...getPageOptions(page),
+            request: {signal},
+          }),
         );
         if (nextPage) {
           await manager.untilTaskRunDone(
@@ -213,11 +217,15 @@ const useFetch = (reposStore: Store<Schemas>) => {
 
   useSetTask(
     'fetchReposForOrg',
-    async (orgAndPage: string = '[""]', _signal, {manager, taskId}) => {
+    async (orgAndPage: string = '[""]', signal, {manager, taskId}) => {
       if (hasToken()) {
         const [org, page = '1'] = JSON.parse(orgAndPage);
         const nextPage = await addRepos(
-          octokit.rest.repos.listForOrg({org, ...getPageOptions(page)}),
+          octokit.rest.repos.listForOrg({
+            org,
+            ...getPageOptions(page),
+            request: {signal},
+          }),
         );
         if (nextPage) {
           await manager.untilTaskRunDone(
@@ -236,11 +244,12 @@ const useFetch = (reposStore: Store<Schemas>) => {
 
   useSetTask(
     'fetchOrgs',
-    async (page: string | undefined, _abort, {manager, taskId}) => {
+    async (page: string | undefined, signal, {manager, taskId}) => {
       if (hasToken()) {
-        const response = await octokit.rest.orgs.listForAuthenticatedUser(
-          getPageOptions(page),
-        );
+        const response = await octokit.rest.orgs.listForAuthenticatedUser({
+          ...getPageOptions(page),
+          request: {signal},
+        });
         const nextPage = getNextPage(response);
         if (nextPage) {
           await manager.untilTaskRunDone(
@@ -266,7 +275,7 @@ const useFetch = (reposStore: Store<Schemas>) => {
   );
 
   useSetTask(
-    'fetchRepos',
+    'fetchAllRepos',
     async (_arg, _signal, {manager}) => {
       reposStore.forEachRow(TABLE_ID, (repoId, _) =>
         reposStore.setCell(TABLE_ID, repoId, 'stale', true),
@@ -281,18 +290,17 @@ const useFetch = (reposStore: Store<Schemas>) => {
               ),
           ),
         );
+        reposStore.forEachRow(TABLE_ID, (repoId, _) => {
+          if (reposStore.getCell(TABLE_ID, repoId, 'stale')) {
+            reposStore.delRow(TABLE_ID, repoId);
+          }
+        });
       }
-
-      reposStore.forEachRow(TABLE_ID, (repoId, _) => {
-        if (reposStore.getCell(TABLE_ID, repoId, 'stale')) {
-          reposStore.delRow(TABLE_ID, repoId);
-        }
-      });
     },
     [reposStore],
     'multiFetch',
     {repeatDelay: REFRESH_DELAY},
   );
 
-  useScheduleTaskRun('fetchRepos');
+  useScheduleTaskRun('fetchAllRepos');
 };
