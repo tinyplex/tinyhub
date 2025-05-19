@@ -870,7 +870,7 @@ Author: jamesgpearce
 ---
 
 Name: tinytick
-Version: 1.2.6
+Version: 1.2.8
 License: MIT
 Private: false
 Description: A tiny but very useful JavaScript task orchestrator.
