@@ -19,7 +19,7 @@ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH RE
 ---
 
 Name: before-after-hook
-Version: 3.0.2
+Version: 4.0.0
 License: Apache-2.0
 Private: false
 Description: asynchronous before/error/after hooks for internal functionality
@@ -233,7 +233,7 @@ License Copyright:
 ---
 
 Name: @octokit/endpoint
-Version: 10.1.4
+Version: 11.0.0
 License: MIT
 Private: false
 Description: Turns REST API endpoints into generic request options
@@ -267,7 +267,7 @@ THE SOFTWARE.
 ---
 
 Name: fast-content-type-parse
-Version: 2.0.1
+Version: 3.0.0
 License: MIT
 Private: false
 Description: Parse HTTP Content-Type header according to RFC 7231
@@ -310,7 +310,7 @@ SOFTWARE.
 ---
 
 Name: @octokit/request-error
-Version: 6.1.8
+Version: 7.0.0
 License: MIT
 Private: false
 Description: Error class for Octokit request errors
@@ -344,7 +344,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/request
-Version: 9.2.3
+Version: 10.0.2
 License: MIT
 Private: false
 Description: Send parameterized requests to GitHub's APIs with sensible defaults in browsers and Node
@@ -378,7 +378,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/graphql
-Version: 8.2.2
+Version: 9.0.1
 License: MIT
 Private: false
 Description: GitHub GraphQL API client for browsers and Node
@@ -412,7 +412,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/auth-token
-Version: 5.1.2
+Version: 6.0.0
 License: MIT
 Private: false
 Description: GitHub API token authentication for browsers and Node.js
@@ -446,7 +446,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/core
-Version: 6.1.5
+Version: 7.0.2
 License: MIT
 Private: false
 Description: Extendable client for GitHub's REST & GraphQL APIs
@@ -480,7 +480,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/plugin-paginate-rest
-Version: 12.0.0
+Version: 13.0.1
 License: MIT
 Private: false
 Description: Octokit plugin to paginate REST API endpoint responses
@@ -499,7 +499,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: @octokit/plugin-paginate-graphql
-Version: 5.2.4
+Version: 6.0.0
 License: MIT
 Private: false
 Description: Octokit plugin to paginate GraphQL API endpoint responses
@@ -518,7 +518,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: @octokit/plugin-rest-endpoint-methods
-Version: 14.0.0
+Version: 16.0.0
 License: MIT
 Private: false
 Description: Octokit plugin adding one method for all of api.github.com REST API endpoints
@@ -571,7 +571,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ---
 
 Name: @octokit/plugin-retry
-Version: 7.2.1
+Version: 8.0.1
 License: MIT
 Private: false
 Description: Automatic retry plugin for octokit
@@ -605,7 +605,7 @@ SOFTWARE.
 ---
 
 Name: @octokit/plugin-throttling
-Version: 10.0.0
+Version: 11.0.1
 License: MIT
 Private: false
 Description: Octokit plugin for GitHub's recommended request throttling
@@ -639,7 +639,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/oauth-app
-Version: 7.1.6
+Version: 8.0.1
 License: MIT
 Private: false
 Description: GitHub OAuth toolset for Node.js
@@ -659,7 +659,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: octokit
-Version: 4.1.3
+Version: 5.0.3
 License: MIT
 Private: false
 Description: The all-batteries-included GitHub SDK for Browsers, Node.js, and Deno
@@ -795,7 +795,7 @@ SOFTWARE.
 ---
 
 Name: tinybase
-Version: 6.2.0-beta.1
+Version: 6.2.0-beta.4
 License: MIT
 Private: false
 Description: A reactive data store and sync engine.
@@ -905,7 +905,7 @@ SOFTWARE.
 ---
 
 Name: @icons-pack/react-simple-icons
-Version: 12.8.0
+Version: 12.9.0
 License: MIT
 Private: false
 Description: This package provides the Simple Icons packaged as a set of React components.
