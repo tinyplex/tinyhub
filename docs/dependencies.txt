@@ -795,7 +795,7 @@ SOFTWARE.
 ---
 
 Name: tinybase
-Version: 6.2.0-beta.4
+Version: 6.2.0
 License: MIT
 Private: false
 Description: A reactive data store and sync engine.
@@ -905,7 +905,7 @@ SOFTWARE.
 ---
 
 Name: @icons-pack/react-simple-icons
-Version: 12.9.0
+Version: 13.0.0
 License: MIT
 Private: false
 Description: This package provides the Simple Icons packaged as a set of React components.
