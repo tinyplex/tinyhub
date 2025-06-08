@@ -21,7 +21,7 @@ export const SideNav = () => {
       <Hr />
       <RepoGroups />
       <Hr />
-      <Collapsible icon={Settings} title="Settings">
+      <Collapsible icon={Settings} title="Settings" id="settings">
         <ReposSort />
         <Hr />
         <IssuesSort />
