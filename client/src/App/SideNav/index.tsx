@@ -1,7 +1,7 @@
 import {Home, Settings} from 'lucide-react';
 import {Button, Collapsible, Hr} from 'tinywidgets';
 import {useSetUiValueCallback, useUiValue} from '../../stores/ViewStore';
-import {IssuesSort} from '../Repo/Issues/IssuesSort';
+import {IssuesSort} from './IssuesSort';
 import {RepoGroups} from './RepoGroups';
 import {ReposSort} from './ReposSort';
 
@@ -23,6 +23,7 @@ export const SideNav = () => {
       <Hr />
       <Collapsible icon={Settings} title="Settings">
         <ReposSort />
+        <Hr />
         <IssuesSort />
       </Collapsible>
     </>

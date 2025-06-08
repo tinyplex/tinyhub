@@ -5,28 +5,25 @@ import {
 } from '../../stores/SettingsStore';
 
 const OPTIONS = {
-  name: 'name',
-  stargazersCount: 'stars',
-  forksCount: 'forks',
-  openIssuesCount: 'issues',
+  title: 'title',
   createdAt: 'most recently created',
   updatedAt: 'most recently updated',
-  fork: 'repos then forks',
+  pullRequest: 'pull requests then issues',
 };
 
-export const ReposSort = () => {
-  const reposSortCell = useSettingsValue('reposSortCell');
+export const IssuesSort = () => {
+  const issuesSortCell = useSettingsValue('issuesSortCell');
   const handleChange = useSetSettingsValueCallback(
-    'reposSortCell',
+    'issuesSortCell',
     (option) => option as string,
   );
 
   return (
     <div>
-      <label>Repos sorted by</label>
+      <label>Issues sorted by</label>
       <Select
         onChange={handleChange}
-        initialOption={reposSortCell}
+        initialOption={issuesSortCell}
         options={OPTIONS}
       />
     </div>
